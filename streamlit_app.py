@@ -3,7 +3,7 @@ import yaml
 
 # ==========================
     page_icon="🌐",# Configuración de la página
-    layout="wide"
+layout="wide"
 )
 
 # ==========================
