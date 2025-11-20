@@ -2,8 +2,11 @@ import streamlit as st
 import yaml
 
 # ==========================
-    page_icon="🌐",# Configuración de la página
-layout="wide"
+
+st.set_page_config(
+    page_title="Mi App",
+    page_icon="🌐",  # Configuración de la página
+    layout="wide"
 )
 
 # ==========================
