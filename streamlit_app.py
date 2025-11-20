@@ -12,39 +12,43 @@ st.set_page_config(
 )
 
 # ==========================
-# Estilos personalizados (colores Bunge)
+# Estilos personalizados (modo oscuro)
 # ==========================
-bunge_primary = "#004C97"   # Azul corporativo
-bunge_secondary = "#F4B41A" # Amarillo corporativo
-bunge_bg = "#F9F9F9"
-
-st.markdown(f"""
+st.markdown("""
     <style>
-        .stApp {{
-            background-color: {bunge_bg};
-        }}
-        .title {{
-            color: #002244;
-            font-size: 36px;
+        .stApp {
+            background-color: #000000; /* Fondo negro */
+        }
+        .title {
+            color: #FFFFFF; /* Blanco */
+            font-size: 48px; /* Más grande */
             font-weight: bold;
-        }}
-        .subtitle {{
-            color: #333333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .subtitle {
+            color: #FFFFFF;
+            font-size: 28px; /* Más grande que selectbox */
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .stSelectbox label {
+            color: #FFFFFF !important; /* Texto blanco en selectbox */
             font-size: 20px;
-            font-weight: bold;
-        }}
-        .stButton>button {{
-            background-color: {bunge_primary};
+        }
+        .stMarkdown, .stText, .stJson, .stTable {
+            color: #FFFFFF !important; /* Texto blanco en contenido */
+        }
+        .stButton>button {
+            background-color: #004C97; /* Azul corporativo */
             color: white;
             border-radius: 8px;
             padding: 10px 20px;
-        }}
-        .stButton>button:hover {{
+            font-size: 18px;
+        }
+        .stButton>button:hover {
             background-color: #003366;
-        }}
-        body, .stMarkdown, .stText {{
-            color: #000000;
-        }}
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -64,10 +68,9 @@ st.sidebar.success(f"API Key generada automáticamente: {api_key}")
 # ==========================
 # Selección de tabla simulada
 # ==========================
-st.write("### Selecciona una tabla para generar reglas y métricas:")
-
+st.markdown('<p class="subtitle">Selecciona una tabla para generar reglas y métricas:</p>', unsafe_allow_html=True)
 tablas_disponibles = ["clientes", "ventas", "productos", "proveedores", "pedidos"]
-tabla_seleccionada = st.selectbox("Tabla:", tablas_disponibles)
+tabla_seleccionada = st.selectbox("", tablas_disponibles)
 
 # ==========================
 # Reglas simuladas por tabla
@@ -101,7 +104,7 @@ reglas_por_tabla = {
 }
 
 # ==========================
-# Métricas dinámicas con variedad
+# Métricas dinámicas variadas
 # ==========================
 def generar_metricas():
     return {
@@ -118,10 +121,10 @@ metricas = generar_metricas()
 # ==========================
 # Mostrar reglas y métricas
 # ==========================
-st.subheader(f"Reglas para la tabla: {tabla_seleccionada}")
+st.markdown('<p class="subtitle">Reglas para la tabla seleccionada:</p>', unsafe_allow_html=True)
 st.table(reglas_por_tabla[tabla_seleccionada])
 
-st.write("### Métricas de calidad")
+st.markdown('<p class="subtitle">Métricas de calidad:</p>', unsafe_allow_html=True)
 st.json(metricas)
 
 # ==========================
@@ -134,7 +137,6 @@ yaml_data = {
 }
 yaml_str = yaml.dump(yaml_data, allow_unicode=True)
 
-# Botón para descargar YAML
 st.download_button(
     label="Descargar reglas y métricas en YAML",
     data=yaml_str,
