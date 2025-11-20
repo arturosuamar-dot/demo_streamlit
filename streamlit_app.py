@@ -9,8 +9,7 @@ import random
 st.set_page_config(
     page_title="DQaaS - Bunge Global SA",
     page_icon="🌐",
-    layout="wide",
-    theme={"base": "dark"}  # Activa modo oscuro global
+    layout="wide"
 )
 
 # ==========================
