@@ -18,8 +18,9 @@ st.set_page_config(
 # ==========================
 st.markdown("""
     <style>
-        .stApp {
-            background-color: #000000;
+        .stApp, .main, .block-container {
+            background-color: #000000 !important;
+            color: #FFFFFF !important;
         }
         .title {
             color: #FFFFFF;
@@ -54,6 +55,7 @@ st.markdown("""
         }
     </style>
 """, unsafe_allow_html=True)
+
 
 # ==========================
 # Título
