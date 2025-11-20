@@ -1,46 +1,49 @@
+
 import streamlit as st
 import yaml
 import random
 
 # ==========================
-# Configuración de la página
+# Configuración de la página con tema oscuro
 # ==========================
 st.set_page_config(
     page_title="DQaaS - Bunge Global SA",
     page_icon="🌐",
-    layout="wide"
+    layout="wide",
+    theme={"base": "dark"}  # Activa modo oscuro global
 )
 
 # ==========================
-# Estilos personalizados (modo oscuro)
+# Estilos personalizados
 # ==========================
 st.markdown("""
     <style>
         .stApp {
-            background-color: #000000; /* Fondo negro */
+            background-color: #000000;
         }
         .title {
             color: #FFFFFF;
-            font-size: 56px; /* Más grande */
+            font-size: 56px;
             font-weight: bold;
             text-align: center;
             margin-bottom: 30px;
         }
         .subtitle {
             color: #FFFFFF;
-            font-size: 22px; /* Más pequeño que antes */
+            font-size: 22px;
             font-weight: bold;
             margin-top: 20px;
         }
         .stSelectbox label {
-            color: #FFFFFF !important; /* Texto blanco en selectbox */
-            font-size: 20px;
+            color: #FFFFFF !important;
+            font-size: 18px;
         }
-        .stMarkdown, .stText, .stJson, .stTable {
-            color: #FFFFFF !important; /* Texto blanco en contenido */
+        .stTable, .stJson {
+            background-color: #000000 !important;
+            color: #FFFFFF !important;
         }
         .stButton>button {
-            background-color: #004C97; /* Azul corporativo */
+            background-color: #004C97;
             color: white;
             border-radius: 8px;
             padding: 10px 20px;
@@ -59,21 +62,14 @@ st.markdown('<p class="title">DQaaS - Data Quality as a Service</p>', unsafe_all
 st.markdown('<p class="subtitle">Bunge Global SA - Viterra Data Products Squad Extension</p>', unsafe_allow_html=True)
 
 # ==========================
-# API Key simulada
-# ==========================
-st.sidebar.header("Configuración")
-api_key = "BUNGE-AUTO-KEY-2025"
-st.sidebar.success(f"API Key generada automáticamente: {api_key}")
-
-# ==========================
-# Selección de tabla simulada
+# Selección de tabla
 # ==========================
 st.markdown('<p class="subtitle">Selecciona una tabla para generar reglas y métricas:</p>', unsafe_allow_html=True)
 tablas_disponibles = ["clientes", "ventas", "productos", "proveedores", "pedidos"]
 tabla_seleccionada = st.selectbox("", tablas_disponibles)
 
 # ==========================
-# Reglas simuladas por tabla
+# Reglas y métricas
 # ==========================
 reglas_por_tabla = {
     "clientes": [
@@ -85,27 +81,9 @@ reglas_por_tabla = {
         {"name": "positive_amount", "description": "Monto positivo", "condition": "amount > 0", "dimension": "Validez"},
         {"name": "valid_currency", "description": "Moneda válida (USD/EUR)", "condition": "currency IN ('USD','EUR')", "dimension": "Consistencia"},
         {"name": "date_not_future", "description": "Fecha no puede ser futura", "condition": "sale_date <= CURRENT_DATE", "dimension": "Validez"}
-    ],
-    "productos": [
-        {"name": "unique_code", "description": "Código único", "condition": "code IS UNIQUE", "dimension": "Unicidad"},
-        {"name": "price_positive", "description": "Precio mayor que cero", "condition": "price > 0", "dimension": "Validez"},
-        {"name": "category_not_null", "description": "Categoría no nula", "condition": "category IS NOT NULL", "dimension": "Completitud"}
-    ],
-    "proveedores": [
-        {"name": "country_valid", "description": "País válido (ISO)", "condition": "country IN ('ES','US','BR')", "dimension": "Consistencia"},
-        {"name": "contact_email", "description": "Email de contacto válido", "condition": "contact_email LIKE '%@%'", "dimension": "Consistencia"},
-        {"name": "id_unique", "description": "ID único", "condition": "id IS UNIQUE", "dimension": "Unicidad"}
-    ],
-    "pedidos": [
-        {"name": "status_valid", "description": "Estado válido (PENDIENTE, COMPLETADO)", "condition": "status IN ('PENDIENTE','COMPLETADO')", "dimension": "Consistencia"},
-        {"name": "delivery_date_check", "description": "Fecha de entrega >= fecha pedido", "condition": "delivery_date >= order_date", "dimension": "Validez"},
-        {"name": "quantity_positive", "description": "Cantidad mayor que cero", "condition": "quantity > 0", "dimension": "Validez"}
     ]
 }
 
-# ==========================
-# Métricas dinámicas variadas
-# ==========================
 def generar_metricas():
     return {
         "completitud": f"{random.randint(85, 99)}%",
@@ -118,9 +96,6 @@ def generar_metricas():
 
 metricas = generar_metricas()
 
-# ==========================
-# Mostrar reglas y métricas
-# ==========================
 st.markdown('<p class="subtitle">Reglas para la tabla seleccionada:</p>', unsafe_allow_html=True)
 st.table(reglas_por_tabla[tabla_seleccionada])
 
@@ -128,7 +103,7 @@ st.markdown('<p class="subtitle">Métricas de calidad:</p>', unsafe_allow_html=T
 st.json(metricas)
 
 # ==========================
-# Generar YAML
+# YAML
 # ==========================
 yaml_data = {
     "table": tabla_seleccionada,
