@@ -1,5 +1,6 @@
 import streamlit as st
 import yaml
+import random
 
 # ==========================
 # Configuración de la página
@@ -60,7 +61,6 @@ st.sidebar.header("Configuración")
 api_key = "BUNGE-AUTO-KEY-2025"
 st.sidebar.success(f"API Key generada automáticamente: {api_key}")
 
-
 # ==========================
 # Selección de tabla simulada
 # ==========================
@@ -69,10 +69,8 @@ st.write("### Selecciona una tabla para generar reglas y métricas:")
 tablas_disponibles = ["clientes", "ventas", "productos", "proveedores", "pedidos"]
 tabla_seleccionada = st.selectbox("Tabla:", tablas_disponibles)
 
-
-
 # ==========================
-# Reglas simuladas por tabla (más variedad)
+# Reglas simuladas por tabla
 # ==========================
 reglas_por_tabla = {
     "clientes": [
@@ -103,13 +101,26 @@ reglas_por_tabla = {
 }
 
 # ==========================
+# Métricas dinámicas con variedad
+# ==========================
+def generar_metricas():
+    return {
+        "completitud": f"{random.randint(85, 99)}%",
+        "unicidad": f"{random.randint(80, 98)}%",
+        "consistencia": f"{random.randint(82, 97)}%",
+        "validez": f"{random.randint(83, 96)}%",
+        "integridad_referencial": f"{random.randint(75, 95)}%",
+        "exactitud": f"{random.randint(78, 94)}%"
+    }
+
+metricas = generar_metricas()
+
+# ==========================
 # Mostrar reglas y métricas
 # ==========================
 st.subheader(f"Reglas para la tabla: {tabla_seleccionada}")
 st.table(reglas_por_tabla[tabla_seleccionada])
 
-# Métricas simuladas
-metricas = {"completitud": "98%", "unicidad": "95%", "consistencia": "97%", "validez": "96%"}
 st.write("### Métricas de calidad")
 st.json(metricas)
 
@@ -128,4 +139,5 @@ st.download_button(
     label="Descargar reglas y métricas en YAML",
     data=yaml_str,
     file_name=f"{tabla_seleccionada}_quality.yaml",
-    mime="text/yaml")
+    mime="text/yaml"
+)
