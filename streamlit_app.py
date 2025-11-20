@@ -4,7 +4,7 @@ import yaml
 # ==========================
 
 st.set_page_config(
-    page_title="Mi App",
+    page_title="DQaaS - Bunge Global SA",
     page_icon="🌐",  # Configuración de la página
     layout="wide"
 )
@@ -90,11 +90,6 @@ if st.button("Mostrar reglas"):
         mime="text/yaml"
     )
 # ==========================
-st.set_page_config(
-    page_title="DQaaS - Bunge Global SA",
-
-
-
 
 # Ejemplo yaml
 
