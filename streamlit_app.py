@@ -6,11 +6,7 @@ import random
 # ==========================
 # Configuración de la página con tema oscuro
 # ==========================
-st.set_page_config(
-    page_title="DQaaS - Bunge Global SA",
-    page_icon="🌐",
-    layout="wide"
-)
+
 # ==========================
 # Estilos personalizados
 # ==========================
