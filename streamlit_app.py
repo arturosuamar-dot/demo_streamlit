@@ -1,8 +1,10 @@
 import streamlit as st
+import pandas as pd
 import yaml
 
 # ==========================
-
+# Configuración de la página
+# ==========================
 st.set_page_config(
     page_title="DQaaS - Bunge Global SA",
     page_icon="🌐",  # Configuración de la página
@@ -54,6 +56,58 @@ api_key = "BUNGE-AUTO-KEY-2025"
 st.sidebar.success(f"API Key generada automáticamente: {api_key}")
 
 # ==========================
+# Selección de fuente de datos
+# ==========================
+st.write("### Selecciona la fuente de datos para generar el perfil:")
+opciones_fuente = ["Subir archivo CSV", "Subir archivo Excel"]
+fuente = st.selectbox("Fuente de datos:", opciones_fuente)
+
+df = None
+if fuente == "Subir archivo CSV":
+    archivo = st.file_uploader("Carga tu archivo CSV", type=["csv"])
+    if archivo:
+        df = pd.read_csv(archivo)
+elif fuente == "Subir archivo Excel":
+    archivo = st.file_uploader("Carga tu archivo Excel", type=["xlsx"])
+    if archivo:
+        df = pd.read_excel(archivo)
+
+# ==========================
+# Data Profiling
+# ==========================
+if df is not None:
+    st.subheader("Vista previa de los datos")
+    st.dataframe(df.head())
+
+    # Generar perfil básico
+    perfil = {
+        "filas": df.shape[0],
+        "columnas": df.shape[1],
+        "columnas_info": {}
+    }
+
+    for col in df.columns:
+        perfil["columnas_info"][col] = {
+            "tipo": str(df[col].dtype),
+            "nulos": int(df[col].isnull().sum()),
+            "únicos": int(df[col].nunique())
+        }
+
+    st.subheader("Perfil de datos")
+    st.json(perfil)
+
+    # Convertir a YAML
+    yaml_content = yaml.dump(perfil, allow_unicode=True)
+
+    # Botón para descargar
+    st.download_button(
+        label="Descargar perfil en YAML",
+        data=yaml_content,
+        file_name="data_profiling.yaml",
+        mime="text/yaml"
+    )
+
+# ==========================
 # Reglas de Calidad del Dato
 # ==========================
 st.write("### Selecciona el tipo de reglas de calidad:")
@@ -89,29 +143,3 @@ if st.button("Mostrar reglas"):
         file_name=f"reglas_{opcion.lower()}.yaml",
         mime="text/yaml"
     )
-# ==========================
-
-# Ejemplo yaml
-
-# data puede ser cualquier estructura Python (diccionario, lista, etc.).
-# yaml.dump() convierte el objeto en texto YAML.
-# mime="text/yaml" indica el tipo de archivo.
-# file_name define el nombre del archivo descargado.
-
-# Datos de ejemplo
-#data = {
-#    "nombre": "Arturo",
-#    "rol": "Data Architecture Associate",
-#    "ubicación": "La Coruña"
-#}
-
-# Convertir a YAML
-#yaml_content = yaml.dump(data, allow_unicode=True)
-
-# Crear botón de descarga
-#st.download_button(
-#    label="Descargar YAML",
-#    data=yaml_content,
-#    file_name="configuracion.yaml",
-#    mime="text/yaml"
-#)
