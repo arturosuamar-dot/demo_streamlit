@@ -11,7 +11,6 @@ st.set_page_config(
     page_icon="🌐",
     layout="wide"
 )
-
 # ==========================
 # Estilos personalizados
 # ==========================
@@ -54,7 +53,6 @@ st.markdown("""
         }
     </style>
 """, unsafe_allow_html=True)
-
 
 # ==========================
 # Título
