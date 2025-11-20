@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 import yaml
 
 # ==========================
@@ -7,7 +6,7 @@ import yaml
 # ==========================
 st.set_page_config(
     page_title="DQaaS - Bunge Global SA",
-    page_icon="🌐",  # Configuración de la página
+    page_icon="🌐",
     layout="wide"
 )
 
@@ -24,12 +23,12 @@ st.markdown(f"""
             background-color: {bunge_bg};
         }}
         .title {{
-            color: #002244; /* Azul más oscuro */
+            color: #002244;
             font-size: 36px;
             font-weight: bold;
         }}
         .subtitle {{
-            color: #333333; /* Gris oscuro */
+            color: #333333;
             font-size: 20px;
             font-weight: bold;
         }}
@@ -43,7 +42,7 @@ st.markdown(f"""
             background-color: #003366;
         }}
         body, .stMarkdown, .stText {{
-            color: #000000; /* Texto negro para contenido */
+            color: #000000;
         }}
     </style>
 """, unsafe_allow_html=True)
@@ -62,140 +61,53 @@ api_key = "BUNGE-AUTO-KEY-2025"
 st.sidebar.success(f"API Key generada automáticamente: {api_key}")
 
 # ==========================
-# Selección de fuente de datos
+# Selección de tabla simulada
 # ==========================
-st.write("### Selecciona la fuente de datos para generar el perfil:")
-opciones_fuente = ["Subir archivo CSV", "Subir archivo Excel"]
-fuente = st.selectbox("Fuente de datos:", opciones_fuente)
+st.write("### Selecciona una tabla para generar reglas y métricas:")
 
-df = None
-if fuente == "Subir archivo CSV":
-    archivo = st.file_uploader("Carga tu archivo CSV", type=["csv"])
-    if archivo:
-        df = pd.read_csv(archivo)
-elif fuente == "Subir archivo Excel":
-    archivo = st.file_uploader("Carga tu archivo Excel", type=["xlsx"])
-    if archivo:
-        df = pd.read_excel(archivo)
+tablas_disponibles = ["clientes", "ventas", "productos"]
+tabla_seleccionada = st.selectbox("Tabla:", tablas_disponibles)
 
 # ==========================
-# Data Profiling
+# Reglas simuladas por tabla
 # ==========================
-if df is not None:
-    st.subheader("Vista previa de los datos")
-    st.dataframe(df.head())
-
-    # Generar perfil básico
-    perfil = {
-        "filas": df.shape[0],
-        "columnas": df.shape[1],
-        "columnas_info": {}
-    }
-
-    for col in df.columns:
-        perfil["columnas_info"][col] = {
-            "tipo": str(df[col].dtype),
-            "nulos": int(df[col].isnull().sum()),
-            "únicos": int(df[col].nunique())
-        }
-
-    st.subheader("Perfil de datos")
-    st.json(perfil)
-
-    # Convertir a YAML
-    yaml_content = yaml.dump(perfil, allow_unicode=True)
-
-    # Botón para descargar
-    st.download_button(
-        label="Descargar perfil en YAML",
-        data=yaml_content,
-        file_name="data_profiling.yaml",
-        mime="text/yaml"
-    )
-
-# ==========================
-# Reglas de Calidad del Dato
-# ==========================
-st.write("### Descarga reglas de calidad con estructura avanzada:")
-
-reglas_avanzadas = {
-    "Completitud": [
-        {
-            "name": "MandatoryFields",
-            "description": "Todos los campos obligatorios deben estar presentes",
-            "type": "Validation",
-            "engine": "Python",
-            "rule": "not_null",
-            "dimension": "Completitud",
-            "scheduler": "cron",
-            "schedule": "0 0 * * *",
-            "target": [
-                {"name": "material_group"}
-            ]
-        }
+reglas_por_tabla = {
+    "clientes": [
+        {"name": "no_null_id", "description": "ID no nulo", "condition": "id IS NOT NULL"},
+        {"name": "email_format", "description": "Formato de email válido", "condition": "email LIKE '%@%'"}
     ],
-    "Consistencia": [
-        {
-            "name": "DateFormatCheck",
-            "description": "Formato de fecha debe ser YYYY-MM-DD",
-            "type": "Validation",
-            "engine": "Python",
-            "rule": "regex",
-            "dimension": "Consistencia",
-            "scheduler": "cron",
-            "schedule": "0 6 * * *",
-            "target": [
-                {"name": "created_date"}
-            ]
-        }
+    "ventas": [
+        {"name": "positive_amount", "description": "Monto positivo", "condition": "amount > 0"}
     ],
-    "Unicidad": [
-        {
-            "name": "UniqueIdentifier",
-            "description": "No debe haber duplicados en el identificador principal",
-            "type": "Validation",
-            "engine": "SQL",
-            "rule": "unique",
-            "dimension": "Unicidad",
-            "scheduler": "cron",
-            "schedule": "0 12 * * *",
-            "target": [
-                {"name": "id"}
-            ]
-        }
+    "productos": [
+        {"name": "unique_code", "description": "Código único", "condition": "code IS UNIQUE"}
     ]
 }
 
-# Mostrar cada bloque con su botón
-for tipo, lista_reglas in reglas_avanzadas.items():
-    st.markdown(f"<p class='subtitle'>{tipo}</p>", unsafe_allow_html=True)
+# ==========================
+# Mostrar reglas y métricas
+# ==========================
+st.subheader(f"Reglas para la tabla: {tabla_seleccionada}")
+st.table(reglas_por_tabla[tabla_seleccionada])
 
-    # Mostrar reglas en formato legible
-    for regla in lista_reglas:
-        st.write(f"- **{regla['name']}**: {regla['description']}")
+# Métricas simuladas
+metricas = {"completitud": "98%", "unicidad": "95%", "consistencia": "97%"}
+st.write("### Métricas de calidad")
+st.json(metricas)
 
-    # Construir estructura completa para YAML
-    estructura_yaml = {
-        "name": f"rule_{tipo.lower()}",
-        "status": "active",
-        "dataProduct": "workshops",
-        "layer": "integration",
-        "tablename": "dim_material_groups_latest",
-        "columns": [
-            {
-                "name": regla["target"][0]["name"],
-                "quality": lista_reglas  # Aquí se incrustan todas las reglas del tipo
-            }
-        ]
-    }
+# ==========================
+# Generar YAML
+# ==========================
+yaml_data = {
+    "table": tabla_seleccionada,
+    "rules": reglas_por_tabla[tabla_seleccionada],
+    "quality_metrics": metricas
+}
+yaml_str = yaml.dump(yaml_data, allow_unicode=True)
 
-    yaml_content = yaml.dump(estructura_yaml, allow_unicode=True, sort_keys=False)
-
-    st.download_button(
-        label=f"Descargar {tipo} en YAML",
-        data=yaml_content,
-        file_name=f"reglas_{tipo.lower()}.yaml",
-        mime="text/yaml"
-    )
-
-    st.markdown("---")
+# Botón para descargar YAML
+st.download_button(
+    label="Descargar reglas y métricas en YAML",
+    data=yaml_str,
+    file_name=f"{tabla_seleccionada}_quality.yaml",
+    mime="text/yaml"
