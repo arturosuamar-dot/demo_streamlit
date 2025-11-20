@@ -110,4 +110,4 @@ st.download_button(
     label="Descargar reglas y métricas en YAML",
     data=yaml_str,
     file_name=f"{tabla_seleccionada}_quality.yaml",
-    mime="text/yaml"
+    mime="text/yaml")
