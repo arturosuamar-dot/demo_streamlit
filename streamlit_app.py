@@ -20,17 +20,17 @@ st.markdown("""
             background-color: #000000; /* Fondo negro */
         }
         .title {
-            color: #FFFFFF; /* Blanco */
-            font-size: 48px; /* Más grande */
+            color: #FFFFFF;
+            font-size: 56px; /* Más grande */
             font-weight: bold;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         .subtitle {
             color: #FFFFFF;
-            font-size: 28px; /* Más grande que selectbox */
+            font-size: 22px; /* Más pequeño que antes */
             font-weight: bold;
-            margin-top: 10px;
+            margin-top: 20px;
         }
         .stSelectbox label {
             color: #FFFFFF !important; /* Texto blanco en selectbox */
