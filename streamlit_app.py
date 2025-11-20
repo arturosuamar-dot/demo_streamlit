@@ -24,12 +24,12 @@ st.markdown(f"""
             background-color: {bunge_bg};
         }}
         .title {{
-            color: {bunge_primary};
+            color: #002244; /* Azul más oscuro */
             font-size: 36px;
             font-weight: bold;
         }}
         .subtitle {{
-            color: {bunge_secondary};
+            color: #333333; /* Gris oscuro */
             font-size: 20px;
             font-weight: bold;
         }}
@@ -38,6 +38,12 @@ st.markdown(f"""
             color: white;
             border-radius: 8px;
             padding: 10px 20px;
+        }}
+        .stButton>button:hover {{
+            background-color: #003366;
+        }}
+        body, .stMarkdown, .stText {{
+            color: #000000; /* Texto negro para contenido */
         }}
     </style>
 """, unsafe_allow_html=True)
