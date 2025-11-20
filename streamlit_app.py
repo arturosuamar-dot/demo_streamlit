@@ -114,9 +114,9 @@ if df is not None:
     )
 
 # ==========================
-# Reglas de Calidad del Dato
+# Reglas de Calidad del Dato (Opción 1)
 # ==========================
-st.write("### Selecciona el tipo de reglas de calidad:")
+st.write("### Descarga reglas de calidad:")
 
 reglas = {
     "Completitud": [
@@ -132,20 +132,25 @@ reglas = {
     ]
 }
 
-opcion = st.radio("Tipo de regla:", list(reglas.keys()))
+# Mostrar cada grupo con su botón
+for tipo, lista_reglas in reglas.items():
+    # Título del bloque
+    st.markdown(f"<p class='subtitle'>{tipo}</p>", unsafe_allow_html=True)
 
-if st.button("Mostrar reglas"):
-    st.write(f"**Reglas para {opcion}:**")
-    for regla in reglas[opcion]:
+    # Mostrar reglas
+    for regla in lista_reglas:
         st.write(f"- {regla}")
 
     # Convertir a YAML
-    yaml_content = yaml.dump({opcion: reglas[opcion]}, allow_unicode=True)
+    yaml_content = yaml.dump({tipo: lista_reglas}, allow_unicode=True)
 
     # Botón de descarga
     st.download_button(
-        label="Descargar reglas en YAML",
+        label=f"Descargar {tipo} en YAML",
         data=yaml_content,
-        file_name=f"reglas_{opcion.lower()}.yaml",
+        file_name=f"reglas_{tipo.lower()}.yaml",
         mime="text/yaml"
     )
+
+    # Separador visual
+    st.markdown("---")
