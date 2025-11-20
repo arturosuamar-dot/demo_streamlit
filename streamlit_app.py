@@ -114,37 +114,83 @@ if df is not None:
     )
 
 # ==========================
-# Reglas de Calidad del Dato (Opción 1)
+# Reglas de Calidad del Dato
 # ==========================
-st.write("### Descarga reglas de calidad:")
+st.write("### Descarga reglas de calidad con estructura avanzada:")
 
-reglas = {
+reglas_avanzadas = {
     "Completitud": [
-        "Todos los campos obligatorios deben estar presentes",
-        "No se permiten valores nulos en campos clave"
+        {
+            "name": "MandatoryFields",
+            "description": "Todos los campos obligatorios deben estar presentes",
+            "type": "Validation",
+            "engine": "Python",
+            "rule": "not_null",
+            "dimension": "Completitud",
+            "scheduler": "cron",
+            "schedule": "0 0 * * *",
+            "target": [
+                {"name": "material_group"}
+            ]
+        }
     ],
     "Consistencia": [
-        "Formato de fecha debe ser YYYY-MM-DD",
-        "Valores numéricos deben coincidir con el rango definido"
+        {
+            "name": "DateFormatCheck",
+            "description": "Formato de fecha debe ser YYYY-MM-DD",
+            "type": "Validation",
+            "engine": "Python",
+            "rule": "regex",
+            "dimension": "Consistencia",
+            "scheduler": "cron",
+            "schedule": "0 6 * * *",
+            "target": [
+                {"name": "created_date"}
+            ]
+        }
     ],
     "Unicidad": [
-        "No debe haber duplicados en el identificador principal"
+        {
+            "name": "UniqueIdentifier",
+            "description": "No debe haber duplicados en el identificador principal",
+            "type": "Validation",
+            "engine": "SQL",
+            "rule": "unique",
+            "dimension": "Unicidad",
+            "scheduler": "cron",
+            "schedule": "0 12 * * *",
+            "target": [
+                {"name": "id"}
+            ]
+        }
     ]
 }
 
-# Mostrar cada grupo con su botón
-for tipo, lista_reglas in reglas.items():
-    # Título del bloque
+# Mostrar cada bloque con su botón
+for tipo, lista_reglas in reglas_avanzadas.items():
     st.markdown(f"<p class='subtitle'>{tipo}</p>", unsafe_allow_html=True)
 
-    # Mostrar reglas
+    # Mostrar reglas en formato legible
     for regla in lista_reglas:
-        st.write(f"- {regla}")
+        st.write(f"- **{regla['name']}**: {regla['description']}")
 
-    # Convertir a YAML
-    yaml_content = yaml.dump({tipo: lista_reglas}, allow_unicode=True)
+    # Construir estructura completa para YAML
+    estructura_yaml = {
+        "name": f"rule_{tipo.lower()}",
+        "status": "active",
+        "dataProduct": "workshops",
+        "layer": "integration",
+        "tablename": "dim_material_groups_latest",
+        "columns": [
+            {
+                "name": regla["target"][0]["name"],
+                "quality": lista_reglas  # Aquí se incrustan todas las reglas del tipo
+            }
+        ]
+    }
 
-    # Botón de descarga
+    yaml_content = yaml.dump(estructura_yaml, allow_unicode=True, sort_keys=False)
+
     st.download_button(
         label=f"Descargar {tipo} en YAML",
         data=yaml_content,
@@ -152,5 +198,4 @@ for tipo, lista_reglas in reglas.items():
         mime="text/yaml"
     )
 
-    # Separador visual
     st.markdown("---")
