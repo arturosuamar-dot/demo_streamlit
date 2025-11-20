@@ -60,27 +60,45 @@ st.sidebar.header("Configuración")
 api_key = "BUNGE-AUTO-KEY-2025"
 st.sidebar.success(f"API Key generada automáticamente: {api_key}")
 
+
 # ==========================
 # Selección de tabla simulada
 # ==========================
 st.write("### Selecciona una tabla para generar reglas y métricas:")
 
-tablas_disponibles = ["clientes", "ventas", "productos"]
+tablas_disponibles = ["clientes", "ventas", "productos", "proveedores", "pedidos"]
 tabla_seleccionada = st.selectbox("Tabla:", tablas_disponibles)
 
+
+
 # ==========================
-# Reglas simuladas por tabla
+# Reglas simuladas por tabla (más variedad)
 # ==========================
 reglas_por_tabla = {
     "clientes": [
-        {"name": "no_null_id", "description": "ID no nulo", "condition": "id IS NOT NULL"},
-        {"name": "email_format", "description": "Formato de email válido", "condition": "email LIKE '%@%'"}
+        {"name": "no_null_id", "description": "ID no debe ser nulo", "condition": "id IS NOT NULL", "dimension": "Completitud"},
+        {"name": "email_format", "description": "Formato de email válido", "condition": "email LIKE '%@%'", "dimension": "Consistencia"},
+        {"name": "age_range", "description": "Edad entre 18 y 99", "condition": "age BETWEEN 18 AND 99", "dimension": "Validez"}
     ],
     "ventas": [
-        {"name": "positive_amount", "description": "Monto positivo", "condition": "amount > 0"}
+        {"name": "positive_amount", "description": "Monto positivo", "condition": "amount > 0", "dimension": "Validez"},
+        {"name": "valid_currency", "description": "Moneda válida (USD/EUR)", "condition": "currency IN ('USD','EUR')", "dimension": "Consistencia"},
+        {"name": "date_not_future", "description": "Fecha no puede ser futura", "condition": "sale_date <= CURRENT_DATE", "dimension": "Validez"}
     ],
     "productos": [
-        {"name": "unique_code", "description": "Código único", "condition": "code IS UNIQUE"}
+        {"name": "unique_code", "description": "Código único", "condition": "code IS UNIQUE", "dimension": "Unicidad"},
+        {"name": "price_positive", "description": "Precio mayor que cero", "condition": "price > 0", "dimension": "Validez"},
+        {"name": "category_not_null", "description": "Categoría no nula", "condition": "category IS NOT NULL", "dimension": "Completitud"}
+    ],
+    "proveedores": [
+        {"name": "country_valid", "description": "País válido (ISO)", "condition": "country IN ('ES','US','BR')", "dimension": "Consistencia"},
+        {"name": "contact_email", "description": "Email de contacto válido", "condition": "contact_email LIKE '%@%'", "dimension": "Consistencia"},
+        {"name": "id_unique", "description": "ID único", "condition": "id IS UNIQUE", "dimension": "Unicidad"}
+    ],
+    "pedidos": [
+        {"name": "status_valid", "description": "Estado válido (PENDIENTE, COMPLETADO)", "condition": "status IN ('PENDIENTE','COMPLETADO')", "dimension": "Consistencia"},
+        {"name": "delivery_date_check", "description": "Fecha de entrega >= fecha pedido", "condition": "delivery_date >= order_date", "dimension": "Validez"},
+        {"name": "quantity_positive", "description": "Cantidad mayor que cero", "condition": "quantity > 0", "dimension": "Validez"}
     ]
 }
 
@@ -91,7 +109,7 @@ st.subheader(f"Reglas para la tabla: {tabla_seleccionada}")
 st.table(reglas_por_tabla[tabla_seleccionada])
 
 # Métricas simuladas
-metricas = {"completitud": "98%", "unicidad": "95%", "consistencia": "97%"}
+metricas = {"completitud": "98%", "unicidad": "95%", "consistencia": "97%", "validez": "96%"}
 st.write("### Métricas de calidad")
 st.json(metricas)
 
