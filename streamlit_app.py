@@ -80,8 +80,24 @@ reglas_por_tabla = {
         {"name": "positive_amount", "description": "Monto positivo", "condition": "amount > 0", "dimension": "Validez"},
         {"name": "valid_currency", "description": "Moneda válida (USD/EUR)", "condition": "currency IN ('USD','EUR')", "dimension": "Consistencia"},
         {"name": "date_not_future", "description": "Fecha no puede ser futura", "condition": "sale_date <= CURRENT_DATE", "dimension": "Validez"}
+    ],
+    "productos": [
+        {"name": "unique_code", "description": "Código único", "condition": "code IS UNIQUE", "dimension": "Unicidad"},
+        {"name": "price_positive", "description": "Precio mayor que cero", "condition": "price > 0", "dimension": "Validez"},
+        {"name": "category_not_null", "description": "Categoría no nula", "condition": "category IS NOT NULL", "dimension": "Completitud"}
+    ],
+    "proveedores": [
+        {"name": "country_valid", "description": "País válido (ISO)", "condition": "country IN ('ES','US','BR')", "dimension": "Consistencia"},
+        {"name": "contact_email", "description": "Email de contacto válido", "condition": "contact_email LIKE '%@%'", "dimension": "Consistencia"},
+        {"name": "id_unique", "description": "ID único", "condition": "id IS UNIQUE", "dimension": "Unicidad"}
+    ],
+    "pedidos": [
+        {"name": "status_valid", "description": "Estado válido (PENDIENTE, COMPLETADO)", "condition": "status IN ('PENDIENTE','COMPLETADO')", "dimension": "Consistencia"},
+        {"name": "delivery_date_check", "description": "Fecha de entrega >= fecha pedido", "condition": "delivery_date >= order_date", "dimension": "Validez"},
+        {"name": "quantity_positive", "description": "Cantidad mayor que cero", "condition": "quantity > 0", "dimension": "Validez"}
     ]
 }
+
 
 def generar_metricas():
     return {
@@ -96,8 +112,10 @@ def generar_metricas():
 metricas = generar_metricas()
 
 st.markdown('<p class="subtitle">Reglas para la tabla seleccionada:</p>', unsafe_allow_html=True)
-st.table(reglas_por_tabla[tabla_seleccionada])
-
+if tabla_seleccionada in reglas_por_tabla:
+    st.table(reglas_por_tabla[tabla_seleccionada])
+else:
+    st.warning("No hay reglas definidas para esta tabla.")
 st.markdown('<p class="subtitle">Métricas de calidad:</p>', unsafe_allow_html=True)
 st.json(metricas)
 
