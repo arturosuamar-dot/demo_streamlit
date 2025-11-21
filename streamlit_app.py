@@ -47,7 +47,7 @@ st.markdown("""
     <style>
     /* Cambiar tamaño del texto en el selectbox */
     div[data-baseweb="select"] > div {
-        font-size: 20px;  /* Ajusta el tamaño aquí */
+        font-size: 30px;  /* Ajusta el tamaño aquí */
     }
     </style>
 """, unsafe_allow_html=True)
