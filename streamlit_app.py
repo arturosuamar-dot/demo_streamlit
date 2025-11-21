@@ -2,69 +2,20 @@ import streamlit as st
 import yaml
 import random
 from datetime import datetime
-import base64
-
-
+import plotly.express as px
+import plotly.graph_objects as go
 
 # ==========================
 # Configuración de la página
 # ==========================
-st.set_page_config(
-    page_title="DQaaS - Bunge Global SA",
-    page_icon="🌐",
-    layout="wide"
-)
-
-# ==========================
-# Estilos personalizados (estilo Bunge)
-# ==========================
-st.markdown("""
-    <style>
-        .stApp {
-            background-color: #FFFFFF !important;
-            color: #003366 !important;
-            font-family: 'Open Sans', sans-serif;
-        }
-        .title {
-            color: #004C97;
-            font-size: 48px;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-        .subtitle {
-            color: #003366;
-            font-size: 22px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-        .stButton>button {
-            background-color: #004C97;
-            color: white;
-            border-radius: 8px;
-            padding: 10px 20px;
-            font-size: 18px;
-            border: none;
-        }
-        .stButton>button:hover {
-            background-color: #003366;
-        }
-        footer {
-            text-align: center;
-            color: #666666;
-            font-size: 14px;
-            margin-top: 40px;
-        }
-    </style>
-""", unsafe_allow_html=True)
+st.set_page_config(page_title="DQaaS - Bunge Global SA", page_icon="🌐", layout="wide")
 
 # ==========================
 # Encabezado con logo y título
 # ==========================
-
 st.markdown("""
     <div style="text-align: center; margin-bottom: 30px;">
-        <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 10px;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Bunge_logo.svg/512px-Bunge_logo.svg.png" width="180" style="margin-bottom: 10px;">
         <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">DQaaS - Data Quality as a Service</h1>
         <p style="color: #003366; font-size: 22px; font-weight: bold; margin-top: 10px;">
             Bunge Global SA - Viterra Data Products Squad Extension
@@ -73,26 +24,22 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================
-# Sidebar para navegación
+# Sidebar
 # ==========================
 st.sidebar.header("Opciones")
 st.sidebar.info("Selecciona la tabla y genera reglas de calidad en formato Bunge YAML.")
-
-# ==========================
-# Simulación de conexión GCP
-# ==========================
 if st.sidebar.button("Conectar a GCP"):
     st.sidebar.success("Conexión simulada con BigQuery ✅")
 
 # ==========================
 # Selección de tabla
 # ==========================
-st.markdown('<p class="subtitle">Selecciona una tabla para generar reglas y métricas:</p>', unsafe_allow_html=True)
+st.markdown('<p style="color:#003366;font-size:22px;font-weight:bold;">Selecciona una tabla para generar reglas y métricas:</p>', unsafe_allow_html=True)
 tablas_disponibles = ["clientes", "ventas", "productos", "proveedores", "pedidos"]
 tabla_seleccionada = st.selectbox("", tablas_disponibles)
 
 # ==========================
-# Reglas por tabla
+# Reglas más específicas
 # ==========================
 reglas_por_tabla = {
     "clientes": [
@@ -102,28 +49,28 @@ reglas_por_tabla = {
     ],
     "ventas": [
         {"name": "positive_amount", "description": "Monto positivo", "condition": "amount > 0", "dimension": "Validez"},
-        {"name": "valid_currency", "description": "Moneda válida (USD/EUR)", "condition": "currency IN ('USD','EUR')", "dimension": "Consistencia"},
+        {"name": "valid_currency", "description": "Moneda válida (USD, BRL, EUR)", "condition": "currency IN ('USD','BRL','EUR')", "dimension": "Consistencia"},
         {"name": "date_not_future", "description": "Fecha no puede ser futura", "condition": "sale_date <= CURRENT_DATE", "dimension": "Validez"}
     ],
     "productos": [
         {"name": "unique_code", "description": "Código único", "condition": "code IS UNIQUE", "dimension": "Unicidad"},
-        {"name": "price_positive", "description": "Precio mayor que cero", "condition": "price > 0", "dimension": "Validez"},
+        {"name": "price_range", "description": "Precio entre 100 y 2000 USD/ton", "condition": "price BETWEEN 100 AND 2000", "dimension": "Validez"},
         {"name": "category_not_null", "description": "Categoría no nula", "condition": "category IS NOT NULL", "dimension": "Completitud"}
     ],
     "proveedores": [
-        {"name": "country_valid", "description": "País válido (ISO)", "condition": "country IN ('ES','US','BR')", "dimension": "Consistencia"},
+        {"name": "country_valid", "description": "Código país ISO válido", "condition": "country IN ('BR','US','AR','ES')", "dimension": "Consistencia"},
         {"name": "contact_email", "description": "Email de contacto válido", "condition": "contact_email LIKE '%@%'", "dimension": "Consistencia"},
         {"name": "id_unique", "description": "ID único", "condition": "id IS UNIQUE", "dimension": "Unicidad"}
     ],
     "pedidos": [
         {"name": "status_valid", "description": "Estado válido (PENDIENTE, COMPLETADO)", "condition": "status IN ('PENDIENTE','COMPLETADO')", "dimension": "Consistencia"},
-        {"name": "delivery_date_check", "description": "Fecha de entrega >= fecha pedido", "condition": "delivery_date >= order_date", "dimension": "Validez"},
-        {"name": "quantity_positive", "description": "Cantidad mayor que cero", "condition": "quantity > 0", "dimension": "Validez"}
+        {"name": "delivery_date_check", "description": "Fecha entrega >= fecha pedido", "condition": "delivery_date >= order_date", "dimension": "Validez"},
+        {"name": "quantity_min", "description": "Cantidad mínima 100 toneladas", "condition": "quantity >= 100", "dimension": "Validez"}
     ]
 }
 
 # ==========================
-# Datos de prueba alineados con Bunge
+# Datos más cercanos al negocio
 # ==========================
 clientes_data = [
     {"id": 101, "nombre": "Agroexport SA", "email": "contacto@agroexport.com", "age": 45},
@@ -140,19 +87,9 @@ productos_data = [
     {"code": "MAIZ2025", "name": "Maíz Amarillo", "price": 320, "category": "Cereales"},
     {"code": "TRIGO2025", "name": "Trigo Pan", "price": 410, "category": "Cereales"}
 ]
-proveedores_data = [
-    {"id": 301, "name": "Logística Global", "country": "BR", "contact_email": "logistica@global.com"},
-    {"id": 302, "name": "TransAgro", "country": "US", "contact_email": "info@transagro.com"},
-    {"id": 303, "name": "Puertos del Sur", "country": "ES", "contact_email": "puertos@sur.com"}
-]
-pedidos_data = [
-    {"id": 401, "status": "PENDIENTE", "order_date": "2025-11-10", "delivery_date": "2025-11-25", "quantity": 500},
-    {"id": 402, "status": "COMPLETADO", "order_date": "2025-11-05", "delivery_date": "2025-11-15", "quantity": 1200},
-    {"id": 403, "status": "PENDIENTE", "order_date": "2025-11-12", "delivery_date": "2025-11-28", "quantity": 800}
-]
 
 # ==========================
-# Función para métricas
+# Función para métricas con umbral
 # ==========================
 def generar_metricas():
     return {
@@ -165,42 +102,47 @@ def generar_metricas():
     }
 
 metricas = generar_metricas()
+umbral = 90  # Umbral para indicadores
 
 # ==========================
-# Pestañas para organización
+# Pestañas
 # ==========================
-tab1, tab2, tab3, tab4 = st.tabs(["📋 Reglas", "📊 Métricas", "⬇️ Descargar YAML", "📂 Datos de prueba"])
+tab1, tab2, tab3, tab4 = st.tabs(["📋 Reglas", "📊 Métricas", "📈 Gráficos", "📂 Datos de prueba"])
 
+# --- Reglas ---
 with tab1:
     st.markdown('<p class="subtitle">Reglas para la tabla seleccionada:</p>', unsafe_allow_html=True)
     st.table(reglas_por_tabla[tabla_seleccionada])
 
+# --- Métricas con indicadores ---
 with tab2:
     st.markdown('<p class="subtitle">Métricas de calidad:</p>', unsafe_allow_html=True)
     cols = st.columns(len(metricas))
     for i, (k, v) in enumerate(metricas.items()):
-        cols[i].metric(label=k, value=f"{v}%")
+        delta = "✅" if v >= umbral else "⚠️"
+        cols[i].metric(label=k, value=f"{v}%", delta=delta)
 
+# --- Gráficos dinámicos ---
 with tab3:
-    yaml_data = {
-        "metadata": {
-            "company": "Bunge Global SA",
-            "generated_by": "DQaaS Streamlit App",
-            "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "source_system": "GCP BigQuery"
-        },
-        "table": tabla_seleccionada,
-        "rules": reglas_por_tabla[tabla_seleccionada],
-        "quality_metrics": metricas
-    }
-    yaml_str = yaml.dump(yaml_data, allow_unicode=True)
-    st.download_button(
-        label="Descargar reglas y métricas en YAML",
-        data=yaml_str,
-        file_name=f"{tabla_seleccionada}_quality.yaml",
-        mime="text/yaml"
-    )
+    st.markdown('<p class="subtitle">Visualización de métricas:</p>', unsafe_allow_html=True)
+    # Gráfico de barras
+    fig_bar = px.bar(x=list(metricas.keys()), y=list(metricas.values()), color=list(metricas.keys()),
+                     title="Métricas de Calidad", labels={"x": "Dimensión", "y": "Porcentaje"})
+    st.plotly_chart(fig_bar, use_container_width=True)
 
+    # Gráfico radar
+    fig_radar = go.Figure()
+    fig_radar.add_trace(go.Scatterpolar(
+        r=list(metricas.values()),
+        theta=list(metricas.keys()),
+        fill='toself',
+        name='Calidad'
+    ))
+    fig_radar.update_layout(polar=dict(radialaxis=dict(visible=True, range=[70, 100])),
+                            showlegend=False, title="Radar de Calidad")
+    st.plotly_chart(fig_radar, use_container_width=True)
+
+# --- Datos de prueba ---
 with tab4:
     st.markdown(f"**Datos de la tabla {tabla_seleccionada}:**")
     if tabla_seleccionada == "clientes":
@@ -209,10 +151,6 @@ with tab4:
         st.table(ventas_data)
     elif tabla_seleccionada == "productos":
         st.table(productos_data)
-    elif tabla_seleccionada == "proveedores":
-        st.table(proveedores_data)
-    elif tabla_seleccionada == "pedidos":
-        st.table(pedidos_data)
 
 # ==========================
 # Footer
