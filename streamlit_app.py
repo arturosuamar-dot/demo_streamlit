@@ -136,16 +136,21 @@ with tab2:
     cols = st.columns(len(metricas))
     for i, (k, v) in enumerate(metricas.items()):
         if v >= umbral:
-            flecha = "↑"   # flecha verde
-            color = "normal"
+            delta = ""  # No texto, solo flecha automática
+            color = "normal"  # Flecha verde
             estado = "✅"
         else:
-            flecha = "↓"   # flecha roja
-            color = "inverse"
+            delta = ""  # No texto, solo flecha automática
+            color = "inverse"  # Flecha roja
             estado = "⚠️"
         
-        # Pasamos flecha como texto y delta_color para el color
-        cols[i].metric(label=k, value=f"{v}% {estado}", delta=flecha, delta_color=color)
+        cols[i].metric(
+            label=k,
+            value=f"{v}% {estado}",  # Valor + emoji
+            delta=delta,             # Sin texto adicional
+            delta_color=color        # Controla color de flecha
+        )
+
 
 # --- Gráficos ---
 with tab3:
