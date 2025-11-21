@@ -35,7 +35,7 @@ if st.sidebar.button("Conectar a GCP"):
 # Selección de tabla
 # ==========================
 st.markdown('<p style="color:#003366;font-size:22px;font-weight:bold;">Selecciona una tabla para generar reglas y métricas:</p>', unsafe_allow_html=True)
-tablas_disponibles = ["clientes", "ventas", "productos", "proveedores", "pedidos"]
+tablas_disponibles = ["Clientes", "Ventas", "Productos", "Proveedores", "Pedidos"]
 tabla_seleccionada = st.selectbox("", tablas_disponibles)
 
 # ==========================
@@ -87,6 +87,16 @@ productos_data = [
     {"code": "MAIZ2025", "name": "Maíz Amarillo", "price": 320, "category": "Cereales"},
     {"code": "TRIGO2025", "name": "Trigo Pan", "price": 410, "category": "Cereales"}
 ]
+proveedores_data = [
+    {"id": 301, "nombre": "Proveedor Norte", "country": "ES", "contact_email": "norte@proveedor.com"},
+    {"id": 302, "nombre": "Proveedor Sur", "country": "BR", "contact_email": "sur@proveedor.com"}
+]
+
+pedidos_data = [
+    {"id": 401, "status": "PENDIENTE", "order_date": "2025-11-10", "delivery_date": "2025-11-15", "quantity": 120},
+    {"id": 402, "status": "COMPLETADO", "order_date": "2025-11-05", "delivery_date": "2025-11-12", "quantity": 200}
+]
+
 
 # ==========================
 # Función para métricas con umbral
