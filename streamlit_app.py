@@ -13,23 +13,24 @@ st.set_page_config(
 )
 
 # ==========================
-# Estilos personalizados
+# Estilos personalizados (estilo Bunge)
 # ==========================
 st.markdown("""
     <style>
-        .stApp, .main, .block-container {
-            background-color: #000000 !important;
-            color: #FFFFFF !important;
+        .stApp {
+            background-color: #FFFFFF !important;
+            color: #003366 !important;
+            font-family: 'Open Sans', sans-serif;
         }
         .title {
-            color: #FFFFFF;
+            color: #004C97;
             font-size: 48px;
             font-weight: bold;
             text-align: center;
             margin-bottom: 10px;
         }
         .subtitle {
-            color: #FFFFFF;
+            color: #003366;
             font-size: 22px;
             font-weight: bold;
             margin-top: 20px;
@@ -40,13 +41,14 @@ st.markdown("""
             border-radius: 8px;
             padding: 10px 20px;
             font-size: 18px;
+            border: none;
         }
         .stButton>button:hover {
             background-color: #003366;
         }
         footer {
             text-align: center;
-            color: #AAAAAA;
+            color: #666666;
             font-size: 14px;
             margin-top: 40px;
         }
@@ -54,10 +56,10 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================
-# Encabezado con logo
+# Encabezado con logo y título
 # ==========================
+st.image("https://www.bunge.com/themes/custom/bunge/logo.svg", width=180)
 st.markdown('<p class="title">DQaaS - Data Quality as a Service</p>', unsafe_allow_html=True)
-st.image("https://www.bunge.com/themes/custom/bunge/logo.svg", width=150)
 st.markdown('<p class="subtitle">Bunge Global SA - Viterra Data Products Squad Extension</p>', unsafe_allow_html=True)
 
 # ==========================
