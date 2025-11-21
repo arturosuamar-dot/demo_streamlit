@@ -136,7 +136,6 @@ with tab2:
     cols = st.columns(len(metricas))
     for i, (k, v) in enumerate(metricas.items()):
         if v >= umbral:
-            flecha = "↑"   # flecha verde
             color = "normal"
             estado = "✅"
         else:
