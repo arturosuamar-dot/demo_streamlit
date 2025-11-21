@@ -44,7 +44,19 @@ tablas_map = {
 
 
 # Selectbox
+st.markdown("""
+    <style>
+    .subtitle {
+        font-size: 24px;
+        font-weight: bold;
+        color: #004C97;
+        margin-bottom: -10px; /* Reduce espacio */
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 st.markdown('<p class="subtitle">Selecciona una tabla:</p>', unsafe_allow_html=True)
+tabla_visible = st.selectbox("", list(tablas_map.keys()))
 tabla_visible = st.selectbox("", list(tablas_map.keys()))
 tabla_seleccionada = tablas_map[tabla_visible]
 
