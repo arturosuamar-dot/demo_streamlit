@@ -2,6 +2,9 @@ import streamlit as st
 import yaml
 import random
 from datetime import datetime
+import base64
+
+
 
 # ==========================
 # Configuración de la página
@@ -12,6 +15,20 @@ st.set_page_config(
     layout="wide"
 )
 
+
+
+def get_base64_image(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
+
+logo_base64 = get_base64_image("image.png")
+
+st.markdown(f"""
+    <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px;">
+        <img src="data:image/png;base64,{logo_base64}" width="180">
+        <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">DQaaS - Data Quality as a Service</h1>
+    </div>
+""", unsafe_allow_html=True)
 
 # ==========================
 # Encabezado con logo y título
