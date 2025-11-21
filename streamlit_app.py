@@ -32,14 +32,21 @@ if st.sidebar.button("Conectar a GCP"):
     st.sidebar.success("Conexión simulada con BigQuery ✅")
 
 # ==========================
-# Selección de tabla
+# Mapeo de tablas
 # ==========================
-st.markdown('<p style="color:#003366;font-size:22px;font-weight:bold;">Selecciona una tabla para generar reglas y métricas:</p>', unsafe_allow_html=True)
-tablas_disponibles = ["Clientes", "Ventas", "Productos", "Proveedores", "Pedidos"]
-tabla_seleccionada = st.selectbox("", tablas_disponibles)
+tablas_map = {
+    "Clientes": "clientes",
+    "Ventas": "ventas",
+    "Productos": "productos",
+    "Proveedores": "proveedores",
+    "Pedidos": "pedidos"
+}
+
+tabla_visible = st.selectbox("Selecciona una tabla:", list(tablas_map.keys()))
+tabla_seleccionada = tablas_map[tabla_visible]
 
 # ==========================
-# Reglas más específicas
+# Reglas por tabla
 # ==========================
 reglas_por_tabla = {
     "clientes": [
@@ -70,7 +77,7 @@ reglas_por_tabla = {
 }
 
 # ==========================
-# Datos más cercanos al negocio
+# Datos ficticios
 # ==========================
 clientes_data = [
     {"id": 101, "nombre": "Agroexport SA", "email": "contacto@agroexport.com", "age": 45},
@@ -91,15 +98,13 @@ proveedores_data = [
     {"id": 301, "nombre": "Proveedor Norte", "country": "ES", "contact_email": "norte@proveedor.com"},
     {"id": 302, "nombre": "Proveedor Sur", "country": "BR", "contact_email": "sur@proveedor.com"}
 ]
-
 pedidos_data = [
     {"id": 401, "status": "PENDIENTE", "order_date": "2025-11-10", "delivery_date": "2025-11-15", "quantity": 120},
     {"id": 402, "status": "COMPLETADO", "order_date": "2025-11-05", "delivery_date": "2025-11-12", "quantity": 200}
 ]
 
-
 # ==========================
-# Función para métricas con umbral
+# Función para métricas
 # ==========================
 def generar_metricas():
     return {
@@ -112,7 +117,7 @@ def generar_metricas():
     }
 
 metricas = generar_metricas()
-umbral = 90  # Umbral para indicadores
+umbral = 90
 
 # ==========================
 # Pestañas
@@ -124,7 +129,7 @@ with tab1:
     st.markdown('<p class="subtitle">Reglas para la tabla seleccionada:</p>', unsafe_allow_html=True)
     st.table(reglas_por_tabla[tabla_seleccionada])
 
-# --- Métricas con indicadores ---
+# --- Métricas ---
 with tab2:
     st.markdown('<p class="subtitle">Métricas de calidad:</p>', unsafe_allow_html=True)
     cols = st.columns(len(metricas))
@@ -137,36 +142,21 @@ with tab2:
             flecha = "↓"
             color = "inverse"
             estado = "⚠️"
-        cols[i].metric(
-            label=k,
-            value=f"{v}% {estado}",  # Añadimos el icono textual
-            delta=flecha,            # Solo flecha, sin número
-            delta_color=color
-        )
-    
+        cols[i].metric(label=k, value=f"{v}% {estado}", delta=flecha, delta_color=color)
 
-
-# --- Gráficos dinámicos ---
+# --- Gráficos ---
 with tab3:
     st.markdown('<p class="subtitle">Visualización de métricas:</p>', unsafe_allow_html=True)
-    # Gráfico de barras
     fig_bar = px.bar(x=list(metricas.keys()), y=list(metricas.values()), color=list(metricas.keys()),
                      title="Métricas de Calidad", labels={"x": "Dimensión", "y": "Porcentaje"})
     st.plotly_chart(fig_bar, use_container_width=True)
 
-    # Gráfico radar
     fig_radar = go.Figure()
-    fig_radar.add_trace(go.Scatterpolar(
-        r=list(metricas.values()),
-        theta=list(metricas.keys()),
-        fill='toself',
-        name='Calidad'
-    ))
-    fig_radar.update_layout(polar=dict(radialaxis=dict(visible=True, range=[70, 100])),
-                            showlegend=False, title="Radar de Calidad")
+    fig_radar.add_trace(go.Scatterpolar(r=list(metricas.values()), theta=list(metricas.keys()), fill='toself', name='Calidad'))
+    fig_radar.update_layout(polar=dict(radialaxis=dict(visible=True, range=[70, 100])), showlegend=False, title="Radar de Calidad")
     st.plotly_chart(fig_radar, use_container_width=True)
 
-# --- Descargar yaml ---
+# --- Descargar YAML ---
 with tab4:
     yaml_data = {
         "metadata": {
@@ -180,21 +170,21 @@ with tab4:
         "quality_metrics": metricas
     }
     yaml_str = yaml.dump(yaml_data, allow_unicode=True)
-    st.download_button(
-        label="Descargar reglas y métricas en YAML",
-        data=yaml_str,
-        file_name=f"{tabla_seleccionada}_quality.yaml",
-        mime="text/yaml"
-    )
+    st.download_button(label="Descargar reglas y métricas en YAML", data=yaml_str, file_name=f"{tabla_seleccionada}_quality.yaml", mime="text/yaml")
+
 # --- Datos de prueba ---
 with tab5:
-    st.markdown(f"**Datos de la tabla {tabla_seleccionada}:**")
+    st.markdown(f"**Datos de la tabla {tabla_visible}:**")
     if tabla_seleccionada == "clientes":
         st.table(clientes_data)
     elif tabla_seleccionada == "ventas":
         st.table(ventas_data)
     elif tabla_seleccionada == "productos":
         st.table(productos_data)
+    elif tabla_seleccionada == "proveedores":
+        st.table(proveedores_data)
+    elif tabla_seleccionada == "pedidos":
+        st.table(pedidos_data)
 
 # ==========================
 # Footer
