@@ -107,7 +107,7 @@ umbral = 90  # Umbral para indicadores
 # ==========================
 # Pestañas
 # ==========================
-tab1, tab2, tab3, tab4 = st.tabs(["📋 Reglas", "📊 Métricas", "📈 Gráficos", "📂 Datos de prueba"])
+tab1, tab2, tab3, tab4 = st.tabs(["📋 Reglas", "📊 Métricas", "📈 Gráficos", "⬇️ Descargar YAML", "📂 Datos de prueba"])
 
 # --- Reglas ---
 with tab1:
@@ -142,8 +142,28 @@ with tab3:
                             showlegend=False, title="Radar de Calidad")
     st.plotly_chart(fig_radar, use_container_width=True)
 
-# --- Datos de prueba ---
+# --- Descargar yaml ---
 with tab4:
+    yaml_data = {
+        "metadata": {
+            "company": "Bunge Global SA",
+            "generated_by": "DQaaS Streamlit App",
+            "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "source_system": "GCP BigQuery"
+        },
+        "table": tabla_seleccionada,
+        "rules": reglas_por_tabla[tabla_seleccionada],
+        "quality_metrics": metricas
+    }
+    yaml_str = yaml.dump(yaml_data, allow_unicode=True)
+    st.download_button(
+        label="Descargar reglas y métricas en YAML",
+        data=yaml_str,
+        file_name=f"{tabla_seleccionada}_quality.yaml",
+        mime="text/yaml"
+    )
+# --- Datos de prueba ---
+with tab5:
     st.markdown(f"**Datos de la tabla {tabla_seleccionada}:**")
     if tabla_seleccionada == "clientes":
         st.table(clientes_data)
