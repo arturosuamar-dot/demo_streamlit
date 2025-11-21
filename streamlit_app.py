@@ -15,7 +15,7 @@ st.set_page_config(page_title="DQaaS - Bunge Global SA", page_icon="🌐", layou
 # ==========================
 st.markdown("""
     <div style="text-align: center; margin-bottom: 30px;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Bunge_logo.svg/512px-Bunge_logo.svg.png" width="180" style="margin-bottom: 10px;">
+        <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 10px;">
         <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">DQaaS - Data Quality as a Service</h1>
         <p style="color: #003366; font-size: 22px; font-weight: bold; margin-top: 10px;">
             Bunge Global SA - Viterra Data Products Squad Extension
@@ -107,7 +107,7 @@ umbral = 90  # Umbral para indicadores
 # ==========================
 # Pestañas
 # ==========================
-tab1, tab2, tab3, tab4 = st.tabs(["📋 Reglas", "📊 Métricas", "📈 Gráficos", "⬇️ Descargar YAML", "📂 Datos de prueba"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["📋 Reglas", "📊 Métricas", "📈 Gráficos", "⬇️ Descargar YAML", "📂 Datos de prueba"])
 
 # --- Reglas ---
 with tab1:
