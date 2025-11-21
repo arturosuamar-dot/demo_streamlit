@@ -43,15 +43,19 @@ tablas_map = {
 }
 
 # Aumentar tamaño del texto del selectbox
+# CSS para aumentar tamaño del label del selectbox
 st.markdown("""
     <style>
-    /* Cambiar tamaño del texto en el selectbox */
-    div[data-baseweb="select"] > div {
+    /* Cambiar tamaño del texto del label del selectbox */
+    label[data-testid="stSelectboxLabel"] {
         font-size: 30px;  /* Ajusta el tamaño aquí */
+        font-weight: bold; /* Opcional: negrita */
+        color: #004C97;    /* Color corporativo Bunge */
     }
     </style>
 """, unsafe_allow_html=True)
 
+# Selectbox
 tabla_visible = st.selectbox("Selecciona una tabla:", list(tablas_map.keys()))
 tabla_seleccionada = tablas_map[tabla_visible]
 
