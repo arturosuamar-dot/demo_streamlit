@@ -42,7 +42,16 @@ tablas_map = {
     "Pedidos": "pedidos"
 }
 
-st.markdown('<p class="subtitle">Selecciona una tabla:</p>', unsafe_allow_html=True)
+# Aumentar tamaño del texto del selectbox
+st.markdown("""
+    <style>
+    /* Cambiar tamaño del texto en el selectbox */
+    div[data-baseweb="select"] > div {
+        font-size: 20px;  /* Ajusta el tamaño aquí */
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 tabla_visible = st.selectbox("Selecciona una tabla:", list(tablas_map.keys()))
 tabla_seleccionada = tablas_map[tabla_visible]
 
