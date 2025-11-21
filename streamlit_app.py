@@ -57,7 +57,6 @@ st.markdown("""
 
 st.markdown('<p class="subtitle">Selecciona una tabla:</p>', unsafe_allow_html=True)
 tabla_visible = st.selectbox("", list(tablas_map.keys()))
-tabla_visible = st.selectbox("", list(tablas_map.keys()))
 tabla_seleccionada = tablas_map[tabla_visible]
 
 # ==========================
