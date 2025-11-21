@@ -136,14 +136,15 @@ with tab2:
     cols = st.columns(len(metricas))
     for i, (k, v) in enumerate(metricas.items()):
         if v >= umbral:
-            flecha = "↑"
+            delta = 1
             color = "normal"
             estado = "✅"
         else:
-            flecha = "↓"
+            delta = -1
             color = "inverse"
             estado = "⚠️"
-        cols[i].metric(label=k, value=f"{v}% {estado}", delta=flecha, delta_color=color)
+        
+        cols[i].metric(label=k, value=f"{v}% {estado}", delta=delta, delta_color=color)
 
 # --- Gráficos ---
 with tab3:
