@@ -80,7 +80,7 @@ tablas_disponibles = ["clientes", "ventas", "productos", "proveedores", "pedidos
 tabla_seleccionada = st.selectbox("", tablas_disponibles)
 
 # ==========================
-# Reglas y métricas
+# Reglas por tabla
 # ==========================
 reglas_por_tabla = {
     "clientes": [
@@ -109,6 +109,39 @@ reglas_por_tabla = {
         {"name": "quantity_positive", "description": "Cantidad mayor que cero", "condition": "quantity > 0", "dimension": "Validez"}
     ]
 }
+
+# ==========================
+# Datos de prueba alineados con Bunge
+# ==========================
+clientes_data = [
+    {"id": 101, "nombre": "Agroexport SA", "email": "contacto@agroexport.com", "age": 45},
+    {"id": 102, "nombre": "Granos del Sur", "email": "ventas@granosur.com", "age": 38},
+    {"id": 103, "nombre": "Bunge Brasil", "email": "info@bunge.com.br", "age": 50}
+]
+ventas_data = [
+    {"id": 201, "amount": 150000, "currency": "USD", "sale_date": "2025-11-15"},
+    {"id": 202, "amount": 98000, "currency": "EUR", "sale_date": "2025-11-18"},
+    {"id": 203, "amount": 250000, "currency": "USD", "sale_date": "2025-11-20"}
+]
+productos_data = [
+    {"code": "SOY2025", "name": "Soja Premium", "price": 520, "category": "Oleaginosas"},
+    {"code": "MAIZ2025", "name": "Maíz Amarillo", "price": 320, "category": "Cereales"},
+    {"code": "TRIGO2025", "name": "Trigo Pan", "price": 410, "category": "Cereales"}
+]
+proveedores_data = [
+    {"id": 301, "name": "Logística Global", "country": "BR", "contact_email": "logistica@global.com"},
+    {"id": 302, "name": "TransAgro", "country": "US", "contact_email": "info@transagro.com"},
+    {"id": 303, "name": "Puertos del Sur", "country": "ES", "contact_email": "puertos@sur.com"}
+]
+pedidos_data = [
+    {"id": 401, "status": "PENDIENTE", "order_date": "2025-11-10", "delivery_date": "2025-11-25", "quantity": 500},
+    {"id": 402, "status": "COMPLETADO", "order_date": "2025-11-05", "delivery_date": "2025-11-15", "quantity": 1200},
+    {"id": 403, "status": "PENDIENTE", "order_date": "2025-11-12", "delivery_date": "2025-11-28", "quantity": 800}
+]
+
+# ==========================
+# Función para métricas
+# ==========================
 def generar_metricas():
     return {
         "Completitud": random.randint(85, 99),
@@ -124,7 +157,7 @@ metricas = generar_metricas()
 # ==========================
 # Pestañas para organización
 # ==========================
-tab1, tab2, tab3 = st.tabs(["📋 Reglas", "📊 Métricas", "⬇️ Descargar YAML"])
+tab1, tab2, tab3, tab4 = st.tabs(["📋 Reglas", "📊 Métricas", "⬇️ Descargar YAML", "📂 Datos de prueba"])
 
 with tab1:
     st.markdown('<p class="subtitle">Reglas para la tabla seleccionada:</p>', unsafe_allow_html=True)
@@ -155,6 +188,19 @@ with tab3:
         file_name=f"{tabla_seleccionada}_quality.yaml",
         mime="text/yaml"
     )
+
+with tab4:
+    st.markdown(f"**Datos de la tabla {tabla_seleccionada}:**")
+    if tabla_seleccionada == "clientes":
+        st.table(clientes_data)
+    elif tabla_seleccionada == "ventas":
+        st.table(ventas_data)
+    elif tabla_seleccionada == "productos":
+        st.table(productos_data)
+    elif tabla_seleccionada == "proveedores":
+        st.table(proveedores_data)
+    elif tabla_seleccionada == "pedidos":
+        st.table(pedidos_data)
 
 # ==========================
 # Footer
