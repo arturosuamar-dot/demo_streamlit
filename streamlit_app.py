@@ -196,7 +196,7 @@ with tab4:
 
 # --- Datos de prueba ---
 with tab5:
-    st.markdown(f"**Datos de la tabla {tabla_visible}:**")
+    st.markdown(f"**Datos de la tabla {tabla_visible}:**", unsafe_allow_html=True)
     if tabla_seleccionada == "clientes":
         st.table(clientes_data)
     elif tabla_seleccionada == "ventas":
