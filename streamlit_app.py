@@ -15,19 +15,6 @@ st.set_page_config(
     layout="wide"
 )
 
-
-
-st.markdown("""
-    <div style="text-align: center; margin-bottom: 30px;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Bunge_logo.svg/512px-Bunge_logo.svg.png" width="180" style="margin-bottom: 10px;">
-        <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">DQaaS - Data Quality as a Service</h1>
-        <p style="color: #003366; font-size: 22px; font-weight: bold; margin-top: 10px;">
-            Bunge Global SA - Viterra Data Products Squad Extension
-        </p>
-    </div>
-""", unsafe_allow_html=True)
-
-
 # ==========================
 # Estilos personalizados (estilo Bunge)
 # ==========================
@@ -74,9 +61,16 @@ st.markdown("""
 # ==========================
 # Encabezado con logo y título
 # ==========================
-st.image("https://www.bunge.com/themes/custom/bunge/logo.svg", width=180)
-st.markdown('<p class="title">DQaaS - Data Quality as a Service</p>', unsafe_allow_html=True)
-st.markdown('<p class="subtitle">Bunge Global SA - Viterra Data Products Squad Extension</p>', unsafe_allow_html=True)
+
+st.markdown("""
+    <div style="text-align: center; margin-bottom: 30px;">
+        <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 10px;">
+        <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">DQaaS - Data Quality as a Service</h1>
+        <p style="color: #003366; font-size: 22px; font-weight: bold; margin-top: 10px;">
+            Bunge Global SA - Viterra Data Products Squad Extension
+        </p>
+    </div>
+""", unsafe_allow_html=True)
 
 # ==========================
 # Sidebar para navegación
