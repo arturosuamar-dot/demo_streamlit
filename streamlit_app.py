@@ -12,6 +12,20 @@ st.set_page_config(
     layout="wide"
 )
 
+
+# ==========================
+# Encabezado con logo y título
+# ==========================
+st.markdown("""
+    <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Bunge_logo.svg/512px-Bunge_logo.svg.png" width="180">
+        <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">DQaaS - Data Quality as a Service</h1>
+    </div>
+    <p style="text-align: center; color: #003366; font-size: 22px; font-weight: bold;">
+        Bunge Global SA - Viterra Data Products Squad Extension
+    </p>
+""", unsafe_allow_html=True)
+
 # ==========================
 # Estilos personalizados (estilo Bunge)
 # ==========================
