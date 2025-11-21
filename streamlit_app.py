@@ -119,8 +119,14 @@ with tab2:
     st.markdown('<p class="subtitle">Métricas de calidad:</p>', unsafe_allow_html=True)
     cols = st.columns(len(metricas))
     for i, (k, v) in enumerate(metricas.items()):
-        delta = "✅" if v >= umbral else "⚠️"
-        cols[i].metric(label=k, value=f"{v}%", delta=delta)
+        if v >= umbral:
+            delta = 1  # flecha hacia arriba
+            color = "normal"  # verde
+        else:
+            delta = -1  # flecha hacia abajo
+            color = "inverse"  # rojo
+        cols[i].metric(label=k, value=f"{v}%", delta=delta, delta_color=color)
+
 
 # --- Gráficos dinámicos ---
 with tab3:
