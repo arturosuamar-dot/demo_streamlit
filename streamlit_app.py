@@ -260,34 +260,44 @@ else:
         elif dataproduct_seleccionada == "pedidos":
             st.table(pedidos_data)
 
-    # ========= 📄 CSV adjunto (auto): Global y Segmento =========
+    # ========= 📄 CSV adjunto (auto): Selector local =========
     with tab6:
         st.markdown('<p class="subtitle">CSV adjunto: perfilado automático (global y por segmento)</p>', unsafe_allow_html=True)
 
         import pandas as pd
         import numpy as np
         import re
+        from pathlib import Path
 
-        # ---- Carga del CSV ----
-        csv_file = st.file_uploader("Sube un CSV (cualquier esquema)", type=["csv"], key="csv_uploader_auto")
+        # ---- Catálogo local ----
+        DATASETS = {
+            # Usa el nombre legible como clave y la ruta relativa como valor
+            "datos_prueba.csv": "./datos_prueba.csv",
+            # Puedes añadir más si quieres:
+            # "otro_dataset.csv": "./otro_dataset.csv",
+        }
 
-        def load_csv_to_df(uploaded) -> pd.DataFrame:
-            if uploaded is not None:
-                return pd.read_csv(uploaded)
-            else:
-                # Usa por defecto el CSV que compartiste
-                return pd.read_csv("global_agribusiness_food_company_1000_2.csv")
+        fuente = st.selectbox("Selecciona dataset CSV (local)", options=list(DATASETS.keys()))
+        path_csv = DATASETS[fuente]
 
-        # ---- Utilidades ----
+        # ---- Utilidades de carga y tipado ----
+        @st.cache_data(show_spinner=False)
+        def load_csv_local(path_str: str) -> pd.DataFrame:
+            p = Path(path_str)
+            if not p.exists():
+                raise FileNotFoundError(f"No se encuentra el archivo: {p.resolve()}")
+            # Si conoces el separador explícitamente, usa sep="," para mayor rendimiento
+            return pd.read_csv(p)
+
         def infer_types(df: pd.DataFrame):
             # Normaliza strings
             for col in df.select_dtypes(include=["object"]).columns:
                 df[col] = df[col].astype(str).str.strip()
 
-            # Detecta posibles columnas datetime en objetos (>=60% parseables)
+            # Detecta columnas datetime en objetos (>=60% parseables)
             def try_parse_datetime(series: pd.Series) -> bool:
                 try:
-                    parsed = pd.to_datetime(series, errors="coerce", infer_datetime_format=True)
+                    parsed = pd.to_datetime(series, errors="coerce")
                     return parsed.notna().mean() >= 0.6
                 except Exception:
                     return False
@@ -297,10 +307,10 @@ else:
                 if df[col].dtype == "object" and try_parse_datetime(df[col]):
                     datetime_candidates.append(col)
             for col in datetime_candidates:
-                df[col] = pd.to_datetime(df[col], errors="coerce", infer_datetime_format=True)
+                df[col] = pd.to_datetime(df[col], errors="coerce")
 
             numeric_cols = df.select_dtypes(include=["number"]).columns.tolist()
-            datetime_cols = df.select_dtypes(include=["datetime"]).columns.tolist()
+            datetime_cols = df.select_dtypes(include=["datetime64[ns]", "datetime64[ns, tz]"]).columns.tolist()
             categorical_cols = df.select_dtypes(include=["object", "category"]).columns.tolist()
             return df, numeric_cols, datetime_cols, categorical_cols
 
@@ -434,9 +444,9 @@ else:
             }
             return reglas, metrics
 
-        # ---- Principal CSV ----
+        # ---- Principal CSV (selector local) ----
         try:
-            df = load_csv_to_df(csv_file)
+            df = load_csv_local(path_csv)
             df, numeric_cols, datetime_cols, categorical_cols = infer_types(df)
             default_keys = derive_default_keys(df, numeric_cols)
 
@@ -497,9 +507,11 @@ else:
                         "company": "Bunge Global SA",
                         "generated_by": "DQaaS Streamlit App",
                         "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                        "source_system": "CSV Upload (auto)"
+                        "source_system": f"Local file ({fuente})"
                     },
                     "dataset": {
+                        "name": fuente,
+                        "source": path_csv,
                         "rows": int(len(df)),
                         "columns": int(len(df.columns)),
                         "numeric_columns": numeric_cols,
@@ -520,7 +532,7 @@ else:
                 st.download_button(
                     label="Descargar YAML (Global)",
                     data=yaml_str_global,
-                    file_name="csv_quality_profile_global.yaml",
+                    file_name=f"csv_quality_profile_global_{fuente.replace(' ', '_')}.yaml",
                     mime="text/yaml"
                 )
 
@@ -531,15 +543,14 @@ else:
             # ----- SEGMENTO -----
             with gtab2:
                 st.markdown('<p class="subtitle">🎯 Configurar segmento</p>', unsafe_allow_html=True)
-                # Selecciona columna para segmentar (por defecto intenta "Country" si existe)
                 default_segment_col = "Country" if "Country" in df.columns else (categorical_cols[0] if categorical_cols else df.columns[0])
-                seg_col = st.selectbox("Columna de segmento", options=df.columns.tolist(), index=df.columns.tolist().index(default_segment_col) if default_segment_col in df.columns else 0)
-                # Valores del segmento (multiselect)
+                seg_col = st.selectbox("Columna de segmento", options=df.columns.tolist(),
+                                       index=df.columns.tolist().index(default_segment_col) if default_segment_col in df.columns else 0)
+
                 unique_vals = sorted(df[seg_col].dropna().unique().tolist())
                 default_vals = ["Spain"] if seg_col == "Country" and "Spain" in unique_vals else []
                 seg_vals = st.multiselect(f"Valores para {seg_col}", options=unique_vals, default=default_vals)
 
-                # Configuración de reglas para el segmento (independiente del global)
                 with st.expander("⚙️ Configurar reglas (Segmento)"):
                     key_cols_seg = st.multiselect("Columnas clave (unicidad, segmento)", options=df.columns.tolist(), default=default_keys, key="key_cols_seg")
                     c1, c2, c3 = st.columns(3)
@@ -548,22 +559,14 @@ else:
                     max_cat_seg = c3.slider("Máx. categorías permitidas (segmento)", 5, 50, 20, 1, key="max_cat_seg")
                     allow_future_seg = st.checkbox("Permitir fechas futuras (segmento)", value=False, key="allow_future_seg")
 
-                # Aplica filtro de segmento
-                if seg_vals:
-                    df_segment = df[df[seg_col].isin(seg_vals)].copy()
-                else:
-                    df_segment = df.copy()  # sin selección → segmento = dataset completo (para no bloquear)
-
-                # Deriva tipos sobre el segmento (por si difieren tras el filtro)
+                df_segment = df[df[seg_col].isin(seg_vals)].copy() if seg_vals else df.copy()
                 df_segment, num_seg, dt_seg, cat_seg = infer_types(df_segment)
 
-                # Genera reglas y métricas del segmento
                 reglas_seg, metricas_seg = make_rules_and_metrics(
                     df_segment, num_seg, dt_seg, cat_seg,
                     key_cols_seg, p_low_seg, p_high_seg, max_cat_seg, allow_future_seg
                 )
 
-                # Inserta al inicio una regla que documente el filtro aplicado
                 if seg_vals:
                     reglas_seg.insert(0, {
                         "name": f"segment_filter_{seg_col}",
@@ -572,11 +575,9 @@ else:
                         "dimension": "Contexto"
                     })
 
-                # Reglas segmento
                 st.markdown('<p class="subtitle">📋 Reglas (Segmento)</p>', unsafe_allow_html=True)
                 st.table(reglas_seg)
 
-                # Métricas segmento
                 umbral_seg = 90
                 st.markdown('<p class="subtitle">📊 Métricas (Segmento)</p>', unsafe_allow_html=True)
                 cols = st.columns(len(metricas_seg))
@@ -585,7 +586,6 @@ else:
                     estado = "✅" if v >= umbral_seg else "⚠️"
                     cols[i].metric(label=k, value=f"{v}% {estado}", delta="", delta_color=color)
 
-                # Gráficos segmento
                 st.markdown('<p class="subtitle">📈 Gráficos (Segmento)</p>', unsafe_allow_html=True)
                 fig_bar_seg = px.bar(x=list(metricas_seg.keys()), y=list(metricas_seg.values()),
                                      color=list(metricas_seg.keys()), title=f"Métricas de Calidad (Segmento: {seg_col})",
@@ -603,14 +603,13 @@ else:
                 )
                 st.plotly_chart(fig_radar_seg, use_container_width=True)
 
-                # YAML segmento
                 st.markdown('<p class="subtitle">⬇️ Descargar YAML (Segmento)</p>', unsafe_allow_html=True)
                 yaml_seg = {
                     "metadata": {
                         "company": "Bunge Global SA",
                         "generated_by": "DQaaS Streamlit App",
                         "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                        "source_system": "CSV Upload (auto)"
+                        "source_system": f"Local file ({fuente})"
                     },
                     "segment": {
                         "column": seg_col,
@@ -641,7 +640,6 @@ else:
                     mime="text/yaml"
                 )
 
-                # Vista de datos (Segmento)
                 st.markdown('<p class="subtitle">📂 Vista CSV (Segmento)</p>', unsafe_allow_html=True)
                 if seg_vals:
                     st.caption(f"Filas segmento: {len(df_segment):,} / {len(df):,} [{seg_col} ∈ {seg_vals}]")
@@ -651,7 +649,7 @@ else:
 
         except Exception as e:
             st.error(f"Error procesando el CSV: {e}")
-            st.info("Prueba con un CSV válido. La app soporta esquemas arbitrarios y perfila columnas numéricas, de fecha y categóricas automáticamente.")
+            st.info("Verifica que 'datos_prueba.csv' exista al mismo nivel que 'streamlit_app.py' y que tenga un formato CSV válido.")
 
     # ==========================
     # Footer
