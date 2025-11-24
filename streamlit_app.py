@@ -12,34 +12,78 @@ import plotly.graph_objects as go
 st.set_page_config(page_title="DQaaS - Bunge Global SA", page_icon="🌐", layout="wide")
 
 # ==========================
+# CSS global para ancho, tabs y emojis
+# ==========================
+st.markdown("""
+    <style>
+    /* Ancho global del contenedor principal (siempre ancho) */
+    .main .block-container {
+        max-width: 1800px;         /* ancho amplio por defecto */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    @media (min-width: 1800px) {
+        .main .block-container {
+            max-width: 96vw;       /* aprovechar casi todo el viewport en pantallas muy grandes */
+        }
+    }
+
+    /* Asegurar que los elementos dentro aprovechen el ancho */
+    .stApp, .main, .block-container {
+        width: 100%;
+    }
+
+    /* Estilos de Tabs: evitar recorte de emojis y mejorar legibilidad */
+    .stTabs [data-baseweb="tab-list"] {
+        flex-wrap: wrap;             /* permite bajar de línea si hay muchas pestañas */
+        gap: 4px;
+    }
+    .stTabs [data-baseweb="tab"] {
+        padding: 12px 18px;
+        font-size: 18px;
+        line-height: 1.3;
+        white-space: nowrap;         /* mantener el emoji pegado al texto */
+    }
+
+    /* Tipografía con soporte de emojis de color */
+    html, body, .stApp {
+        font-family: "Segoe UI", "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji",
+                      "Helvetica Neue", Arial, sans-serif !important;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Botón principal más ancho (pantalla inicial) */
+    div.stButton > button {
+        width: 420px;
+        height: 64px;
+        font-size: 24px;
+        font-weight: bold;
+        background-color: #004C97;
+        color: white;
+        border-radius: 10px;
+        border: none;
+        transition: 0.3s;
+    }
+    div.stButton > button:hover {
+        background-color: #003366;
+        transform: scale(1.05);
+    }
+
+    /* Subtítulos y footer */
+    .subtitle { font-size: 24px; font-weight: bold; color: #004C97; margin-bottom: -10px; }
+    footer { text-align: center; color: #6b6b6b; margin-top: 40px; }
+
+    /* Evitar que tablas y charts se limiten por un ancho menor */
+    .element-container { width: 100%; max-width: 100%; }
+    </style>
+""", unsafe_allow_html=True)
+
+# ==========================
 # Estado inicial
 # ==========================
 if "perfilado_iniciado" not in st.session_state:
     st.session_state.perfilado_iniciado = False
-
-# ==========================
-# CSS condicional para el ancho del contenedor
-# ==========================
-if not st.session_state.perfilado_iniciado:
-    st.markdown("""
-        <style>
-        .block-container {
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-else:
-    st.markdown("""
-        <style>
-        .block-container {
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        </style>
-    """, unsafe_allow_html=True)
 
 # ==========================
 # Pantalla inicial
@@ -47,32 +91,13 @@ else:
 if not st.session_state.perfilado_iniciado:
     st.markdown("""
         <div style="text-align: center; margin-top: 80px;">
-            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" style="width:180px; margin-bottom:20px;" />
+            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28"
+                 alt="Bunge Logo" style="width:180px; margin-bottom:20px;" />
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold;">
                 Bunge Global SA - Viterra Data Products Squad Extension
             </p>
         </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("""
-        <style>
-        div.stButton > button {
-            width: 300px;
-            height: 60px;
-            font-size: 24px;
-            font-weight: bold;
-            background-color: #004C97;
-            color: white;
-            border-radius: 10px;
-            border: none;
-            transition: 0.3s;
-        }
-        div.stButton > button:hover {
-            background-color: #003366;
-            transform: scale(1.05);
-        }
-        </style>
     """, unsafe_allow_html=True)
 
     st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
@@ -89,22 +114,13 @@ else:
     # ==========================
     st.markdown("""
         <div style="text-align: center; margin-bottom: 30px;">
-            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" style="width:180px; margin-bottom:20px;" />
+            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28"
+                 alt="Bunge Logo" style="width:180px; margin-bottom:20px;" />
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold; margin-top: 10px;">
                 Bunge Global SA - Viterra Data Products Squad Extension
             </p>
         </div>
-    """, unsafe_allow_html=True)
-
-    # ==========================
-    # Estilos (solo títulos y footer)
-    # ==========================
-    st.markdown("""
-        <style>
-        .subtitle { font-size: 24px; font-weight: bold; color: #004C97; margin-bottom: -10px; }
-        footer { text-align: center; color: #6b6b6b; margin-top: 40px; }
-        </style>
     """, unsafe_allow_html=True)
 
     # ==========================
@@ -307,8 +323,7 @@ else:
         df = load_csv_local(path_csv)
         df, numeric_cols, datetime_cols, categorical_cols = infer_types(df)
 
-        # ---- Selección inmediata de campo de filtro y segmento (SIN DEFAULTS) ----
-        # Campo de filtro sugerido: 'Country' si existe, sino primer categórico o la primera columna
+        # ---- Segmentación inmediata (sin defaults) ----
         default_filter_col = "Country" if "Country" in df.columns else (categorical_cols[0] if categorical_cols else df.columns[0])
         st.markdown('<p class="subtitle">🎯 Segmentación</p>', unsafe_allow_html=True)
         col_f1, col_f2 = st.columns([1, 2])
@@ -320,7 +335,6 @@ else:
                 key="filter_col_immediate"
             )
         with col_f2:
-            # SIN preselección de valores (global por defecto)
             unique_vals = sorted(df[seg_col].dropna().unique().tolist())
             seg_vals = st.multiselect(f"Valores para {seg_col}", options=unique_vals, default=[], key="seg_vals_immediate")
 
@@ -379,6 +393,7 @@ else:
                 title=f"Métricas de Calidad — {dataproduct_visible} ({scope_label})",
                 labels={"x": "Dimensión", "y": "Porcentaje"}
             )
+            fig_bar.update_layout(margin=dict(l=10, r=10, t=50, b=10))
             st.plotly_chart(fig_bar, use_container_width=True)
 
             fig_radar = go.Figure()
@@ -389,7 +404,8 @@ else:
             min_axis = max(0, min(metricas_cur.values()) - 10) if metricas_cur else 0
             fig_radar.update_layout(
                 polar=dict(radialaxis=dict(visible=True, range=[min_axis, 100])),
-                showlegend=False, title=f"Radar de Calidad — {dataproduct_visible} ({scope_label})"
+                showlegend=False, title=f"Radar de Calidad — {dataproduct_visible} ({scope_label})",
+                margin=dict(l=10, r=10, t=50, b=10)
             )
             st.plotly_chart(fig_radar, use_container_width=True)
 
