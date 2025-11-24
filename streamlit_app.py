@@ -12,6 +12,12 @@ import plotly.graph_objects as go
 st.set_page_config(page_title="DQaaS - Bunge Global SA", page_icon="🌐", layout="wide")
 
 # ==========================
+# Estado inicial
+# ==========================
+if "perfilado_iniciado" not in st.session_state:
+    st.session_state.perfilado_iniciado = False
+
+# ==========================
 # CSS global para ancho, tabs y emojis
 # ==========================
 st.markdown("""
@@ -78,12 +84,6 @@ st.markdown("""
     .element-container { width: 100%; max-width: 100%; }
     </style>
 """, unsafe_allow_html=True)
-
-# ==========================
-# Estado inicial
-# ==========================
-if "perfilado_iniciado" not in st.session_state:
-    st.session_state.perfilado_iniciado = False
 
 # ==========================
 # Pantalla inicial
