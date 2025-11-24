@@ -78,7 +78,7 @@ if not st.session_state.perfilado_iniciado:
 
         # Botón centrado (sin usar columnas asimétricas)
         # Para mantenerlo en el centro, usamos un pequeño contenedor con margen auto
-        btn_col = st.columns([1.2, 1, 1])  # 3 columnas iguales
+        btn_col = st.columns([1.5, 1, 1])  # 3 columnas iguales
         with btn_col[1]:
             if st.button("🚀 Iniciar Perfilado de Datos", key="start_button", use_container_width=True):
                 st.session_state.perfilado_iniciado = True
