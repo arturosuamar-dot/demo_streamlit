@@ -21,6 +21,7 @@ if "perfilado_iniciado" not in st.session_state:
 # Pantalla inicial
 # ==========================
 if not st.session_state.perfilado_iniciado:
+
     # Portada
     st.markdown("""
         <div style="text-align: center; margin-top: 100px;">
@@ -29,13 +30,11 @@ if not st.session_state.perfilado_iniciado:
             <br>
         </div>
     """, unsafe_allow_html=True)
-
-    # CSS para botón centrado y grande
+    
+    # CSS para estilizar el botón
     st.markdown("""
         <style>
         div.stButton > button {
-            display: block;
-            margin: 30px auto;
             width: 300px;
             height: 60px;
             font-size: 24px;
@@ -52,11 +51,13 @@ if not st.session_state.perfilado_iniciado:
         }
         </style>
     """, unsafe_allow_html=True)
-
-    # Botón
+    
+    # Contenedor centrado para el botón
+    st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
     if st.button("🚀 Iniciar Perfilado de Datos", key="start_button"):
         st.session_state.perfilado_iniciado = True
         st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
 
 else:
     # ==========================
