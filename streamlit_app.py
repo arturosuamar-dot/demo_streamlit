@@ -70,7 +70,7 @@ if not st.session_state.perfilado_iniciado:
     st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
 
     # Botón centrado de forma robusta con columnas (3-2-3 da un centrado visual muy preciso)
-    col_left, col_center, col_right = st.columns([3, 2, 3])
+    col_left, col_center, col_right = st.columns([3, 2, 3.5])
     with col_center:
         # usa use_container_width para que el botón ocupe la columna y no “parezca” desviado
         if st.button("🚀 Iniciar Perfilado de Datos", key="start_button", use_container_width=True):
