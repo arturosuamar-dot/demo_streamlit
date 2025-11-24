@@ -1,0 +1,1001 @@
+ProductID,ProductName,Category,Region,Country,Supplier,UnitPrice,Currency,StockQuantity,LastUpdated
+1,Orange,Fruits,North America,China,Fromage Global,1281.31,INR,3890,2025-02-25 08:08:05
+2,Sugar,Processed,Africa,Spain,BioAgro Ltd,1530.8,INR,2141,2025-05-08 11:20:41
+3,Cocoa Powder,Processed,Oceania,Italy,Fromage Global,758.55,INR,1973,2025-08-15 18:19:42
+4,Coffee,Beverages,Africa,South Africa,AgroGlobal,1064.53,INR,4712,2025-09-21 05:45:03
+5,Palm Oil,Oilseeds,Europe,Mexico,ThaiAgri Export,1052.75,EUR,877,2025-01-09 13:36:48
+6,Yogurt,Dairy,Europe,South Africa,SweetHarvest,721.66,EUR,1350,2025-11-10 18:26:56
+7,Soft Drink,Beverages,South America,Italy,Mediterraneo S.A.,1103.89,EUR,2565,2025-05-15 07:04:37
+8,Orange Juice,Beverages,Oceania,Spain,DairyWorld,1443.27,INR,342,2025-09-30 20:24:08
+9,Mango,Fruits,Asia,USA,AgroPalm Corp,360.04,EUR,4451,2025-07-25 11:43:08
+10,Carrot,Vegetables,Oceania,Thailand,Fromage Global,151.47,INR,3746,2025-01-23 10:51:09
+11,Wheat,Grains,North America,Indonesia,VeggieCorp,163.04,USD,754,2025-07-21 03:57:09
+12,Oats,Grains,Asia,India,FruitEx Intl,108.62,INR,3362,2025-04-01 23:43:29
+13,Corn,Grains,Asia,South Africa,VeggieCorp,1328.36,USD,1284,2025-05-14 06:43:41
+14,Tea,Beverages,Africa,Brazil,SweetHarvest,383.58,USD,2490,2024-12-26 12:32:08
+15,Palm Oil,Oilseeds,North America,Mexico,Mediterraneo S.A.,866.99,INR,3820,2024-11-30 04:33:30
+16,Mango,Fruits,North America,China,FruitEx Intl,1990.36,INR,1845,2025-04-29 21:12:31
+17,Palm Oil,Oilseeds,Africa,Spain,BeverageWorld,461.48,EUR,3371,2025-04-19 17:14:40
+18,Soft Drink,Beverages,North America,India,ThaiAgri Export,1404.95,EUR,4362,2025-02-28 09:58:51
+19,Corn,Grains,Europe,Spain,ChocoTrade Ltd,1424.99,EUR,758,2025-10-15 11:20:12
+20,Rice,Grains,Africa,Mexico,BeverageWorld,478.14,USD,1138,2025-01-05 20:05:31
+21,Coffee,Beverages,Europe,Ghana,Fromage Global,529.44,INR,4827,2025-02-09 01:38:23
+22,Milk Powder,Dairy,Oceania,Australia,VeggieCorp,1550.43,EUR,805,2025-07-02 18:42:16
+23,Apple,Fruits,Europe,Italy,AgriFoods Inc,569.88,USD,4630,2025-08-30 13:48:01
+24,Soft Drink,Beverages,Oceania,Mexico,AgroPalm Corp,925.01,INR,3810,2025-09-30 21:46:13
+25,Yogurt,Dairy,Africa,Brazil,ThaiAgri Export,1362.4,USD,1719,2025-05-31 22:48:05
+26,Tomato,Vegetables,Oceania,Ghana,VeggieCorp,259.58,USD,3138,2025-11-19 20:15:12
+27,Mango,Fruits,Asia,Ghana,AgriFoods Inc,194.87,INR,2034,2025-08-27 17:27:27
+28,Yogurt,Dairy,Oceania,China,AgriFoods Inc,438.72,USD,2239,2025-11-15 22:39:40
+29,Coffee,Beverages,North America,India,VeggieCorp,1188.34,INR,1172,2025-07-14 16:47:53
+30,Potato,Vegetables,Oceania,Ghana,AgriFoods Inc,1715.18,INR,1659,2025-10-11 01:57:13
+31,Tea,Beverages,Europe,Australia,ThaiAgri Export,225.77,USD,3708,2025-04-18 11:45:50
+32,Cocoa Powder,Processed,South America,China,AgroGlobal,1220.69,EUR,827,2025-06-30 11:05:54
+33,Tomato,Vegetables,Europe,Mexico,Mediterraneo S.A.,927.04,USD,1836,2025-01-16 10:09:45
+34,Soybean,Oilseeds,North America,Brazil,ChocoTrade Ltd,1767.15,EUR,1165,2025-05-12 00:11:37
+35,Potato,Vegetables,North America,France,VeggieCorp,1650.29,USD,3568,2024-12-15 05:49:49
+36,Olive Oil,Processed,North America,Spain,AgriFoods Inc,289.2,EUR,3737,2025-11-13 16:18:13
+37,Onion,Vegetables,Europe,South Africa,VeggieCorp,1562.93,EUR,2306,2025-07-22 21:01:50
+38,Oats,Grains,South America,Australia,Mediterraneo S.A.,1141.98,INR,3347,2025-06-26 05:54:55
+39,Soybean,Oilseeds,Europe,France,AgroPalm Corp,661.72,USD,272,2024-11-30 15:08:00
+40,Flour,Processed,Europe,USA,DairyWorld,203.01,EUR,4334,2025-05-22 22:20:46
+41,Apple,Fruits,Oceania,Indonesia,BeverageWorld,1963.94,INR,1180,2025-10-03 21:46:26
+42,Tomato,Vegetables,North America,France,VeggieCorp,1168.59,INR,1144,2024-12-18 01:17:13
+43,Sugar,Processed,Africa,Australia,BioAgro Ltd,1433.88,INR,1401,2025-04-01 09:11:51
+44,Yogurt,Dairy,Oceania,Italy,BeverageWorld,1852.67,USD,2441,2025-01-05 19:26:35
+45,Grapes,Fruits,North America,South Africa,FruitEx Intl,209.07,USD,3871,2025-04-24 06:51:32
+46,Cocoa Powder,Processed,Oceania,India,Mediterraneo S.A.,1744.41,USD,3953,2025-10-15 02:18:06
+47,Corn,Grains,Europe,France,AgroGlobal,1158.78,EUR,4074,2025-10-08 16:01:29
+48,Sunflower Oil,Oilseeds,Europe,Thailand,AgroGlobal,1684.83,EUR,2115,2025-01-08 00:09:17
+49,Wheat,Grains,North America,China,SweetHarvest,1851.7,EUR,3849,2025-08-31 01:56:39
+50,Sunflower Oil,Oilseeds,South America,Indonesia,BioAgro Ltd,977.18,EUR,4549,2025-08-29 12:00:23
+51,Coffee,Beverages,Oceania,USA,Mediterraneo S.A.,1906.1,EUR,2232,2025-01-04 10:13:31
+52,Coffee,Beverages,Asia,Indonesia,BeverageWorld,1140.29,EUR,2379,2025-05-13 09:02:04
+53,Barley,Grains,Europe,Ghana,AgroPalm Corp,1821.83,INR,476,2024-12-11 10:05:30
+54,Soybean,Oilseeds,Asia,Spain,Mediterraneo S.A.,1880.09,USD,3675,2024-12-25 04:39:38
+55,Sunflower Oil,Oilseeds,Oceania,France,AgriFoods Inc,638.96,USD,607,2025-11-07 22:54:56
+56,Banana,Fruits,Asia,South Africa,ChocoTrade Ltd,241.3,EUR,317,2025-08-28 07:53:47
+57,Tomato,Vegetables,South America,Thailand,VeggieCorp,105.26,USD,1338,2024-11-29 23:29:31
+58,Tomato,Vegetables,Africa,Mexico,ThaiAgri Export,189.81,INR,1869,2025-08-30 10:37:45
+59,Coffee,Beverages,Europe,Italy,FruitEx Intl,1370.58,INR,4383,2025-03-01 13:21:52
+60,Apple Juice,Beverages,Europe,Spain,BioAgro Ltd,1822.25,EUR,2864,2025-04-08 14:03:12
+61,Barley,Grains,Africa,Ghana,AgriFoods Inc,1959.41,USD,1003,2025-09-25 20:34:17
+62,Tea,Beverages,Africa,China,ThaiAgri Export,1631.33,INR,3216,2025-05-26 14:57:25
+63,Orange Juice,Beverages,North America,China,AgroPalm Corp,1940.69,INR,2406,2024-12-08 19:11:06
+64,Barley,Grains,North America,Australia,AgroPalm Corp,1945.86,EUR,4429,2025-03-01 19:13:05
+65,Coffee,Beverages,Africa,Spain,VeggieCorp,1706.83,INR,1907,2025-06-02 14:14:15
+66,Cheddar Cheese,Dairy,Asia,Mexico,ThaiAgri Export,1115.67,INR,3491,2025-01-25 03:41:18
+67,Wheat,Grains,Africa,Brazil,BeverageWorld,1136.8,EUR,4685,2025-08-17 22:41:42
+68,Milk Powder,Dairy,Asia,China,AgroGlobal,1463.92,EUR,2447,2025-02-11 02:52:12
+69,Banana,Fruits,Africa,South Africa,AgroGlobal,1173.21,INR,421,2025-04-18 07:15:03
+70,Apple Juice,Beverages,South America,USA,VeggieCorp,761.28,INR,1950,2025-03-27 20:06:19
+71,Oats,Grains,South America,Indonesia,Fromage Global,1202.25,EUR,2179,2024-12-14 00:18:35
+72,Banana,Fruits,South America,Indonesia,ChocoTrade Ltd,1021.91,INR,2747,2025-08-01 13:40:51
+73,Yogurt,Dairy,South America,Indonesia,SweetHarvest,1188.05,USD,3652,2025-05-16 01:28:01
+74,Orange Juice,Beverages,Africa,Mexico,AgriFoods Inc,858.47,INR,4618,2025-06-17 02:31:03
+75,Tomato,Vegetables,Asia,South Africa,ChocoTrade Ltd,1515.88,EUR,113,2025-03-07 13:59:08
+76,Barley,Grains,Asia,USA,ChocoTrade Ltd,1183.09,EUR,4248,2025-05-14 17:13:06
+77,Orange Juice,Beverages,North America,Spain,AgroGlobal,1688.06,EUR,1570,2025-05-11 12:26:18
+78,Apple,Fruits,South America,China,BioAgro Ltd,1284.22,EUR,4416,2025-08-13 22:24:53
+79,Soybean,Oilseeds,South America,France,AgriFoods Inc,899.53,INR,457,2025-08-21 08:42:53
+80,Mango,Fruits,Asia,Brazil,Fromage Global,1978.14,EUR,4505,2025-03-15 08:50:35
+81,Yogurt,Dairy,Europe,Italy,DairyWorld,394.07,USD,3079,2025-10-21 07:57:59
+82,Grapes,Fruits,Africa,India,BioAgro Ltd,649.29,EUR,2727,2025-09-26 15:38:42
+83,Cheddar Cheese,Dairy,Africa,Spain,BioAgro Ltd,1103.21,USD,2139,2025-02-12 19:14:22
+84,Sunflower Oil,Oilseeds,Asia,USA,FruitEx Intl,1394.05,USD,2589,2025-08-08 03:09:20
+85,Sunflower Oil,Oilseeds,South America,Spain,AgroGlobal,1677.03,EUR,4896,2025-10-02 11:28:14
+86,Yogurt,Dairy,North America,Thailand,FruitEx Intl,1614.98,EUR,185,2024-11-29 18:36:18
+87,Orange,Fruits,Africa,Mexico,ThaiAgri Export,764.9,EUR,2183,2025-04-18 08:59:58
+88,Olive Oil,Processed,North America,Indonesia,Mediterraneo S.A.,1401.77,INR,3618,2025-09-07 15:19:02
+89,Potato,Vegetables,South America,Spain,VeggieCorp,1120.54,INR,4336,2025-06-17 14:11:52
+90,Potato,Vegetables,South America,Mexico,ThaiAgri Export,998.42,USD,2349,2025-10-05 09:07:31
+91,Rice,Grains,Africa,Brazil,AgriFoods Inc,1788.41,INR,2742,2025-08-07 10:27:52
+92,Soybean,Oilseeds,Oceania,Australia,Fromage Global,384.7,USD,434,2025-02-28 21:16:25
+93,Cheddar Cheese,Dairy,South America,Italy,BeverageWorld,1477.72,EUR,550,2025-01-13 01:20:42
+94,Mango,Fruits,Asia,China,AgroPalm Corp,1977.19,EUR,3483,2025-06-22 14:27:05
+95,Palm Oil,Oilseeds,Africa,India,ChocoTrade Ltd,426.43,INR,3126,2025-06-02 08:38:30
+96,Orange Juice,Beverages,South America,Ghana,BeverageWorld,1189.55,USD,1838,2025-07-24 09:05:44
+97,Carrot,Vegetables,Asia,Italy,ChocoTrade Ltd,558.05,USD,2323,2025-03-04 05:10:54
+98,Apple Juice,Beverages,Oceania,South Africa,DairyWorld,246.54,USD,4859,2025-02-14 18:10:20
+99,Sunflower Oil,Oilseeds,Europe,Italy,BioAgro Ltd,1220.08,USD,4535,2024-12-25 12:55:18
+100,Banana,Fruits,Asia,Brazil,ChocoTrade Ltd,1303.42,USD,455,2025-05-14 02:56:21
+101,Tea,Beverages,Europe,South Africa,Mediterraneo S.A.,648.12,INR,1708,2025-11-09 11:06:36
+102,Rice,Grains,North America,South Africa,Fromage Global,743.9,USD,2628,2025-09-07 05:12:14
+103,Soybean,Oilseeds,Africa,Italy,Mediterraneo S.A.,823.45,EUR,1970,2025-04-18 06:47:24
+104,Cheddar Cheese,Dairy,Asia,France,ChocoTrade Ltd,1389.09,INR,1752,2025-04-14 01:39:12
+105,Broccoli,Vegetables,Africa,Ghana,Fromage Global,1101.58,USD,3828,2025-07-09 18:16:46
+106,Palm Oil,Oilseeds,South America,Indonesia,FruitEx Intl,1032.64,INR,1952,2025-04-16 11:43:57
+107,Mango,Fruits,Africa,Australia,Fromage Global,420.29,INR,2787,2025-01-18 06:06:03
+108,Onion,Vegetables,Asia,Spain,AgroPalm Corp,1629.3,USD,3074,2025-09-22 07:41:32
+109,Cheddar Cheese,Dairy,South America,Italy,AgroPalm Corp,550.05,INR,132,2025-04-16 12:37:25
+110,Wheat,Grains,Asia,Thailand,BioAgro Ltd,726.77,USD,3099,2025-06-17 09:56:41
+111,Olive Oil,Processed,South America,Italy,AgriFoods Inc,1117.95,USD,1703,2025-07-01 03:54:30
+112,Milk Powder,Dairy,South America,Italy,VeggieCorp,414.12,USD,2018,2025-01-21 16:04:04
+113,Orange Juice,Beverages,Asia,India,ChocoTrade Ltd,214.23,USD,766,2025-02-11 04:09:49
+114,Palm Oil,Oilseeds,Africa,South Africa,AgroGlobal,236.39,INR,1379,2025-06-16 18:05:19
+115,Wheat,Grains,Europe,Thailand,DairyWorld,806.94,INR,1870,2025-05-04 21:55:40
+116,Palm Oil,Oilseeds,Africa,Australia,ThaiAgri Export,809.12,EUR,1905,2025-07-28 09:12:21
+117,Yogurt,Dairy,Asia,China,Fromage Global,641.24,USD,1642,2025-03-04 18:38:30
+118,Yogurt,Dairy,South America,Mexico,AgroPalm Corp,594.5,USD,3906,2025-03-22 00:22:52
+119,Barley,Grains,Europe,USA,VeggieCorp,390.63,EUR,1596,2025-07-06 17:58:10
+120,Corn,Grains,North America,USA,AgroPalm Corp,1458.68,USD,4835,2024-12-28 20:47:49
+121,Canola,Oilseeds,North America,France,SweetHarvest,991.7,EUR,4705,2025-09-15 13:35:56
+122,Onion,Vegetables,Asia,Australia,ChocoTrade Ltd,230.82,EUR,727,2025-09-28 10:22:10
+123,Palm Oil,Oilseeds,Asia,Thailand,ThaiAgri Export,1946.87,USD,3012,2025-09-28 10:14:37
+124,Rice,Grains,Africa,India,BioAgro Ltd,1951.79,USD,233,2025-02-21 20:20:38
+125,Milk Powder,Dairy,South America,USA,Fromage Global,1730.15,USD,1862,2025-11-01 17:50:45
+126,Barley,Grains,Asia,Mexico,Mediterraneo S.A.,146.04,INR,1577,2025-03-21 08:24:14
+127,Apple,Fruits,South America,Brazil,ThaiAgri Export,1853.95,EUR,3341,2025-05-21 03:00:34
+128,Corn,Grains,Africa,Indonesia,BioAgro Ltd,1573.88,USD,4866,2025-08-27 06:18:32
+129,Corn,Grains,Africa,Indonesia,VeggieCorp,1047.1,EUR,3367,2025-05-13 07:03:56
+130,Flour,Processed,South America,Mexico,Fromage Global,285.52,EUR,3121,2025-06-18 22:54:49
+131,Milk Powder,Dairy,Africa,Australia,ThaiAgri Export,491.47,USD,4444,2025-08-24 13:11:17
+132,Carrot,Vegetables,South America,France,Fromage Global,567.21,USD,502,2025-02-24 10:18:22
+133,Butter,Dairy,Asia,Indonesia,ThaiAgri Export,634.11,INR,724,2025-09-02 14:20:05
+134,Flour,Processed,Asia,France,FruitEx Intl,1948.99,INR,146,2025-06-19 10:32:37
+135,Carrot,Vegetables,South America,Mexico,VeggieCorp,640.11,EUR,2354,2025-08-31 16:34:07
+136,Oats,Grains,South America,Brazil,VeggieCorp,319.52,USD,561,2025-05-05 04:12:50
+137,Cocoa Powder,Processed,Africa,Mexico,Mediterraneo S.A.,1574.55,EUR,3008,2025-10-17 02:00:00
+138,Soybean,Oilseeds,Asia,India,AgriFoods Inc,1161.06,INR,376,2024-12-03 05:18:01
+139,Barley,Grains,Oceania,Spain,VeggieCorp,375.54,EUR,2773,2025-06-22 03:09:08
+140,Cheddar Cheese,Dairy,North America,India,AgroGlobal,101.62,USD,4151,2025-02-17 15:35:47
+141,Palm Oil,Oilseeds,Asia,Spain,BioAgro Ltd,182.74,USD,2770,2025-08-08 04:07:47
+142,Soft Drink,Beverages,South America,Mexico,DairyWorld,1571.34,EUR,3798,2025-01-10 15:58:32
+143,Grapes,Fruits,Africa,France,AgroPalm Corp,1576.84,EUR,2884,2025-03-28 12:18:32
+144,Corn,Grains,South America,India,FruitEx Intl,212.87,EUR,299,2024-12-14 04:01:06
+145,Carrot,Vegetables,Africa,France,BioAgro Ltd,182.29,INR,1084,2025-01-08 09:07:50
+146,Cocoa Powder,Processed,Africa,Spain,AgroGlobal,501.83,EUR,898,2025-03-10 18:39:03
+147,Carrot,Vegetables,Asia,Spain,VeggieCorp,323.94,USD,1982,2025-05-29 02:41:11
+148,Rice,Grains,Asia,South Africa,AgroPalm Corp,413.09,USD,330,2025-08-23 23:13:28
+149,Tea,Beverages,North America,Australia,Mediterraneo S.A.,1243.04,USD,2002,2025-09-23 20:50:51
+150,Yogurt,Dairy,South America,France,Mediterraneo S.A.,300.92,USD,1642,2025-08-14 20:54:29
+151,Broccoli,Vegetables,Europe,India,FruitEx Intl,1832.2,USD,1270,2025-10-18 14:27:23
+152,Milk Powder,Dairy,South America,Thailand,ChocoTrade Ltd,102.6,EUR,4810,2025-01-29 12:57:27
+153,Banana,Fruits,Europe,Thailand,VeggieCorp,1875.92,USD,4567,2025-02-23 15:22:02
+154,Milk Powder,Dairy,Africa,Ghana,VeggieCorp,1124.55,INR,3887,2025-04-10 03:26:10
+155,Mango,Fruits,Africa,Italy,FruitEx Intl,624.34,EUR,2223,2025-06-06 01:29:05
+156,Orange,Fruits,Oceania,Mexico,AgriFoods Inc,687.64,EUR,4387,2025-11-17 11:57:46
+157,Carrot,Vegetables,Asia,Indonesia,AgroGlobal,600.28,INR,2000,2025-07-05 21:34:08
+158,Apple,Fruits,South America,Mexico,DairyWorld,1107.35,EUR,3961,2025-11-07 13:07:13
+159,Barley,Grains,Europe,China,Fromage Global,1173.24,USD,3994,2024-12-17 04:49:12
+160,Yogurt,Dairy,North America,Italy,SweetHarvest,1463.51,USD,2298,2025-07-13 12:54:30
+161,Cheddar Cheese,Dairy,Oceania,South Africa,AgroGlobal,563.54,INR,2628,2025-02-06 02:48:21
+162,Rice,Grains,Africa,Australia,ThaiAgri Export,1398.74,INR,1963,2025-02-22 03:17:30
+163,Sugar,Processed,Oceania,France,FruitEx Intl,1301.44,USD,4329,2025-05-20 17:12:43
+164,Barley,Grains,Oceania,France,BeverageWorld,667.57,USD,1299,2025-04-22 04:37:46
+165,Mango,Fruits,North America,South Africa,Fromage Global,424.43,USD,1149,2025-10-22 21:26:44
+166,Orange Juice,Beverages,Europe,South Africa,BioAgro Ltd,718.34,EUR,776,2025-10-21 00:19:10
+167,Butter,Dairy,Asia,India,AgroGlobal,113.91,EUR,4357,2024-11-28 21:00:40
+168,Banana,Fruits,Africa,South Africa,AgroGlobal,562.71,INR,4885,2025-08-12 01:28:58
+169,Apple,Fruits,Oceania,India,AgroPalm Corp,1776.87,EUR,2469,2025-09-25 04:13:01
+170,Barley,Grains,Europe,Australia,AgriFoods Inc,1485.34,USD,2225,2025-05-13 02:05:42
+171,Oats,Grains,Oceania,Australia,AgroPalm Corp,1972.77,INR,3830,2025-06-05 18:54:34
+172,Yogurt,Dairy,South America,Indonesia,AgriFoods Inc,213.69,EUR,1552,2025-06-25 00:32:42
+173,Barley,Grains,Europe,Ghana,VeggieCorp,1091.19,INR,1515,2025-05-31 10:26:54
+174,Soft Drink,Beverages,Africa,France,BioAgro Ltd,802.33,USD,4298,2025-08-23 15:12:26
+175,Oats,Grains,South America,France,AgriFoods Inc,600.32,EUR,3454,2025-07-15 09:44:07
+176,Oats,Grains,Asia,USA,ThaiAgri Export,1945.33,EUR,3163,2025-02-23 20:42:29
+177,Canola,Oilseeds,Africa,South Africa,BioAgro Ltd,502.96,EUR,3482,2025-05-23 16:45:25
+178,Milk Powder,Dairy,North America,Ghana,ChocoTrade Ltd,333.14,EUR,805,2025-11-08 10:46:32
+179,Orange,Fruits,Oceania,Ghana,AgroPalm Corp,876.58,INR,4995,2025-03-17 09:35:56
+180,Sunflower Oil,Oilseeds,Asia,India,AgroPalm Corp,449.75,EUR,3810,2025-07-20 23:45:43
+181,Yogurt,Dairy,North America,Australia,Mediterraneo S.A.,245.82,EUR,4464,2025-06-28 08:29:50
+182,Coffee,Beverages,South America,USA,DairyWorld,573.49,INR,2795,2025-04-20 03:58:27
+183,Cocoa Powder,Processed,Asia,Italy,DairyWorld,633.36,EUR,1909,2025-08-28 06:26:14
+184,Milk Powder,Dairy,Asia,India,VeggieCorp,1429.48,INR,3387,2025-11-15 01:22:20
+185,Milk Powder,Dairy,Africa,France,BeverageWorld,804.5,INR,4618,2025-09-13 19:14:54
+186,Potato,Vegetables,Africa,China,SweetHarvest,455.14,EUR,490,2024-11-25 10:16:43
+187,Potato,Vegetables,Africa,France,AgroPalm Corp,1080.88,INR,4088,2025-09-03 08:47:18
+188,Butter,Dairy,Africa,Thailand,BeverageWorld,168.2,EUR,184,2025-06-01 16:02:46
+189,Sugar,Processed,North America,China,BioAgro Ltd,451.41,INR,3293,2025-11-02 17:37:19
+190,Cocoa Powder,Processed,Africa,Thailand,AgroPalm Corp,763.25,INR,452,2025-11-16 05:53:27
+191,Soft Drink,Beverages,South America,China,AgroGlobal,348.22,INR,3959,2024-11-21 10:43:01
+192,Oats,Grains,Oceania,Spain,AgroGlobal,934.83,EUR,1511,2025-02-01 03:22:13
+193,Flour,Processed,South America,South Africa,AgroPalm Corp,1449.13,USD,1604,2025-06-22 07:36:58
+194,Rice,Grains,Africa,Thailand,AgriFoods Inc,1800.24,INR,759,2025-09-08 21:58:37
+195,Mango,Fruits,Africa,Thailand,AgriFoods Inc,1999.12,EUR,894,2024-11-30 08:01:06
+196,Olive Oil,Processed,North America,Ghana,SweetHarvest,608.92,INR,3287,2025-08-18 10:26:03
+197,Barley,Grains,Africa,Spain,AgroPalm Corp,1682.32,INR,1532,2025-01-27 20:21:23
+198,Milk Powder,Dairy,Oceania,Spain,SweetHarvest,449.8,EUR,754,2025-06-12 01:56:24
+199,Banana,Fruits,Asia,Ghana,FruitEx Intl,155.61,EUR,4105,2025-07-19 09:28:19
+200,Yogurt,Dairy,Europe,Australia,AgroGlobal,1656.63,EUR,590,2025-09-03 02:37:17
+201,Carrot,Vegetables,Oceania,India,BeverageWorld,1317.17,EUR,2163,2025-02-22 17:09:27
+202,Canola,Oilseeds,Asia,Ghana,FruitEx Intl,1088.27,EUR,3161,2025-10-18 01:04:59
+203,Rice,Grains,Asia,Thailand,Fromage Global,1865.46,INR,4201,2025-07-13 01:53:02
+204,Sunflower Oil,Oilseeds,Oceania,India,AgriFoods Inc,905.77,USD,2801,2024-12-28 09:13:29
+205,Rice,Grains,Asia,India,VeggieCorp,1514.41,USD,3238,2025-01-29 07:02:15
+206,Coffee,Beverages,North America,USA,SweetHarvest,1307.57,INR,3374,2025-09-18 15:45:16
+207,Orange Juice,Beverages,South America,Thailand,FruitEx Intl,917.83,INR,2934,2025-10-11 07:37:48
+208,Flour,Processed,North America,Thailand,ThaiAgri Export,1217.16,INR,4682,2025-06-11 20:38:08
+209,Sugar,Processed,Oceania,Italy,BioAgro Ltd,1841.45,USD,4165,2025-08-05 18:43:20
+210,Cocoa Powder,Processed,Asia,Mexico,ThaiAgri Export,1997.34,INR,4570,2025-04-25 22:40:53
+211,Potato,Vegetables,Oceania,Thailand,BioAgro Ltd,601.58,USD,4160,2025-08-17 22:32:32
+212,Onion,Vegetables,North America,Mexico,VeggieCorp,842.23,INR,367,2025-11-19 20:25:53
+213,Banana,Fruits,Asia,Australia,BeverageWorld,1310.15,EUR,1446,2025-06-18 06:03:59
+214,Coffee,Beverages,Europe,France,AgriFoods Inc,152.78,INR,2177,2025-01-18 09:36:19
+215,Tomato,Vegetables,Africa,USA,BeverageWorld,315.03,EUR,1500,2025-09-06 18:56:49
+216,Onion,Vegetables,North America,Brazil,BeverageWorld,1460.01,EUR,774,2025-10-07 02:33:57
+217,Apple Juice,Beverages,South America,Brazil,Fromage Global,280.54,EUR,4957,2024-11-30 17:08:11
+218,Cheddar Cheese,Dairy,Africa,Indonesia,FruitEx Intl,363.05,INR,3588,2025-10-10 17:27:43
+219,Sunflower Oil,Oilseeds,Europe,Ghana,DairyWorld,1251.36,USD,216,2025-07-24 17:31:52
+220,Butter,Dairy,South America,Thailand,AgroPalm Corp,1997.79,USD,1281,2025-11-18 01:13:17
+221,Sunflower Oil,Oilseeds,Africa,Mexico,FruitEx Intl,1121.33,INR,214,2025-01-02 12:31:26
+222,Yogurt,Dairy,Oceania,Italy,FruitEx Intl,1089.42,EUR,299,2025-08-14 10:33:36
+223,Cocoa Powder,Processed,Europe,India,BeverageWorld,1131.01,INR,4108,2025-11-04 05:20:48
+224,Canola,Oilseeds,Asia,Spain,AgroGlobal,1404.08,INR,2155,2025-05-03 14:47:40
+225,Soybean,Oilseeds,Europe,Brazil,SweetHarvest,300.26,USD,2866,2024-12-18 10:41:23
+226,Oats,Grains,South America,Italy,AgroPalm Corp,792.54,USD,3972,2025-07-19 16:52:42
+227,Cheddar Cheese,Dairy,Africa,Thailand,ChocoTrade Ltd,1255.64,USD,829,2025-06-26 22:58:31
+228,Flour,Processed,Africa,India,BioAgro Ltd,158.38,INR,4726,2024-12-23 00:19:27
+229,Apple Juice,Beverages,Africa,Ghana,Mediterraneo S.A.,344.56,EUR,3843,2025-02-23 23:50:11
+230,Palm Oil,Oilseeds,Africa,Australia,DairyWorld,1715.88,EUR,2552,2025-09-14 10:29:12
+231,Soybean,Oilseeds,North America,Ghana,BioAgro Ltd,526.53,EUR,1333,2025-11-16 22:06:50
+232,Cocoa Powder,Processed,Asia,China,ThaiAgri Export,200.78,INR,2129,2025-08-03 14:41:23
+233,Cheddar Cheese,Dairy,Europe,Brazil,AgriFoods Inc,972.15,INR,4548,2024-12-08 11:24:38
+234,Mango,Fruits,Africa,France,FruitEx Intl,1851.92,USD,1427,2025-03-23 10:51:52
+235,Flour,Processed,South America,India,Mediterraneo S.A.,1012.83,EUR,3452,2024-12-02 06:02:08
+236,Butter,Dairy,Europe,Thailand,VeggieCorp,749.99,EUR,322,2024-11-27 20:37:18
+237,Palm Oil,Oilseeds,Africa,Australia,SweetHarvest,873.12,EUR,1265,2025-10-09 10:37:55
+238,Wheat,Grains,Africa,Ghana,AgroPalm Corp,1582.0,EUR,1144,2025-11-15 17:32:31
+239,Wheat,Grains,Europe,India,DairyWorld,1707.61,INR,1087,2025-08-27 06:37:59
+240,Yogurt,Dairy,Oceania,Ghana,ChocoTrade Ltd,753.48,EUR,168,2025-03-29 14:36:25
+241,Flour,Processed,North America,China,ChocoTrade Ltd,851.7,EUR,4405,2025-08-25 02:01:00
+242,Olive Oil,Processed,Europe,Ghana,DairyWorld,968.48,EUR,1600,2025-02-03 06:17:45
+243,Palm Oil,Oilseeds,Asia,India,BeverageWorld,911.59,EUR,1532,2024-12-29 00:51:28
+244,Olive Oil,Processed,Africa,Italy,SweetHarvest,413.87,EUR,2702,2025-07-06 16:53:46
+245,Orange,Fruits,North America,Mexico,FruitEx Intl,1084.08,EUR,4956,2025-03-03 10:02:18
+246,Apple Juice,Beverages,North America,Indonesia,AgriFoods Inc,1482.54,EUR,4775,2025-01-05 14:46:28
+247,Carrot,Vegetables,Asia,India,AgroGlobal,907.6,INR,3639,2025-11-06 23:49:23
+248,Apple,Fruits,Oceania,Brazil,Fromage Global,384.74,EUR,2444,2025-10-28 20:28:28
+249,Milk Powder,Dairy,Africa,Brazil,AgroPalm Corp,1696.91,USD,3809,2025-06-28 12:49:47
+250,Tea,Beverages,Africa,Spain,VeggieCorp,1323.88,EUR,1697,2025-10-29 10:38:27
+251,Apple,Fruits,Oceania,Brazil,DairyWorld,934.76,EUR,2002,2025-06-15 00:16:41
+252,Flour,Processed,Africa,Mexico,ThaiAgri Export,1719.59,USD,300,2025-02-21 06:05:56
+253,Milk Powder,Dairy,South America,France,Mediterraneo S.A.,1575.63,INR,3395,2025-09-05 14:39:15
+254,Canola,Oilseeds,North America,Brazil,BeverageWorld,1752.76,INR,3100,2025-08-02 13:58:36
+255,Sugar,Processed,Oceania,Italy,FruitEx Intl,959.99,USD,4260,2025-07-27 19:54:07
+256,Canola,Oilseeds,South America,France,SweetHarvest,232.42,USD,230,2025-02-09 17:14:58
+257,Sugar,Processed,North America,Mexico,DairyWorld,315.55,INR,4510,2025-05-10 01:10:53
+258,Sunflower Oil,Oilseeds,South America,Mexico,AgriFoods Inc,1176.88,USD,2383,2025-04-26 19:35:05
+259,Corn,Grains,Africa,USA,VeggieCorp,296.62,EUR,830,2025-04-02 15:35:30
+260,Canola,Oilseeds,Africa,Spain,DairyWorld,1275.56,USD,1346,2025-08-02 05:28:48
+261,Soybean,Oilseeds,Asia,Thailand,SweetHarvest,447.88,EUR,430,2025-02-18 00:58:39
+262,Tea,Beverages,Europe,China,BioAgro Ltd,983.92,USD,2338,2025-08-11 17:50:46
+263,Yogurt,Dairy,Oceania,Indonesia,AgroPalm Corp,1991.74,USD,3527,2025-02-12 12:20:45
+264,Rice,Grains,Asia,Brazil,AgroPalm Corp,1148.18,USD,2195,2025-06-01 03:04:14
+265,Grapes,Fruits,Europe,USA,Mediterraneo S.A.,1275.18,EUR,3336,2025-03-10 20:25:38
+266,Olive Oil,Processed,Europe,USA,ThaiAgri Export,1796.66,INR,2366,2025-01-25 07:17:08
+267,Sugar,Processed,North America,Australia,ChocoTrade Ltd,836.84,INR,3409,2025-08-10 04:49:20
+268,Flour,Processed,North America,France,BioAgro Ltd,1106.45,INR,3882,2025-02-17 14:00:28
+269,Broccoli,Vegetables,Africa,South Africa,ThaiAgri Export,1181.02,USD,3949,2024-12-24 15:32:34
+270,Sugar,Processed,South America,Ghana,AgroPalm Corp,1130.13,EUR,870,2024-12-23 11:05:09
+271,Orange,Fruits,North America,Italy,DairyWorld,682.3,EUR,875,2025-07-11 23:14:52
+272,Grapes,Fruits,Africa,Spain,BioAgro Ltd,322.05,INR,3455,2025-10-16 06:17:59
+273,Soybean,Oilseeds,Asia,Italy,SweetHarvest,1509.27,INR,218,2025-08-09 11:59:00
+274,Mango,Fruits,Oceania,Brazil,AgroGlobal,326.14,USD,1295,2025-08-06 08:23:07
+275,Sunflower Oil,Oilseeds,Europe,Indonesia,ChocoTrade Ltd,509.3,USD,817,2025-01-22 01:48:44
+276,Cheddar Cheese,Dairy,Oceania,Spain,SweetHarvest,1594.76,USD,1806,2025-10-02 01:49:35
+277,Onion,Vegetables,South America,South Africa,DairyWorld,1700.3,EUR,130,2025-03-30 22:35:56
+278,Olive Oil,Processed,Asia,South Africa,VeggieCorp,612.01,USD,4359,2025-06-08 00:18:47
+279,Tomato,Vegetables,Oceania,Australia,DairyWorld,585.8,INR,3577,2025-04-28 23:50:47
+280,Soft Drink,Beverages,South America,Mexico,ThaiAgri Export,1055.2,INR,1312,2025-04-28 20:31:58
+281,Soft Drink,Beverages,Oceania,Indonesia,AgroGlobal,597.37,EUR,4064,2025-06-06 19:07:31
+282,Canola,Oilseeds,Oceania,Ghana,Mediterraneo S.A.,147.14,INR,1833,2025-10-12 10:02:20
+283,Potato,Vegetables,Asia,Indonesia,DairyWorld,1524.26,EUR,4474,2025-04-16 07:45:28
+284,Broccoli,Vegetables,North America,Australia,VeggieCorp,134.0,USD,3296,2025-11-15 08:54:50
+285,Mango,Fruits,North America,Ghana,Fromage Global,1596.99,INR,3783,2025-07-03 11:48:15
+286,Flour,Processed,Africa,USA,Mediterraneo S.A.,1972.09,EUR,2830,2025-08-15 02:59:12
+287,Butter,Dairy,Asia,Indonesia,FruitEx Intl,797.5,INR,693,2025-11-01 14:57:48
+288,Orange,Fruits,South America,USA,VeggieCorp,1266.23,INR,645,2025-08-16 06:26:01
+289,Apple,Fruits,Asia,USA,ChocoTrade Ltd,648.65,INR,3447,2025-09-13 20:12:22
+290,Sunflower Oil,Oilseeds,North America,South Africa,Mediterraneo S.A.,1961.12,USD,3819,2025-09-23 18:19:20
+291,Orange,Fruits,Europe,South Africa,AgroGlobal,654.22,INR,430,2025-08-18 07:08:41
+292,Soft Drink,Beverages,Asia,India,VeggieCorp,656.25,EUR,3125,2025-08-01 04:09:57
+293,Cheddar Cheese,Dairy,North America,South Africa,FruitEx Intl,874.48,EUR,3804,2025-07-13 23:49:45
+294,Banana,Fruits,Asia,France,FruitEx Intl,1877.67,EUR,3892,2025-04-25 16:43:18
+295,Mango,Fruits,Oceania,South Africa,ChocoTrade Ltd,803.4,USD,3866,2025-01-07 06:11:17
+296,Barley,Grains,Asia,China,DairyWorld,1854.07,EUR,3784,2025-03-31 14:20:17
+297,Oats,Grains,Asia,Brazil,VeggieCorp,1059.76,EUR,958,2025-08-04 19:32:04
+298,Orange,Fruits,South America,China,BioAgro Ltd,398.15,INR,1398,2025-10-26 20:25:27
+299,Mango,Fruits,Asia,Mexico,FruitEx Intl,770.69,USD,3054,2025-02-12 15:30:37
+300,Milk Powder,Dairy,Oceania,South Africa,AgriFoods Inc,399.6,EUR,3448,2025-08-16 00:12:43
+301,Cocoa Powder,Processed,Africa,South Africa,SweetHarvest,187.12,EUR,2958,2025-10-23 01:07:37
+302,Orange Juice,Beverages,Oceania,USA,DairyWorld,1342.07,USD,892,2025-05-27 14:22:27
+303,Palm Oil,Oilseeds,South America,Ghana,FruitEx Intl,1254.69,INR,1709,2024-12-14 07:00:29
+304,Onion,Vegetables,Europe,Indonesia,BeverageWorld,982.67,INR,409,2025-04-17 05:17:41
+305,Mango,Fruits,Africa,Thailand,ChocoTrade Ltd,1546.18,INR,2924,2025-02-06 16:20:45
+306,Soybean,Oilseeds,Europe,Brazil,DairyWorld,1543.57,INR,1662,2025-11-03 04:04:10
+307,Broccoli,Vegetables,Europe,Italy,SweetHarvest,1074.62,INR,1444,2025-01-14 14:27:59
+308,Sunflower Oil,Oilseeds,Europe,Australia,VeggieCorp,900.57,INR,2625,2025-07-16 23:19:16
+309,Mango,Fruits,North America,Thailand,BioAgro Ltd,1335.02,INR,356,2025-08-17 15:12:53
+310,Soybean,Oilseeds,Europe,Italy,AgriFoods Inc,1621.81,INR,3324,2025-09-13 08:01:40
+311,Broccoli,Vegetables,Oceania,Indonesia,BeverageWorld,861.59,INR,125,2025-01-01 03:06:12
+312,Palm Oil,Oilseeds,Oceania,Italy,DairyWorld,1415.63,EUR,2445,2025-11-14 16:21:43
+313,Onion,Vegetables,North America,USA,DairyWorld,1616.02,INR,1595,2025-10-06 05:16:41
+314,Sunflower Oil,Oilseeds,Oceania,France,ChocoTrade Ltd,301.75,USD,4375,2025-06-27 05:56:06
+315,Carrot,Vegetables,Europe,Indonesia,ChocoTrade Ltd,1784.85,USD,4082,2025-11-18 15:21:31
+316,Coffee,Beverages,Oceania,Brazil,FruitEx Intl,1219.28,INR,1502,2025-07-01 13:47:34
+317,Barley,Grains,Asia,South Africa,DairyWorld,193.56,USD,4666,2025-03-13 07:30:50
+318,Orange,Fruits,North America,France,Mediterraneo S.A.,187.09,INR,4332,2025-06-23 06:05:07
+319,Sunflower Oil,Oilseeds,Oceania,Brazil,BioAgro Ltd,131.49,USD,2700,2025-04-19 06:01:52
+320,Apple,Fruits,Europe,India,AgroPalm Corp,382.01,USD,3585,2025-05-10 03:20:47
+321,Apple Juice,Beverages,Oceania,South Africa,BioAgro Ltd,927.0,INR,2202,2025-09-11 07:32:55
+322,Sugar,Processed,North America,USA,Mediterraneo S.A.,463.81,USD,1181,2025-03-17 22:49:54
+323,Rice,Grains,South America,Spain,AgroGlobal,443.91,INR,2642,2024-12-16 16:03:54
+324,Orange,Fruits,South America,Indonesia,BeverageWorld,606.8,EUR,3607,2024-11-29 09:33:20
+325,Soft Drink,Beverages,Asia,Brazil,SweetHarvest,1577.62,INR,1244,2025-06-17 16:09:52
+326,Milk Powder,Dairy,Asia,Brazil,AgriFoods Inc,1334.09,INR,106,2025-10-17 23:40:47
+327,Onion,Vegetables,Oceania,Indonesia,VeggieCorp,1583.3,EUR,1202,2025-09-03 04:25:44
+328,Apple Juice,Beverages,Oceania,Thailand,FruitEx Intl,1773.85,INR,3439,2025-06-11 20:02:23
+329,Yogurt,Dairy,Europe,China,BeverageWorld,681.79,USD,900,2025-11-03 05:13:56
+330,Carrot,Vegetables,North America,China,Fromage Global,1695.94,INR,3111,2025-08-02 15:31:31
+331,Butter,Dairy,Oceania,South Africa,BioAgro Ltd,857.59,USD,3395,2025-10-16 03:24:01
+332,Banana,Fruits,South America,Mexico,Fromage Global,335.83,EUR,1358,2024-11-23 22:14:26
+333,Canola,Oilseeds,Africa,Mexico,Mediterraneo S.A.,1178.36,INR,1711,2025-06-03 01:00:15
+334,Potato,Vegetables,Africa,Australia,AgriFoods Inc,201.26,USD,1849,2025-02-04 20:18:52
+335,Flour,Processed,Europe,Italy,AgroGlobal,534.3,EUR,2500,2025-02-09 17:57:02
+336,Canola,Oilseeds,Oceania,Brazil,SweetHarvest,238.42,USD,481,2024-12-19 12:33:07
+337,Soybean,Oilseeds,South America,Australia,VeggieCorp,561.04,INR,2944,2025-06-21 15:59:50
+338,Carrot,Vegetables,Asia,France,BeverageWorld,335.18,USD,4444,2024-12-06 15:54:29
+339,Carrot,Vegetables,Asia,Italy,BioAgro Ltd,1546.33,EUR,1996,2025-05-10 21:20:55
+340,Sunflower Oil,Oilseeds,North America,Mexico,AgroPalm Corp,1741.26,EUR,3202,2025-10-01 12:03:37
+341,Butter,Dairy,Asia,USA,ChocoTrade Ltd,731.91,USD,1290,2025-02-21 06:41:31
+342,Corn,Grains,South America,India,VeggieCorp,971.55,EUR,2532,2025-08-27 17:25:35
+343,Grapes,Fruits,Asia,Spain,AgriFoods Inc,1971.36,USD,4925,2025-09-30 00:05:03
+344,Orange,Fruits,North America,Australia,BioAgro Ltd,993.5,INR,3548,2025-07-03 07:02:10
+345,Apple Juice,Beverages,South America,Indonesia,AgriFoods Inc,461.29,INR,4541,2025-10-27 13:00:43
+346,Carrot,Vegetables,Asia,France,FruitEx Intl,1371.25,EUR,4219,2025-11-16 00:37:40
+347,Broccoli,Vegetables,Oceania,India,FruitEx Intl,177.0,EUR,2274,2025-07-09 15:30:13
+348,Flour,Processed,South America,India,AgriFoods Inc,767.48,USD,3736,2025-06-09 20:34:59
+349,Yogurt,Dairy,Africa,Spain,AgriFoods Inc,238.46,EUR,1210,2025-04-20 00:16:47
+350,Palm Oil,Oilseeds,Europe,Italy,ChocoTrade Ltd,931.68,INR,2182,2025-04-20 16:28:31
+351,Banana,Fruits,South America,India,BioAgro Ltd,1724.7,INR,4695,2025-01-21 19:52:17
+352,Butter,Dairy,Asia,China,BeverageWorld,148.75,INR,3164,2025-08-07 23:06:33
+353,Palm Oil,Oilseeds,Europe,Italy,FruitEx Intl,1474.25,USD,2463,2025-04-08 17:25:18
+354,Orange,Fruits,Oceania,South Africa,AgroPalm Corp,963.64,INR,4866,2025-03-22 20:05:57
+355,Barley,Grains,South America,India,ChocoTrade Ltd,992.44,INR,358,2025-07-24 13:37:08
+356,Rice,Grains,North America,Italy,SweetHarvest,1190.03,EUR,3901,2025-11-02 08:43:29
+357,Butter,Dairy,Africa,Mexico,ChocoTrade Ltd,354.25,INR,607,2024-12-12 12:57:31
+358,Onion,Vegetables,Oceania,China,Mediterraneo S.A.,1720.37,USD,1114,2025-04-22 06:06:53
+359,Canola,Oilseeds,South America,South Africa,ThaiAgri Export,580.35,USD,512,2025-01-13 05:59:49
+360,Milk Powder,Dairy,Asia,USA,AgroPalm Corp,1419.53,EUR,1080,2025-04-30 13:39:01
+361,Oats,Grains,Africa,Mexico,AgroPalm Corp,113.44,USD,346,2024-12-12 13:39:20
+362,Apple,Fruits,Oceania,Thailand,BeverageWorld,1077.46,INR,4950,2025-10-30 04:04:44
+363,Flour,Processed,Asia,France,AgroGlobal,1013.64,INR,922,2025-08-29 06:11:37
+364,Sugar,Processed,Europe,Brazil,BioAgro Ltd,1032.35,INR,2385,2024-11-23 10:31:15
+365,Onion,Vegetables,Asia,South Africa,FruitEx Intl,136.43,EUR,3881,2025-06-25 23:58:33
+366,Palm Oil,Oilseeds,South America,Italy,ThaiAgri Export,1491.27,EUR,642,2025-10-04 04:49:53
+367,Grapes,Fruits,Europe,Brazil,ThaiAgri Export,1072.73,EUR,424,2025-08-27 08:49:40
+368,Apple,Fruits,North America,Ghana,SweetHarvest,1119.63,EUR,1750,2025-06-29 03:51:43
+369,Rice,Grains,Oceania,Brazil,FruitEx Intl,329.39,EUR,1542,2025-05-01 16:37:57
+370,Grapes,Fruits,Asia,Thailand,AgroPalm Corp,1982.51,EUR,1637,2025-06-10 05:05:04
+371,Palm Oil,Oilseeds,Asia,USA,FruitEx Intl,1550.5,INR,2711,2025-06-14 21:27:12
+372,Soft Drink,Beverages,South America,India,FruitEx Intl,1023.34,USD,3046,2025-01-17 08:46:45
+373,Mango,Fruits,Africa,France,BioAgro Ltd,1823.48,INR,2586,2025-04-25 11:18:18
+374,Sunflower Oil,Oilseeds,North America,Thailand,BioAgro Ltd,1009.06,USD,1835,2025-05-29 03:33:42
+375,Oats,Grains,Asia,Indonesia,AgroGlobal,1346.57,USD,4652,2025-08-15 13:23:49
+376,Apple,Fruits,Asia,USA,AgriFoods Inc,1447.88,USD,3622,2025-11-07 20:52:03
+377,Flour,Processed,Oceania,Brazil,VeggieCorp,162.8,INR,1932,2024-12-09 18:19:06
+378,Mango,Fruits,Europe,Mexico,VeggieCorp,1349.78,EUR,4975,2025-01-13 05:41:38
+379,Coffee,Beverages,Europe,India,ChocoTrade Ltd,382.06,EUR,2705,2025-08-16 03:04:44
+380,Apple,Fruits,South America,Mexico,AgroGlobal,210.88,INR,3948,2025-07-30 03:47:19
+381,Canola,Oilseeds,Asia,Thailand,AgroPalm Corp,326.72,INR,3900,2025-09-30 09:08:46
+382,Cheddar Cheese,Dairy,North America,Australia,SweetHarvest,252.33,USD,4982,2025-05-10 07:02:01
+383,Palm Oil,Oilseeds,Asia,China,DairyWorld,140.11,USD,4585,2024-12-12 20:00:45
+384,Broccoli,Vegetables,Africa,France,VeggieCorp,1632.56,USD,4317,2024-12-31 17:15:55
+385,Potato,Vegetables,Africa,Indonesia,DairyWorld,384.98,USD,4006,2025-02-05 10:12:23
+386,Butter,Dairy,Africa,Brazil,AgroGlobal,1001.92,INR,4276,2025-11-16 07:42:29
+387,Soft Drink,Beverages,North America,Ghana,ChocoTrade Ltd,731.83,EUR,3064,2025-04-25 17:31:36
+388,Broccoli,Vegetables,South America,Indonesia,AgriFoods Inc,1167.6,INR,1216,2025-09-23 19:12:15
+389,Soft Drink,Beverages,Europe,Thailand,Mediterraneo S.A.,1751.14,EUR,4061,2025-11-17 14:29:52
+390,Yogurt,Dairy,Oceania,France,VeggieCorp,425.07,INR,3008,2025-10-03 00:02:36
+391,Canola,Oilseeds,Oceania,China,FruitEx Intl,1010.47,EUR,3640,2024-12-22 00:36:48
+392,Yogurt,Dairy,North America,Ghana,AgroGlobal,972.08,USD,692,2025-03-14 10:19:40
+393,Carrot,Vegetables,Asia,Spain,SweetHarvest,340.86,USD,1962,2025-02-18 04:29:45
+394,Carrot,Vegetables,Oceania,Australia,Fromage Global,538.31,USD,101,2025-11-09 00:41:20
+395,Carrot,Vegetables,Oceania,Spain,BeverageWorld,1930.13,EUR,3699,2025-04-16 16:32:06
+396,Sugar,Processed,Oceania,South Africa,AgroGlobal,1576.89,INR,3313,2025-08-23 06:59:45
+397,Orange Juice,Beverages,Europe,Indonesia,DairyWorld,529.79,USD,1481,2025-10-27 09:27:56
+398,Cocoa Powder,Processed,Oceania,Italy,AgroPalm Corp,1954.24,USD,2971,2025-02-03 19:37:28
+399,Potato,Vegetables,Africa,Thailand,ThaiAgri Export,800.67,INR,1228,2025-05-23 10:07:50
+400,Cocoa Powder,Processed,Oceania,Italy,BioAgro Ltd,769.37,EUR,1094,2024-12-06 09:07:52
+401,Grapes,Fruits,South America,USA,ThaiAgri Export,1011.98,EUR,598,2025-01-10 12:52:34
+402,Oats,Grains,Asia,France,AgroGlobal,636.36,USD,4908,2025-01-18 22:15:40
+403,Mango,Fruits,Oceania,Australia,BeverageWorld,1458.01,EUR,3452,2025-07-01 04:55:26
+404,Tea,Beverages,Asia,Spain,AgroGlobal,1366.91,USD,4706,2025-06-12 08:19:30
+405,Sunflower Oil,Oilseeds,North America,Italy,BeverageWorld,1707.88,INR,4023,2025-07-21 00:30:14
+406,Soft Drink,Beverages,Africa,Brazil,FruitEx Intl,1675.56,USD,4228,2025-10-24 09:27:34
+407,Potato,Vegetables,Europe,Indonesia,Mediterraneo S.A.,716.53,EUR,1278,2025-08-13 15:30:28
+408,Orange Juice,Beverages,Oceania,Thailand,BioAgro Ltd,1467.5,EUR,3284,2025-02-20 13:47:12
+409,Soybean,Oilseeds,Oceania,Ghana,Fromage Global,1372.53,EUR,3273,2025-10-28 22:45:34
+410,Cocoa Powder,Processed,Africa,Indonesia,ChocoTrade Ltd,1000.19,EUR,3120,2025-10-25 01:49:53
+411,Tea,Beverages,Europe,France,BioAgro Ltd,872.52,INR,1520,2025-06-09 23:00:22
+412,Orange,Fruits,Oceania,Thailand,ChocoTrade Ltd,1074.56,INR,516,2025-03-15 00:13:28
+413,Carrot,Vegetables,Africa,Ghana,DairyWorld,1352.25,EUR,865,2025-05-25 19:06:40
+414,Apple,Fruits,South America,Indonesia,VeggieCorp,908.23,USD,3736,2025-03-03 05:24:52
+415,Soybean,Oilseeds,North America,China,DairyWorld,1785.54,INR,1217,2025-01-26 10:43:55
+416,Rice,Grains,Asia,Italy,AgroGlobal,1964.64,USD,4699,2025-03-23 15:16:59
+417,Butter,Dairy,Oceania,China,ThaiAgri Export,1405.11,EUR,1234,2025-11-04 14:14:18
+418,Cheddar Cheese,Dairy,North America,Australia,BioAgro Ltd,1337.35,USD,1950,2025-05-28 20:36:52
+419,Cheddar Cheese,Dairy,Africa,Italy,AgroGlobal,1507.89,INR,4419,2025-03-13 11:22:04
+420,Milk Powder,Dairy,South America,USA,Mediterraneo S.A.,339.32,EUR,4700,2025-01-13 00:35:36
+421,Potato,Vegetables,Africa,Thailand,FruitEx Intl,1983.39,EUR,400,2025-07-30 03:25:54
+422,Apple,Fruits,Oceania,Spain,VeggieCorp,593.35,INR,4683,2025-06-29 06:51:33
+423,Canola,Oilseeds,North America,Brazil,SweetHarvest,594.93,INR,4640,2025-05-28 12:27:21
+424,Orange,Fruits,South America,France,SweetHarvest,1145.82,USD,401,2025-04-02 12:10:28
+425,Orange Juice,Beverages,Oceania,Italy,AgriFoods Inc,118.4,INR,1941,2025-03-20 23:30:30
+426,Olive Oil,Processed,Asia,France,VeggieCorp,847.2,INR,1335,2025-02-03 13:43:28
+427,Yogurt,Dairy,Africa,China,FruitEx Intl,779.26,USD,3514,2024-12-15 02:38:33
+428,Wheat,Grains,Oceania,France,AgroPalm Corp,1857.79,USD,3319,2025-02-09 20:32:19
+429,Butter,Dairy,Europe,India,ThaiAgri Export,1548.72,EUR,2423,2025-06-28 15:57:53
+430,Wheat,Grains,North America,Ghana,AgroPalm Corp,345.11,EUR,4040,2025-01-29 12:30:21
+431,Canola,Oilseeds,Europe,Indonesia,ThaiAgri Export,1952.72,EUR,1667,2025-01-18 23:47:45
+432,Yogurt,Dairy,North America,Australia,ChocoTrade Ltd,670.35,USD,4760,2025-02-10 14:55:51
+433,Grapes,Fruits,South America,Indonesia,DairyWorld,968.84,EUR,2689,2025-08-02 02:22:54
+434,Onion,Vegetables,Oceania,India,BioAgro Ltd,1618.46,INR,3345,2025-06-08 03:10:07
+435,Apple Juice,Beverages,North America,USA,AgroGlobal,300.24,INR,1879,2024-12-20 02:25:57
+436,Carrot,Vegetables,Africa,China,SweetHarvest,822.66,EUR,175,2025-06-11 04:18:25
+437,Apple Juice,Beverages,South America,China,AgriFoods Inc,1197.43,INR,1860,2025-07-16 18:35:37
+438,Cocoa Powder,Processed,Africa,Thailand,AgroPalm Corp,134.08,INR,4059,2025-08-02 01:37:52
+439,Butter,Dairy,Africa,China,Mediterraneo S.A.,1670.58,USD,1553,2025-06-25 08:18:16
+440,Yogurt,Dairy,Africa,Australia,BioAgro Ltd,1555.84,EUR,1675,2025-01-16 11:24:09
+441,Yogurt,Dairy,Africa,Spain,Mediterraneo S.A.,550.6,USD,4133,2025-10-05 22:45:22
+442,Orange,Fruits,Africa,USA,Fromage Global,1510.79,EUR,4844,2025-11-02 08:57:27
+443,Olive Oil,Processed,Asia,Thailand,BioAgro Ltd,1774.63,USD,2658,2025-09-03 03:24:02
+444,Tea,Beverages,Oceania,Thailand,SweetHarvest,1792.04,USD,3477,2025-04-18 06:44:20
+445,Mango,Fruits,Africa,USA,AgroGlobal,612.28,INR,3406,2025-06-03 08:16:53
+446,Yogurt,Dairy,Europe,South Africa,VeggieCorp,311.46,EUR,3746,2025-07-13 07:13:39
+447,Flour,Processed,Asia,Indonesia,Mediterraneo S.A.,164.46,INR,3202,2024-12-21 20:28:33
+448,Tomato,Vegetables,Europe,France,BioAgro Ltd,281.51,EUR,524,2025-01-16 23:51:42
+449,Barley,Grains,Africa,Spain,Mediterraneo S.A.,318.3,USD,750,2025-02-09 03:22:29
+450,Canola,Oilseeds,Asia,Spain,BioAgro Ltd,1926.66,EUR,338,2025-08-28 17:00:43
+451,Palm Oil,Oilseeds,North America,India,AgriFoods Inc,1301.26,INR,2990,2024-12-28 00:16:02
+452,Sunflower Oil,Oilseeds,North America,Mexico,VeggieCorp,173.15,INR,724,2024-12-15 13:24:44
+453,Mango,Fruits,North America,Ghana,AgriFoods Inc,1003.01,USD,844,2025-10-21 08:11:06
+454,Canola,Oilseeds,South America,India,Mediterraneo S.A.,1525.42,INR,3477,2025-10-26 06:02:09
+455,Flour,Processed,North America,Brazil,ChocoTrade Ltd,540.83,EUR,2701,2025-05-30 06:57:46
+456,Cocoa Powder,Processed,Oceania,Brazil,Mediterraneo S.A.,437.63,INR,1018,2025-05-18 14:02:13
+457,Banana,Fruits,North America,China,DairyWorld,290.21,INR,533,2025-02-21 09:00:24
+458,Orange Juice,Beverages,Europe,Thailand,BioAgro Ltd,794.98,USD,3179,2025-02-09 21:02:52
+459,Sunflower Oil,Oilseeds,Asia,Italy,BioAgro Ltd,452.28,INR,3921,2025-03-18 15:20:39
+460,Tomato,Vegetables,North America,Ghana,BioAgro Ltd,1815.58,USD,4222,2025-04-03 00:11:35
+461,Potato,Vegetables,South America,Thailand,Fromage Global,1265.96,USD,1614,2025-05-29 19:36:19
+462,Orange Juice,Beverages,Oceania,India,AgriFoods Inc,1302.56,EUR,2338,2025-06-06 12:18:35
+463,Sugar,Processed,Africa,Brazil,ThaiAgri Export,372.74,EUR,4029,2025-02-06 07:46:08
+464,Tea,Beverages,Africa,Mexico,AgroGlobal,1469.09,INR,563,2025-10-18 16:42:06
+465,Cocoa Powder,Processed,Europe,India,VeggieCorp,629.36,INR,482,2025-03-16 14:35:05
+466,Soybean,Oilseeds,Oceania,Thailand,Mediterraneo S.A.,1030.36,USD,3776,2025-01-23 06:55:59
+467,Apple,Fruits,Africa,Indonesia,ThaiAgri Export,906.27,EUR,124,2025-10-06 00:19:23
+468,Mango,Fruits,South America,South Africa,BioAgro Ltd,537.53,EUR,639,2025-10-30 23:02:36
+469,Sunflower Oil,Oilseeds,Africa,South Africa,BioAgro Ltd,597.77,EUR,433,2025-01-08 01:49:43
+470,Soft Drink,Beverages,South America,Thailand,VeggieCorp,752.88,EUR,2966,2025-03-18 17:34:23
+471,Butter,Dairy,Africa,Thailand,AgroPalm Corp,1872.98,INR,1056,2025-04-15 06:03:08
+472,Orange,Fruits,North America,Ghana,Fromage Global,1931.68,INR,3684,2025-08-25 12:59:59
+473,Onion,Vegetables,Asia,Spain,Fromage Global,1895.26,USD,786,2025-08-13 15:44:59
+474,Palm Oil,Oilseeds,Oceania,Australia,BioAgro Ltd,1462.2,EUR,3588,2025-01-01 06:13:30
+475,Orange Juice,Beverages,North America,China,AgroGlobal,1846.31,USD,3246,2025-05-27 22:18:09
+476,Carrot,Vegetables,Europe,Mexico,AgroPalm Corp,1521.0,USD,4624,2025-09-12 03:47:03
+477,Rice,Grains,Europe,Italy,VeggieCorp,962.92,USD,1301,2025-07-28 01:55:22
+478,Grapes,Fruits,North America,Thailand,DairyWorld,307.42,USD,1733,2025-05-01 05:19:34
+479,Sugar,Processed,North America,Australia,SweetHarvest,216.05,EUR,3566,2025-02-15 12:41:28
+480,Cheddar Cheese,Dairy,North America,Brazil,VeggieCorp,835.54,INR,2076,2025-10-23 05:22:01
+481,Tomato,Vegetables,South America,South Africa,VeggieCorp,1145.58,EUR,1223,2025-01-25 02:37:06
+482,Cheddar Cheese,Dairy,Asia,Thailand,VeggieCorp,1461.57,INR,3315,2025-01-14 06:06:29
+483,Tea,Beverages,Oceania,South Africa,ThaiAgri Export,584.12,INR,4733,2025-10-07 03:09:20
+484,Sugar,Processed,South America,South Africa,ChocoTrade Ltd,1757.09,EUR,1030,2025-01-27 21:33:05
+485,Milk Powder,Dairy,Oceania,China,FruitEx Intl,525.54,EUR,404,2025-08-15 15:10:59
+486,Butter,Dairy,South America,South Africa,AgroGlobal,761.96,USD,1211,2025-08-31 08:11:24
+487,Palm Oil,Oilseeds,Europe,South Africa,AgriFoods Inc,386.29,USD,4428,2025-01-09 21:46:47
+488,Carrot,Vegetables,North America,USA,FruitEx Intl,1227.13,USD,255,2025-07-17 11:22:13
+489,Tea,Beverages,Europe,France,Mediterraneo S.A.,290.67,EUR,2484,2025-05-20 10:17:30
+490,Canola,Oilseeds,Europe,France,AgroGlobal,1564.99,EUR,2278,2025-02-20 13:48:54
+491,Corn,Grains,Europe,China,ThaiAgri Export,157.78,EUR,4569,2024-12-23 17:25:33
+492,Butter,Dairy,Oceania,Italy,Fromage Global,1953.81,USD,1039,2025-06-04 15:44:33
+493,Sugar,Processed,Asia,USA,ChocoTrade Ltd,137.75,INR,776,2025-06-23 10:47:11
+494,Broccoli,Vegetables,South America,Italy,ChocoTrade Ltd,237.91,INR,3061,2024-11-30 16:25:32
+495,Mango,Fruits,Oceania,Spain,AgroGlobal,899.52,EUR,1632,2025-01-09 00:46:02
+496,Sunflower Oil,Oilseeds,North America,Indonesia,BioAgro Ltd,1929.11,EUR,4947,2025-02-21 03:05:08
+497,Olive Oil,Processed,Oceania,France,DairyWorld,1170.98,EUR,2272,2025-10-10 22:44:19
+498,Yogurt,Dairy,Asia,USA,VeggieCorp,1053.36,INR,2253,2024-12-26 05:38:37
+499,Cocoa Powder,Processed,Asia,South Africa,Fromage Global,1492.03,EUR,3909,2024-11-23 05:50:58
+500,Apple,Fruits,Europe,Thailand,Fromage Global,642.18,INR,3673,2025-07-11 02:24:49
+501,Sugar,Processed,Asia,Brazil,AgroPalm Corp,1305.26,EUR,2366,2025-04-17 00:45:14
+502,Grapes,Fruits,Europe,France,AgriFoods Inc,203.86,INR,2805,2025-03-06 22:35:49
+503,Palm Oil,Oilseeds,Africa,South Africa,BeverageWorld,135.2,INR,3357,2025-07-18 14:11:49
+504,Flour,Processed,Asia,Indonesia,BeverageWorld,330.83,EUR,2928,2025-02-26 02:02:21
+505,Butter,Dairy,North America,South Africa,AgriFoods Inc,1134.24,INR,3446,2025-01-24 17:15:01
+506,Olive Oil,Processed,Europe,Indonesia,BeverageWorld,225.99,INR,3902,2025-02-22 20:09:50
+507,Banana,Fruits,Asia,Spain,FruitEx Intl,220.31,INR,1876,2025-09-27 21:02:00
+508,Potato,Vegetables,Asia,Italy,ThaiAgri Export,1339.52,EUR,179,2025-03-13 03:48:08
+509,Broccoli,Vegetables,Africa,Ghana,BioAgro Ltd,1266.03,USD,3737,2025-11-06 15:40:37
+510,Coffee,Beverages,Europe,Thailand,VeggieCorp,1095.67,USD,270,2025-09-20 10:30:26
+511,Palm Oil,Oilseeds,Europe,South Africa,AgriFoods Inc,1486.26,USD,4615,2025-04-17 14:57:58
+512,Cocoa Powder,Processed,Asia,Spain,VeggieCorp,1082.29,EUR,184,2025-08-20 07:56:26
+513,Oats,Grains,North America,India,ChocoTrade Ltd,1677.8,INR,3534,2025-11-02 20:27:34
+514,Potato,Vegetables,Oceania,France,Fromage Global,1925.95,USD,4480,2025-07-20 03:52:40
+515,Orange,Fruits,Asia,Ghana,ChocoTrade Ltd,139.69,USD,740,2025-01-10 21:56:56
+516,Rice,Grains,Asia,Mexico,Fromage Global,466.52,EUR,2429,2024-11-21 14:19:05
+517,Tea,Beverages,Africa,France,AgroPalm Corp,569.48,EUR,3281,2025-05-13 22:02:34
+518,Cheddar Cheese,Dairy,Europe,Brazil,BioAgro Ltd,954.38,USD,681,2025-05-05 16:43:23
+519,Palm Oil,Oilseeds,North America,France,AgroGlobal,1761.91,EUR,2876,2025-03-01 01:21:13
+520,Tea,Beverages,Europe,Italy,AgriFoods Inc,963.37,INR,4326,2025-10-22 19:07:29
+521,Butter,Dairy,Europe,Ghana,ChocoTrade Ltd,605.25,INR,2635,2025-04-17 07:53:00
+522,Potato,Vegetables,South America,Spain,ThaiAgri Export,338.99,EUR,1201,2025-08-03 16:03:31
+523,Milk Powder,Dairy,Africa,Indonesia,AgroGlobal,332.98,INR,2583,2025-01-13 09:49:35
+524,Barley,Grains,Oceania,USA,Mediterraneo S.A.,306.34,INR,2954,2025-03-23 23:21:57
+525,Apple,Fruits,Europe,India,FruitEx Intl,1722.53,INR,3675,2025-02-09 05:18:06
+526,Wheat,Grains,Oceania,Thailand,BioAgro Ltd,1291.51,USD,3840,2025-06-02 00:09:41
+527,Cheddar Cheese,Dairy,Oceania,Thailand,ThaiAgri Export,881.21,USD,2666,2025-09-10 10:19:00
+528,Butter,Dairy,North America,Brazil,SweetHarvest,494.53,INR,385,2025-10-04 17:13:23
+529,Orange Juice,Beverages,Africa,France,VeggieCorp,703.24,USD,824,2024-11-23 02:00:46
+530,Rice,Grains,Oceania,Mexico,Fromage Global,1581.85,EUR,2822,2025-03-10 09:22:29
+531,Cocoa Powder,Processed,South America,Spain,Mediterraneo S.A.,907.11,EUR,2192,2025-01-11 21:20:06
+532,Sunflower Oil,Oilseeds,Oceania,India,AgroGlobal,155.89,EUR,1614,2025-08-27 03:05:33
+533,Canola,Oilseeds,North America,Brazil,ChocoTrade Ltd,1832.77,USD,2263,2025-05-22 07:50:48
+534,Canola,Oilseeds,Oceania,Brazil,BeverageWorld,671.25,USD,2697,2025-04-19 06:47:45
+535,Tomato,Vegetables,Africa,USA,Fromage Global,1194.72,EUR,4602,2024-11-27 06:26:04
+536,Rice,Grains,North America,Spain,AgroPalm Corp,1930.03,INR,304,2025-02-22 06:15:04
+537,Wheat,Grains,Africa,Spain,AgriFoods Inc,1524.52,EUR,4506,2025-05-01 12:26:52
+538,Coffee,Beverages,Asia,Thailand,Fromage Global,1953.13,USD,4786,2025-08-18 01:29:02
+539,Soybean,Oilseeds,Europe,Indonesia,SweetHarvest,1461.59,USD,4761,2025-04-08 03:51:05
+540,Butter,Dairy,South America,Brazil,AgroPalm Corp,660.51,USD,4858,2025-10-18 16:46:52
+541,Broccoli,Vegetables,South America,Thailand,DairyWorld,1165.75,INR,4096,2025-06-05 01:03:48
+542,Sunflower Oil,Oilseeds,Oceania,Brazil,BioAgro Ltd,1285.2,EUR,820,2025-11-13 17:56:31
+543,Grapes,Fruits,Europe,Spain,SweetHarvest,1189.19,USD,2566,2025-07-31 19:13:02
+544,Corn,Grains,Asia,India,VeggieCorp,1229.23,USD,1251,2025-05-13 14:24:50
+545,Sunflower Oil,Oilseeds,Africa,Brazil,VeggieCorp,1539.26,INR,3228,2025-05-03 20:20:35
+546,Cocoa Powder,Processed,North America,Indonesia,AgriFoods Inc,712.84,INR,3327,2025-09-04 14:31:02
+547,Cocoa Powder,Processed,Africa,Mexico,SweetHarvest,1173.64,EUR,2322,2025-10-17 11:50:26
+548,Carrot,Vegetables,North America,USA,BioAgro Ltd,363.23,INR,4187,2024-12-16 17:34:49
+549,Canola,Oilseeds,Asia,India,AgriFoods Inc,869.7,INR,1998,2025-10-27 18:50:56
+550,Carrot,Vegetables,Asia,India,BioAgro Ltd,1258.54,INR,3803,2024-12-27 21:05:08
+551,Soybean,Oilseeds,South America,China,AgriFoods Inc,646.36,INR,1884,2025-02-17 13:08:44
+552,Yogurt,Dairy,Africa,Spain,Fromage Global,131.62,INR,2852,2025-01-24 07:56:59
+553,Butter,Dairy,Oceania,USA,BeverageWorld,1107.2,USD,3765,2025-09-07 22:15:02
+554,Banana,Fruits,Africa,South Africa,BeverageWorld,1985.83,EUR,4726,2025-03-28 01:32:50
+555,Palm Oil,Oilseeds,Europe,Brazil,VeggieCorp,1421.0,USD,3221,2025-06-17 07:21:35
+556,Rice,Grains,North America,France,ThaiAgri Export,1138.95,EUR,2116,2024-12-14 14:18:16
+557,Butter,Dairy,North America,Australia,ChocoTrade Ltd,1300.49,EUR,4720,2025-06-13 16:10:57
+558,Broccoli,Vegetables,North America,Mexico,Mediterraneo S.A.,1884.4,EUR,284,2025-08-11 21:39:48
+559,Carrot,Vegetables,Asia,France,BioAgro Ltd,1930.46,USD,454,2025-06-03 07:05:32
+560,Flour,Processed,North America,India,Fromage Global,942.67,EUR,1800,2025-09-14 13:11:38
+561,Corn,Grains,Oceania,Spain,BioAgro Ltd,948.28,INR,1882,2025-05-19 01:16:32
+562,Soybean,Oilseeds,North America,Australia,DairyWorld,608.44,EUR,4141,2025-06-03 17:59:40
+563,Orange,Fruits,North America,USA,SweetHarvest,1320.71,INR,1173,2025-01-31 01:11:52
+564,Cocoa Powder,Processed,Asia,South Africa,ThaiAgri Export,274.23,EUR,4518,2025-09-20 03:57:50
+565,Soybean,Oilseeds,Asia,Italy,VeggieCorp,1931.85,EUR,791,2025-07-30 04:10:50
+566,Mango,Fruits,South America,Italy,AgroGlobal,391.12,USD,2995,2025-08-09 23:11:33
+567,Apple,Fruits,Oceania,Brazil,Fromage Global,1552.56,USD,4674,2025-07-28 14:03:50
+568,Broccoli,Vegetables,Europe,Indonesia,ChocoTrade Ltd,1799.76,USD,283,2024-12-17 09:45:21
+569,Cocoa Powder,Processed,Oceania,India,SweetHarvest,351.75,EUR,394,2025-11-11 13:30:30
+570,Potato,Vegetables,Asia,Spain,BeverageWorld,1746.01,USD,2627,2025-05-12 11:02:47
+571,Yogurt,Dairy,Africa,Ghana,SweetHarvest,1389.68,INR,192,2025-04-25 07:24:11
+572,Broccoli,Vegetables,Europe,Brazil,AgroGlobal,809.05,USD,295,2025-11-08 00:29:15
+573,Sunflower Oil,Oilseeds,Africa,Mexico,BioAgro Ltd,1896.97,USD,1909,2025-04-03 17:02:47
+574,Sugar,Processed,Oceania,Italy,DairyWorld,1445.24,INR,4155,2024-12-15 04:05:31
+575,Yogurt,Dairy,North America,Brazil,FruitEx Intl,217.63,USD,296,2024-11-20 17:04:10
+576,Cocoa Powder,Processed,Oceania,France,ThaiAgri Export,591.33,USD,4764,2025-09-01 06:59:17
+577,Tea,Beverages,Europe,Brazil,Mediterraneo S.A.,1806.66,EUR,783,2025-05-03 21:01:55
+578,Onion,Vegetables,Oceania,Brazil,SweetHarvest,1536.92,USD,2101,2025-08-03 06:31:55
+579,Orange Juice,Beverages,North America,India,BeverageWorld,1053.04,EUR,2662,2024-12-12 04:49:29
+580,Flour,Processed,Africa,South Africa,FruitEx Intl,1610.56,EUR,1039,2025-05-05 02:18:58
+581,Orange Juice,Beverages,Asia,South Africa,AgroGlobal,246.59,USD,4977,2024-12-08 08:53:51
+582,Palm Oil,Oilseeds,Asia,Brazil,BeverageWorld,1722.11,INR,2432,2025-02-01 06:04:02
+583,Palm Oil,Oilseeds,Oceania,Spain,SweetHarvest,1219.02,USD,1344,2025-08-24 00:27:56
+584,Palm Oil,Oilseeds,Europe,South Africa,Mediterraneo S.A.,1038.78,EUR,2666,2025-10-05 03:13:38
+585,Cocoa Powder,Processed,Oceania,China,ChocoTrade Ltd,1028.29,INR,4132,2025-07-18 18:58:22
+586,Sunflower Oil,Oilseeds,Asia,France,AgroGlobal,1146.89,EUR,3997,2025-05-01 08:42:31
+587,Carrot,Vegetables,Oceania,Indonesia,SweetHarvest,902.04,USD,254,2025-04-23 04:54:09
+588,Cocoa Powder,Processed,Europe,Thailand,BeverageWorld,1153.9,USD,2697,2025-06-20 22:10:13
+589,Rice,Grains,North America,USA,AgroPalm Corp,350.97,USD,1687,2025-04-28 04:55:38
+590,Coffee,Beverages,South America,India,VeggieCorp,852.67,INR,1534,2025-09-10 01:05:58
+591,Apple,Fruits,Asia,Spain,SweetHarvest,1965.48,INR,2343,2025-06-25 15:52:14
+592,Oats,Grains,South America,Brazil,AgroPalm Corp,1317.4,USD,2572,2025-05-14 07:19:14
+593,Cheddar Cheese,Dairy,North America,China,BeverageWorld,256.32,EUR,934,2025-11-14 23:53:20
+594,Coffee,Beverages,Asia,Spain,FruitEx Intl,1827.91,USD,1190,2024-12-16 22:42:33
+595,Butter,Dairy,South America,Indonesia,SweetHarvest,439.74,USD,2711,2025-03-02 20:58:24
+596,Soft Drink,Beverages,North America,Brazil,SweetHarvest,281.78,INR,590,2025-09-21 12:33:12
+597,Apple,Fruits,Oceania,Mexico,BioAgro Ltd,1684.74,INR,1203,2025-04-01 00:47:42
+598,Apple,Fruits,South America,Brazil,BioAgro Ltd,483.26,INR,1462,2025-09-09 20:43:47
+599,Grapes,Fruits,Europe,France,SweetHarvest,1271.08,EUR,3430,2025-06-29 19:36:43
+600,Milk Powder,Dairy,Africa,Thailand,DairyWorld,1160.43,USD,1628,2025-04-19 02:31:03
+601,Corn,Grains,Europe,South Africa,VeggieCorp,1200.32,INR,142,2025-03-16 12:55:30
+602,Mango,Fruits,Asia,China,FruitEx Intl,1803.07,EUR,3911,2025-10-13 23:05:04
+603,Olive Oil,Processed,Europe,France,DairyWorld,1385.37,INR,1052,2024-12-01 18:41:42
+604,Carrot,Vegetables,North America,South Africa,BioAgro Ltd,1292.05,INR,3922,2025-08-11 03:47:31
+605,Cheddar Cheese,Dairy,Asia,Brazil,AgroGlobal,1333.75,INR,3534,2025-06-11 23:23:32
+606,Grapes,Fruits,Europe,South Africa,AgriFoods Inc,1267.65,USD,552,2025-06-07 11:59:28
+607,Tea,Beverages,Asia,China,SweetHarvest,445.43,INR,4076,2024-12-22 09:57:40
+608,Sugar,Processed,North America,China,ChocoTrade Ltd,659.58,EUR,2531,2025-01-23 00:30:15
+609,Cocoa Powder,Processed,South America,Mexico,FruitEx Intl,254.62,INR,4721,2025-01-19 18:35:13
+610,Olive Oil,Processed,Africa,Indonesia,Fromage Global,1168.07,INR,4198,2024-12-28 20:23:14
+611,Onion,Vegetables,Oceania,South Africa,BeverageWorld,1974.54,USD,664,2025-06-18 18:10:51
+612,Cheddar Cheese,Dairy,South America,Australia,AgroGlobal,236.58,EUR,502,2024-12-05 09:47:02
+613,Apple Juice,Beverages,South America,USA,Mediterraneo S.A.,1033.84,EUR,647,2024-12-02 20:47:34
+614,Cheddar Cheese,Dairy,Africa,Brazil,AgroGlobal,1596.63,USD,4561,2025-09-04 02:20:24
+615,Tomato,Vegetables,Asia,Brazil,SweetHarvest,1320.84,EUR,2555,2025-02-21 04:33:46
+616,Oats,Grains,South America,South Africa,DairyWorld,370.69,EUR,4999,2025-06-17 18:48:51
+617,Tea,Beverages,Africa,USA,AgroPalm Corp,183.36,USD,3135,2025-09-15 03:10:50
+618,Olive Oil,Processed,Europe,Australia,BeverageWorld,676.41,INR,4120,2025-11-05 16:23:20
+619,Soybean,Oilseeds,Asia,India,Mediterraneo S.A.,274.54,EUR,464,2025-08-27 15:21:37
+620,Olive Oil,Processed,Oceania,China,AgriFoods Inc,124.98,INR,1540,2025-09-13 10:00:47
+621,Tomato,Vegetables,Asia,Mexico,VeggieCorp,571.2,USD,3269,2025-10-06 10:57:23
+622,Coffee,Beverages,South America,Australia,AgroPalm Corp,503.87,EUR,3163,2024-12-16 10:14:37
+623,Milk Powder,Dairy,Africa,USA,ThaiAgri Export,1649.64,INR,2326,2025-05-18 18:05:57
+624,Onion,Vegetables,South America,USA,DairyWorld,1688.4,USD,1019,2024-11-28 08:59:00
+625,Canola,Oilseeds,South America,India,AgroPalm Corp,1859.58,INR,1054,2025-01-03 13:11:13
+626,Palm Oil,Oilseeds,Europe,China,Mediterraneo S.A.,1569.59,USD,3002,2025-03-14 01:17:40
+627,Oats,Grains,North America,Spain,ThaiAgri Export,1643.61,USD,3186,2025-04-30 03:29:25
+628,Olive Oil,Processed,Asia,Italy,ChocoTrade Ltd,1150.19,USD,1038,2025-06-24 23:43:35
+629,Butter,Dairy,Africa,USA,FruitEx Intl,1463.94,USD,1997,2025-07-25 21:20:21
+630,Canola,Oilseeds,Asia,Thailand,AgriFoods Inc,965.16,INR,348,2024-11-22 02:01:44
+631,Sugar,Processed,Europe,USA,DairyWorld,1533.24,EUR,435,2025-04-02 16:19:28
+632,Potato,Vegetables,Oceania,France,BeverageWorld,532.45,USD,1866,2025-04-13 11:45:13
+633,Tomato,Vegetables,Africa,Indonesia,AgroGlobal,1961.01,EUR,3956,2025-03-31 23:28:15
+634,Broccoli,Vegetables,Oceania,USA,AgroGlobal,1086.46,USD,2342,2025-07-31 18:02:43
+635,Barley,Grains,North America,Mexico,Fromage Global,159.85,INR,3317,2025-01-07 12:16:31
+636,Olive Oil,Processed,South America,China,DairyWorld,1061.35,USD,4192,2025-01-07 02:50:00
+637,Tea,Beverages,South America,USA,BeverageWorld,1933.64,INR,122,2025-05-30 01:44:00
+638,Carrot,Vegetables,Africa,South Africa,AgroPalm Corp,1140.29,INR,2656,2025-09-27 09:58:31
+639,Cheddar Cheese,Dairy,Africa,Brazil,AgroPalm Corp,1397.35,USD,1792,2025-03-30 00:47:01
+640,Sunflower Oil,Oilseeds,Europe,Thailand,SweetHarvest,1064.67,EUR,4486,2024-12-22 12:13:25
+641,Olive Oil,Processed,South America,Spain,Mediterraneo S.A.,1085.14,INR,4477,2025-02-23 22:21:19
+642,Sugar,Processed,Oceania,Mexico,DairyWorld,871.63,USD,3192,2025-10-25 09:17:10
+643,Sunflower Oil,Oilseeds,North America,Ghana,VeggieCorp,254.43,INR,1832,2025-08-11 13:31:34
+644,Milk Powder,Dairy,South America,South Africa,AgriFoods Inc,978.54,USD,1218,2025-10-18 00:00:01
+645,Broccoli,Vegetables,Asia,USA,ChocoTrade Ltd,1195.29,USD,1457,2025-10-30 01:59:42
+646,Cocoa Powder,Processed,North America,South Africa,VeggieCorp,841.92,INR,2101,2025-06-20 06:44:33
+647,Onion,Vegetables,North America,China,Fromage Global,104.18,INR,4790,2025-10-11 11:08:05
+648,Barley,Grains,North America,Australia,VeggieCorp,560.52,EUR,839,2025-03-04 06:03:07
+649,Palm Oil,Oilseeds,North America,Indonesia,Fromage Global,1327.04,EUR,1258,2025-03-03 00:01:52
+650,Cocoa Powder,Processed,North America,Brazil,SweetHarvest,1150.9,INR,1068,2025-11-02 13:48:09
+651,Wheat,Grains,Africa,South Africa,ThaiAgri Export,552.14,INR,2056,2024-12-17 18:39:39
+652,Carrot,Vegetables,Asia,Brazil,SweetHarvest,1436.42,EUR,373,2025-05-21 19:00:30
+653,Rice,Grains,North America,USA,AgroGlobal,1986.46,EUR,3372,2025-06-06 06:00:05
+654,Milk Powder,Dairy,Europe,USA,Fromage Global,564.91,INR,126,2025-04-12 13:16:02
+655,Tea,Beverages,South America,Indonesia,BeverageWorld,491.14,INR,1291,2025-07-01 02:59:56
+656,Banana,Fruits,Asia,Brazil,DairyWorld,1278.17,INR,1621,2024-12-22 13:31:28
+657,Coffee,Beverages,Asia,China,ThaiAgri Export,1005.32,EUR,3861,2025-11-04 06:22:57
+658,Wheat,Grains,North America,China,FruitEx Intl,672.38,EUR,740,2025-11-12 21:13:52
+659,Palm Oil,Oilseeds,Asia,Australia,Fromage Global,156.02,INR,226,2025-10-01 11:20:01
+660,Tomato,Vegetables,Asia,Ghana,Mediterraneo S.A.,934.66,INR,1403,2025-05-04 23:24:51
+661,Tea,Beverages,Oceania,France,SweetHarvest,1290.93,INR,2987,2025-06-04 01:50:02
+662,Palm Oil,Oilseeds,North America,Italy,AgroPalm Corp,1021.57,USD,4390,2025-01-21 20:21:50
+663,Canola,Oilseeds,Europe,USA,FruitEx Intl,902.16,EUR,4954,2025-02-07 18:44:38
+664,Sugar,Processed,Asia,Brazil,VeggieCorp,1273.02,EUR,1696,2025-01-04 01:06:08
+665,Apple,Fruits,Africa,Italy,AgriFoods Inc,1392.19,USD,120,2025-01-28 12:26:13
+666,Barley,Grains,Asia,Indonesia,ThaiAgri Export,1015.13,INR,1035,2025-07-30 12:31:12
+667,Banana,Fruits,Europe,South Africa,SweetHarvest,1522.45,EUR,4340,2025-09-22 14:18:34
+668,Butter,Dairy,Oceania,Italy,BioAgro Ltd,101.37,EUR,479,2025-07-18 14:20:41
+669,Yogurt,Dairy,Oceania,France,ChocoTrade Ltd,1652.48,USD,2953,2025-09-13 03:36:04
+670,Grapes,Fruits,South America,Thailand,SweetHarvest,1418.71,INR,1316,2025-03-09 11:59:25
+671,Olive Oil,Processed,South America,Ghana,Mediterraneo S.A.,192.37,INR,319,2025-04-28 19:48:26
+672,Onion,Vegetables,Asia,India,ChocoTrade Ltd,134.77,USD,4431,2024-11-23 10:21:28
+673,Onion,Vegetables,North America,Australia,DairyWorld,222.38,EUR,1991,2024-12-24 03:06:20
+674,Cocoa Powder,Processed,Asia,Thailand,Mediterraneo S.A.,100.51,INR,3485,2025-04-30 09:21:47
+675,Cheddar Cheese,Dairy,Europe,Thailand,BeverageWorld,1004.48,INR,2968,2025-09-11 01:53:04
+676,Tea,Beverages,Europe,Ghana,AgroGlobal,1588.85,EUR,2574,2025-04-16 03:13:37
+677,Corn,Grains,Europe,Italy,Mediterraneo S.A.,1800.67,INR,2816,2025-07-23 21:47:21
+678,Potato,Vegetables,Oceania,India,FruitEx Intl,1500.59,USD,2661,2025-02-19 08:13:25
+679,Milk Powder,Dairy,Africa,Spain,ChocoTrade Ltd,1790.86,EUR,1083,2025-06-09 22:29:19
+680,Orange,Fruits,Asia,Spain,FruitEx Intl,1050.22,INR,4368,2025-07-21 13:56:21
+681,Soybean,Oilseeds,South America,Indonesia,BioAgro Ltd,451.21,USD,3599,2025-01-20 13:01:18
+682,Flour,Processed,Oceania,Australia,AgroPalm Corp,473.67,EUR,1831,2025-10-12 06:27:48
+683,Tomato,Vegetables,Europe,Italy,DairyWorld,206.32,USD,966,2025-06-21 10:20:36
+684,Carrot,Vegetables,Europe,Australia,BioAgro Ltd,1764.23,EUR,3715,2025-10-10 08:57:27
+685,Butter,Dairy,South America,USA,VeggieCorp,1854.39,USD,4117,2025-11-06 19:09:10
+686,Sugar,Processed,South America,Thailand,BioAgro Ltd,350.65,EUR,217,2025-07-25 05:36:47
+687,Yogurt,Dairy,North America,South Africa,DairyWorld,236.25,USD,2741,2025-06-06 16:56:32
+688,Cheddar Cheese,Dairy,South America,Brazil,Fromage Global,1588.44,EUR,192,2025-06-03 15:22:00
+689,Onion,Vegetables,Africa,France,AgroGlobal,1216.84,USD,4595,2025-01-24 22:07:20
+690,Wheat,Grains,Africa,France,DairyWorld,1287.21,USD,604,2024-12-13 05:21:51
+691,Soybean,Oilseeds,Europe,Ghana,AgroGlobal,1590.87,EUR,3408,2025-10-09 11:38:36
+692,Coffee,Beverages,Asia,India,AgriFoods Inc,800.09,INR,2169,2025-10-26 08:53:29
+693,Sugar,Processed,Africa,China,DairyWorld,1738.62,EUR,2729,2025-10-02 23:51:19
+694,Sunflower Oil,Oilseeds,North America,China,AgroGlobal,189.94,INR,3877,2025-07-02 15:44:55
+695,Coffee,Beverages,South America,USA,ChocoTrade Ltd,1225.71,EUR,2850,2025-01-15 10:19:33
+696,Cocoa Powder,Processed,Europe,South Africa,DairyWorld,865.05,USD,1421,2025-07-27 10:40:54
+697,Palm Oil,Oilseeds,Oceania,Brazil,BioAgro Ltd,1002.03,INR,3839,2025-08-04 07:50:19
+698,Rice,Grains,South America,Australia,FruitEx Intl,1579.27,INR,4462,2025-11-09 19:31:07
+699,Orange Juice,Beverages,Oceania,Brazil,AgroPalm Corp,478.54,EUR,1888,2025-11-08 09:54:05
+700,Sunflower Oil,Oilseeds,North America,India,AgroPalm Corp,846.58,INR,4365,2025-10-20 17:40:42
+701,Butter,Dairy,Africa,Brazil,AgriFoods Inc,379.95,INR,1591,2025-07-21 09:34:24
+702,Oats,Grains,Oceania,USA,SweetHarvest,1087.0,USD,2933,2025-04-26 16:55:41
+703,Oats,Grains,Africa,Mexico,DairyWorld,1645.6,EUR,4954,2025-09-08 00:23:16
+704,Sugar,Processed,Africa,Spain,ThaiAgri Export,1796.62,USD,604,2025-08-02 20:14:50
+705,Broccoli,Vegetables,Oceania,Spain,ChocoTrade Ltd,770.15,USD,3952,2025-02-05 23:44:03
+706,Grapes,Fruits,North America,Indonesia,AgriFoods Inc,935.46,INR,1095,2025-02-26 06:10:22
+707,Soybean,Oilseeds,Europe,Ghana,AgroPalm Corp,260.48,EUR,4016,2025-09-27 04:52:00
+708,Oats,Grains,South America,Spain,Mediterraneo S.A.,1457.11,INR,2369,2025-07-27 02:38:19
+709,Cheddar Cheese,Dairy,Europe,Ghana,DairyWorld,1538.44,USD,4433,2025-10-13 10:12:26
+710,Carrot,Vegetables,Africa,USA,Mediterraneo S.A.,1799.15,EUR,1880,2025-10-25 16:41:27
+711,Apple,Fruits,Oceania,Thailand,FruitEx Intl,1821.83,USD,4573,2025-09-26 18:09:02
+712,Mango,Fruits,Africa,Brazil,DairyWorld,216.85,USD,2315,2025-04-30 04:54:42
+713,Oats,Grains,Oceania,Mexico,SweetHarvest,1110.94,EUR,3589,2025-04-25 19:39:54
+714,Tea,Beverages,Europe,Ghana,ThaiAgri Export,926.7,EUR,2725,2025-11-06 15:27:46
+715,Cocoa Powder,Processed,South America,Spain,AgriFoods Inc,1396.99,EUR,323,2025-03-22 00:01:18
+716,Wheat,Grains,Asia,USA,VeggieCorp,392.52,INR,3610,2025-04-11 22:11:09
+717,Carrot,Vegetables,Europe,Brazil,AgroGlobal,1203.33,INR,2546,2025-06-04 09:58:34
+718,Barley,Grains,Oceania,Thailand,BeverageWorld,1073.23,EUR,3737,2025-01-14 15:01:44
+719,Cocoa Powder,Processed,Africa,Italy,Mediterraneo S.A.,1649.1,INR,2430,2025-01-15 10:30:25
+720,Potato,Vegetables,South America,France,BeverageWorld,986.62,INR,3980,2025-03-30 05:12:15
+721,Sugar,Processed,Asia,South Africa,SweetHarvest,1570.45,INR,707,2025-03-17 16:31:53
+722,Sugar,Processed,Asia,China,FruitEx Intl,475.5,USD,1704,2025-02-14 14:31:07
+723,Cocoa Powder,Processed,South America,Brazil,AgriFoods Inc,961.6,INR,2517,2025-10-23 06:52:37
+724,Wheat,Grains,Oceania,Ghana,AgriFoods Inc,1572.17,EUR,1349,2025-09-15 09:42:58
+725,Yogurt,Dairy,Africa,Mexico,SweetHarvest,1488.75,USD,4430,2024-12-24 20:31:09
+726,Potato,Vegetables,Africa,Ghana,Mediterraneo S.A.,238.9,USD,4696,2024-11-21 13:07:26
+727,Apple Juice,Beverages,Africa,France,Fromage Global,374.64,INR,3593,2025-10-22 13:18:25
+728,Apple Juice,Beverages,Africa,Spain,Fromage Global,615.64,EUR,3166,2025-09-29 03:48:04
+729,Sugar,Processed,Asia,China,FruitEx Intl,395.62,INR,3339,2025-04-17 15:16:39
+730,Milk Powder,Dairy,Asia,China,Fromage Global,253.97,INR,4839,2025-02-21 19:58:10
+731,Oats,Grains,Africa,Brazil,VeggieCorp,113.09,EUR,3119,2025-06-08 22:46:18
+732,Soft Drink,Beverages,South America,Thailand,BeverageWorld,1587.66,EUR,3731,2025-07-08 05:02:53
+733,Soft Drink,Beverages,North America,South Africa,ChocoTrade Ltd,557.92,EUR,2716,2025-09-11 21:10:32
+734,Onion,Vegetables,Europe,France,DairyWorld,776.65,INR,4967,2025-01-17 23:46:31
+735,Cocoa Powder,Processed,Europe,India,VeggieCorp,750.18,INR,1638,2025-03-27 12:49:28
+736,Grapes,Fruits,North America,Mexico,DairyWorld,718.74,USD,1914,2025-09-30 19:06:34
+737,Apple,Fruits,South America,Spain,DairyWorld,682.08,USD,2584,2025-11-20 09:29:59
+738,Apple,Fruits,Oceania,Australia,ThaiAgri Export,454.66,EUR,3844,2025-03-24 14:51:14
+739,Carrot,Vegetables,Africa,Mexico,DairyWorld,1307.3,EUR,4395,2024-12-17 02:00:45
+740,Sunflower Oil,Oilseeds,South America,China,Fromage Global,408.85,USD,2633,2024-12-07 23:15:44
+741,Milk Powder,Dairy,North America,Indonesia,ChocoTrade Ltd,1834.46,INR,4850,2024-11-29 03:54:42
+742,Barley,Grains,Oceania,Ghana,AgriFoods Inc,1032.43,USD,4608,2025-07-04 13:25:17
+743,Flour,Processed,South America,Thailand,AgriFoods Inc,777.98,INR,495,2025-04-07 13:07:57
+744,Broccoli,Vegetables,Europe,USA,BeverageWorld,928.08,INR,2660,2025-03-14 15:03:30
+745,Broccoli,Vegetables,North America,Indonesia,SweetHarvest,197.14,INR,3922,2025-05-30 20:29:38
+746,Milk Powder,Dairy,Europe,Ghana,DairyWorld,1188.5,USD,2333,2025-04-29 00:59:32
+747,Corn,Grains,Oceania,Australia,ThaiAgri Export,486.91,USD,3330,2025-09-20 06:16:19
+748,Orange Juice,Beverages,North America,Spain,DairyWorld,590.67,INR,4226,2025-09-06 00:49:12
+749,Mango,Fruits,South America,Mexico,Fromage Global,631.17,EUR,4589,2025-01-31 20:31:57
+750,Onion,Vegetables,Africa,Ghana,AgroPalm Corp,1962.63,USD,1384,2025-06-24 02:05:02
+751,Mango,Fruits,Asia,Thailand,DairyWorld,1912.61,INR,111,2025-04-04 04:38:49
+752,Corn,Grains,South America,Mexico,AgroPalm Corp,1321.36,INR,1669,2025-10-14 19:29:06
+753,Oats,Grains,Asia,France,SweetHarvest,1511.18,USD,3273,2025-05-22 16:42:49
+754,Orange Juice,Beverages,Africa,USA,ThaiAgri Export,1602.81,INR,388,2025-06-17 03:44:05
+755,Broccoli,Vegetables,Asia,India,Fromage Global,1030.51,INR,1297,2025-07-06 10:31:41
+756,Soybean,Oilseeds,Oceania,South Africa,AgriFoods Inc,602.82,USD,399,2025-07-15 08:42:12
+757,Sunflower Oil,Oilseeds,Europe,Spain,SweetHarvest,746.79,INR,2339,2025-03-17 10:16:30
+758,Potato,Vegetables,Europe,Mexico,ChocoTrade Ltd,918.47,EUR,2621,2024-12-30 13:25:50
+759,Oats,Grains,Europe,Mexico,BeverageWorld,1563.63,USD,4988,2025-01-03 15:30:36
+760,Tomato,Vegetables,North America,Mexico,AgriFoods Inc,955.42,EUR,2920,2025-04-20 06:35:01
+761,Carrot,Vegetables,Oceania,Mexico,AgroGlobal,1056.66,INR,1188,2025-07-29 08:52:41
+762,Wheat,Grains,Africa,South Africa,BioAgro Ltd,147.82,EUR,3095,2025-04-16 20:01:26
+763,Flour,Processed,South America,Ghana,AgriFoods Inc,1665.27,INR,783,2025-04-11 20:37:27
+764,Rice,Grains,South America,South Africa,Fromage Global,1931.72,INR,991,2025-02-03 11:23:42
+765,Soft Drink,Beverages,Asia,South Africa,BioAgro Ltd,793.85,EUR,1525,2024-11-24 07:24:06
+766,Barley,Grains,Oceania,USA,BeverageWorld,449.43,INR,2360,2024-12-26 03:20:10
+767,Mango,Fruits,Asia,Spain,AgriFoods Inc,103.47,INR,4731,2024-12-15 10:24:48
+768,Sunflower Oil,Oilseeds,Asia,Australia,BioAgro Ltd,1139.42,EUR,945,2025-07-11 07:36:29
+769,Cheddar Cheese,Dairy,Oceania,Mexico,DairyWorld,1601.9,EUR,4343,2025-10-27 02:55:04
+770,Butter,Dairy,Africa,Brazil,SweetHarvest,318.35,USD,2629,2025-02-15 20:36:47
+771,Orange,Fruits,Africa,France,DairyWorld,487.03,INR,4519,2025-10-01 10:17:03
+772,Butter,Dairy,Asia,Spain,BioAgro Ltd,461.64,USD,2335,2025-03-23 23:30:53
+773,Tomato,Vegetables,Asia,India,BioAgro Ltd,436.03,INR,3286,2025-03-24 03:39:37
+774,Milk Powder,Dairy,North America,USA,AgriFoods Inc,852.62,USD,3554,2025-10-14 13:40:07
+775,Coffee,Beverages,Asia,South Africa,FruitEx Intl,240.33,INR,3157,2025-04-08 20:44:42
+776,Wheat,Grains,South America,Thailand,Mediterraneo S.A.,1532.33,INR,3638,2025-01-07 18:42:22
+777,Cheddar Cheese,Dairy,Africa,South Africa,VeggieCorp,229.18,EUR,4777,2025-11-14 20:13:07
+778,Coffee,Beverages,Asia,Australia,FruitEx Intl,1421.78,INR,4825,2025-04-15 11:35:32
+779,Tea,Beverages,Asia,India,ThaiAgri Export,507.54,USD,585,2025-08-22 00:05:21
+780,Sunflower Oil,Oilseeds,Europe,India,VeggieCorp,742.26,USD,3503,2025-10-30 15:02:23
+781,Olive Oil,Processed,South America,USA,SweetHarvest,164.37,EUR,2304,2025-04-22 07:38:24
+782,Olive Oil,Processed,Oceania,India,AgroGlobal,1016.1,INR,4249,2025-07-25 21:09:33
+783,Banana,Fruits,North America,China,Mediterraneo S.A.,870.34,INR,2721,2025-04-07 13:24:32
+784,Cocoa Powder,Processed,North America,China,AgroGlobal,450.94,INR,2872,2024-12-20 00:08:05
+785,Carrot,Vegetables,Africa,Thailand,ThaiAgri Export,1345.38,INR,3824,2025-03-17 07:14:08
+786,Cocoa Powder,Processed,Europe,China,AgroGlobal,680.54,USD,4120,2025-04-29 18:46:53
+787,Sugar,Processed,Europe,Italy,SweetHarvest,148.81,INR,4377,2025-05-29 23:29:29
+788,Olive Oil,Processed,North America,China,DairyWorld,972.86,INR,3679,2025-02-03 17:03:41
+789,Flour,Processed,Africa,France,ThaiAgri Export,639.2,EUR,3019,2025-05-04 21:19:02
+790,Yogurt,Dairy,Europe,Italy,FruitEx Intl,542.91,EUR,941,2025-11-18 18:26:23
+791,Cocoa Powder,Processed,Asia,Australia,AgroPalm Corp,170.5,INR,973,2025-05-08 01:33:39
+792,Yogurt,Dairy,Africa,Ghana,AgroPalm Corp,606.04,INR,249,2025-02-12 11:40:50
+793,Sugar,Processed,South America,Italy,ThaiAgri Export,1688.63,INR,1152,2025-11-15 17:29:15
+794,Cheddar Cheese,Dairy,South America,Mexico,ThaiAgri Export,1511.39,EUR,2494,2025-06-26 17:11:36
+795,Broccoli,Vegetables,Oceania,USA,AgroPalm Corp,658.99,INR,3005,2025-08-16 04:54:57
+796,Tea,Beverages,Oceania,Indonesia,BioAgro Ltd,594.53,INR,4622,2025-04-17 06:53:16
+797,Banana,Fruits,Africa,France,AgroGlobal,462.14,EUR,272,2025-08-04 17:38:38
+798,Cocoa Powder,Processed,Europe,USA,AgriFoods Inc,1459.62,USD,572,2025-07-28 17:11:38
+799,Palm Oil,Oilseeds,Asia,Indonesia,AgroGlobal,592.54,INR,1905,2025-08-23 00:08:40
+800,Apple Juice,Beverages,Asia,Australia,Mediterraneo S.A.,870.37,EUR,3917,2025-03-15 12:44:07
+801,Barley,Grains,Asia,France,DairyWorld,1332.42,INR,2797,2025-10-15 04:29:33
+802,Flour,Processed,Asia,USA,DairyWorld,1867.44,EUR,455,2025-11-15 02:53:07
+803,Coffee,Beverages,Oceania,Thailand,AgroGlobal,1864.0,USD,3274,2025-10-27 17:44:47
+804,Banana,Fruits,Oceania,Ghana,AgriFoods Inc,1597.94,EUR,4282,2025-02-10 22:05:29
+805,Soybean,Oilseeds,South America,Spain,ChocoTrade Ltd,795.07,EUR,3421,2025-08-28 14:52:32
+806,Soft Drink,Beverages,South America,Ghana,ChocoTrade Ltd,1548.79,INR,511,2025-07-25 15:51:17
+807,Corn,Grains,Africa,South Africa,AgroGlobal,1946.24,EUR,4317,2025-01-30 04:36:08
+808,Butter,Dairy,Africa,USA,FruitEx Intl,1388.26,INR,3438,2025-10-22 23:59:26
+809,Coffee,Beverages,Oceania,Ghana,AgroGlobal,1959.64,INR,4103,2025-03-17 10:33:18
+810,Oats,Grains,Asia,Australia,AgriFoods Inc,856.9,USD,3201,2025-09-30 15:35:47
+811,Palm Oil,Oilseeds,North America,Australia,BioAgro Ltd,1918.94,INR,3299,2025-05-17 13:18:57
+812,Apple,Fruits,North America,Italy,ThaiAgri Export,299.31,INR,824,2025-09-17 00:07:21
+813,Orange Juice,Beverages,North America,China,FruitEx Intl,720.33,EUR,3362,2025-11-12 07:24:33
+814,Canola,Oilseeds,Asia,France,Mediterraneo S.A.,176.8,USD,3932,2025-03-24 19:10:21
+815,Apple Juice,Beverages,Asia,France,ChocoTrade Ltd,1892.51,INR,570,2025-11-13 21:53:50
+816,Grapes,Fruits,Oceania,France,DairyWorld,1759.31,USD,2792,2025-02-24 01:24:43
+817,Mango,Fruits,Africa,Italy,SweetHarvest,1700.3,EUR,934,2025-03-06 13:02:35
+818,Soft Drink,Beverages,Africa,France,FruitEx Intl,1258.09,USD,4347,2025-01-11 05:33:12
+819,Sugar,Processed,Africa,South Africa,AgroGlobal,1277.28,INR,4732,2025-03-18 09:12:04
+820,Rice,Grains,Asia,Thailand,Mediterraneo S.A.,1432.84,USD,2564,2025-02-17 06:21:20
+821,Cheddar Cheese,Dairy,North America,Italy,AgroGlobal,217.71,EUR,582,2024-12-09 08:48:35
+822,Rice,Grains,Europe,Spain,AgriFoods Inc,206.59,EUR,846,2025-04-27 22:28:38
+823,Apple,Fruits,Asia,Brazil,BeverageWorld,1952.57,EUR,4149,2025-08-23 20:45:06
+824,Barley,Grains,North America,Australia,FruitEx Intl,1497.34,EUR,3912,2025-03-07 17:03:14
+825,Apple,Fruits,Africa,Indonesia,Mediterraneo S.A.,984.04,INR,2732,2025-07-10 14:50:04
+826,Sunflower Oil,Oilseeds,Oceania,Mexico,AgriFoods Inc,1914.95,EUR,1950,2025-06-26 12:01:06
+827,Banana,Fruits,South America,USA,BioAgro Ltd,1126.63,INR,3281,2025-06-25 23:10:12
+828,Sugar,Processed,Europe,Spain,AgriFoods Inc,852.15,INR,436,2025-03-19 22:41:41
+829,Cocoa Powder,Processed,Europe,Spain,BeverageWorld,1207.45,USD,3232,2025-11-06 06:36:08
+830,Flour,Processed,South America,Brazil,AgroPalm Corp,1186.95,INR,4791,2025-03-22 07:18:10
+831,Sugar,Processed,North America,USA,DairyWorld,1690.04,USD,1152,2025-10-02 01:39:25
+832,Flour,Processed,Europe,Indonesia,ThaiAgri Export,920.07,INR,1189,2025-09-23 02:22:35
+833,Rice,Grains,Oceania,France,BeverageWorld,283.24,USD,4437,2025-02-09 19:37:38
+834,Olive Oil,Processed,Asia,Australia,DairyWorld,1323.27,EUR,2690,2025-10-11 15:15:46
+835,Orange Juice,Beverages,Africa,China,FruitEx Intl,600.96,EUR,3077,2025-07-15 06:01:15
+836,Coffee,Beverages,Asia,Australia,SweetHarvest,1436.18,INR,2544,2025-09-17 19:41:58
+837,Canola,Oilseeds,North America,Thailand,BioAgro Ltd,305.18,EUR,2678,2025-08-31 12:46:50
+838,Butter,Dairy,Asia,South Africa,BioAgro Ltd,1431.31,USD,356,2025-03-13 19:45:14
+839,Broccoli,Vegetables,Europe,Ghana,Mediterraneo S.A.,457.11,EUR,1955,2025-04-13 12:34:44
+840,Onion,Vegetables,Europe,Spain,AgriFoods Inc,1549.19,EUR,4021,2025-08-21 05:50:37
+841,Wheat,Grains,Europe,France,DairyWorld,1880.06,EUR,2170,2024-12-27 11:48:35
+842,Cocoa Powder,Processed,South America,Spain,BeverageWorld,629.76,USD,1827,2025-01-13 09:34:20
+843,Sugar,Processed,North America,France,BeverageWorld,225.77,USD,3904,2025-03-17 21:12:39
+844,Potato,Vegetables,Oceania,Spain,Mediterraneo S.A.,982.62,INR,3910,2025-11-12 00:02:33
+845,Flour,Processed,Oceania,Ghana,SweetHarvest,1267.48,INR,3139,2025-11-19 11:07:18
+846,Coffee,Beverages,Oceania,China,SweetHarvest,1514.2,INR,2257,2024-11-21 16:30:27
+847,Orange,Fruits,Asia,Indonesia,BeverageWorld,1636.22,EUR,3685,2025-05-18 19:32:54
+848,Yogurt,Dairy,North America,Italy,ThaiAgri Export,219.03,USD,678,2025-05-25 19:49:26
+849,Apple Juice,Beverages,Africa,Thailand,DairyWorld,367.53,EUR,3699,2025-11-03 17:10:25
+850,Rice,Grains,Europe,Indonesia,FruitEx Intl,1461.28,INR,2211,2025-07-28 21:44:48
+851,Flour,Processed,Africa,India,ThaiAgri Export,173.09,EUR,4914,2025-06-29 21:35:12
+852,Milk Powder,Dairy,Oceania,France,Fromage Global,1254.5,INR,4218,2025-07-14 18:58:17
+853,Palm Oil,Oilseeds,Oceania,China,FruitEx Intl,1091.79,USD,712,2024-12-03 10:05:57
+854,Mango,Fruits,South America,Thailand,Fromage Global,1843.66,INR,3699,2025-02-06 11:07:16
+855,Banana,Fruits,North America,Mexico,BeverageWorld,1040.29,USD,3372,2025-03-20 02:55:57
+856,Palm Oil,Oilseeds,Oceania,France,BeverageWorld,512.37,USD,4122,2025-11-06 12:54:26
+857,Soft Drink,Beverages,Europe,Spain,Fromage Global,552.74,INR,102,2025-01-27 03:19:50
+858,Onion,Vegetables,Oceania,Mexico,AgriFoods Inc,608.55,INR,1382,2025-01-04 03:20:20
+859,Sunflower Oil,Oilseeds,Europe,France,AgroGlobal,1402.05,INR,4301,2025-08-31 20:51:46
+860,Coffee,Beverages,North America,Australia,FruitEx Intl,1078.01,USD,364,2025-11-15 15:58:28
+861,Barley,Grains,Asia,USA,ThaiAgri Export,223.55,EUR,3789,2025-11-08 20:16:42
+862,Grapes,Fruits,Oceania,China,DairyWorld,1356.01,EUR,641,2025-09-02 00:18:10
+863,Mango,Fruits,Europe,France,FruitEx Intl,1024.54,INR,1757,2024-12-17 21:32:17
+864,Barley,Grains,South America,Mexico,Fromage Global,1657.22,EUR,2708,2025-07-04 14:57:12
+865,Tomato,Vegetables,Asia,Italy,SweetHarvest,1096.92,INR,2139,2024-11-22 22:23:52
+866,Orange,Fruits,North America,Italy,Fromage Global,277.46,USD,2450,2025-08-25 19:16:22
+867,Coffee,Beverages,Europe,Australia,VeggieCorp,248.71,INR,217,2025-06-30 21:31:00
+868,Potato,Vegetables,North America,Ghana,Mediterraneo S.A.,192.11,USD,1640,2025-09-29 17:11:33
+869,Sugar,Processed,North America,Italy,Fromage Global,1880.94,USD,1875,2025-04-08 02:51:51
+870,Carrot,Vegetables,Oceania,USA,AgroGlobal,325.77,USD,1990,2025-07-28 06:01:37
+871,Canola,Oilseeds,Oceania,Italy,BioAgro Ltd,254.72,USD,3274,2025-01-16 09:04:50
+872,Sunflower Oil,Oilseeds,Africa,Brazil,Mediterraneo S.A.,250.98,USD,3363,2025-04-11 12:23:34
+873,Tomato,Vegetables,Africa,China,Mediterraneo S.A.,901.18,EUR,2511,2025-08-10 23:41:50
+874,Milk Powder,Dairy,North America,Australia,VeggieCorp,440.8,INR,2849,2025-03-30 06:19:05
+875,Wheat,Grains,Africa,China,AgriFoods Inc,871.64,INR,1544,2025-11-05 05:57:24
+876,Apple Juice,Beverages,Asia,Australia,AgroGlobal,126.61,USD,1634,2025-07-18 07:47:37
+877,Carrot,Vegetables,South America,France,SweetHarvest,1991.58,USD,4663,2025-06-14 22:32:13
+878,Onion,Vegetables,Europe,Brazil,AgroPalm Corp,1221.93,INR,2002,2025-10-03 22:40:16
+879,Flour,Processed,North America,China,VeggieCorp,1405.08,EUR,4128,2025-02-01 01:23:01
+880,Oats,Grains,Europe,Spain,FruitEx Intl,1671.87,INR,4923,2025-11-09 09:57:56
+881,Sunflower Oil,Oilseeds,Africa,India,DairyWorld,1577.75,INR,186,2024-12-06 06:03:39
+882,Sunflower Oil,Oilseeds,South America,Brazil,Fromage Global,1595.34,EUR,1415,2025-10-29 18:25:27
+883,Grapes,Fruits,Europe,India,ThaiAgri Export,235.77,USD,2894,2025-01-20 16:02:46
+884,Soybean,Oilseeds,Oceania,Ghana,AgroGlobal,1488.89,INR,3388,2025-09-22 19:01:13
+885,Cheddar Cheese,Dairy,South America,Italy,AgroGlobal,272.56,EUR,811,2025-07-15 20:49:19
+886,Wheat,Grains,Europe,Italy,ThaiAgri Export,1283.11,EUR,3599,2025-01-26 09:16:24
+887,Mango,Fruits,North America,Brazil,BioAgro Ltd,1489.34,INR,472,2025-07-26 01:32:14
+888,Butter,Dairy,Oceania,Italy,ChocoTrade Ltd,1029.02,EUR,4848,2025-07-19 10:15:40
+889,Yogurt,Dairy,North America,Australia,AgroPalm Corp,1039.48,EUR,2262,2025-06-05 06:55:29
+890,Rice,Grains,Oceania,Spain,VeggieCorp,901.87,EUR,4249,2025-07-24 21:48:03
+891,Cheddar Cheese,Dairy,North America,China,BioAgro Ltd,200.36,INR,3029,2025-02-17 00:30:06
+892,Palm Oil,Oilseeds,Europe,Ghana,Fromage Global,1987.74,USD,2504,2025-02-02 14:58:36
+893,Soybean,Oilseeds,North America,Mexico,AgroGlobal,752.35,INR,466,2025-09-25 18:54:57
+894,Yogurt,Dairy,North America,Australia,VeggieCorp,1670.99,USD,1398,2025-10-09 00:56:16
+895,Cheddar Cheese,Dairy,North America,India,BioAgro Ltd,1010.17,INR,3984,2025-02-09 06:01:43
+896,Tomato,Vegetables,North America,Thailand,SweetHarvest,406.39,INR,4469,2024-11-24 03:48:55
+897,Broccoli,Vegetables,Europe,Ghana,AgriFoods Inc,1798.13,EUR,4023,2025-08-24 06:58:46
+898,Cocoa Powder,Processed,North America,Brazil,FruitEx Intl,139.21,USD,3992,2025-10-23 16:04:51
+899,Apple,Fruits,Oceania,Thailand,AgriFoods Inc,434.62,EUR,3507,2024-12-30 10:57:40
+900,Sunflower Oil,Oilseeds,North America,China,BeverageWorld,1543.08,USD,2219,2025-10-18 17:23:46
+901,Sugar,Processed,Asia,Spain,AgroPalm Corp,1491.7,EUR,1684,2025-02-04 01:20:58
+902,Soybean,Oilseeds,Asia,China,SweetHarvest,1134.74,EUR,4876,2025-07-01 10:36:27
+903,Sunflower Oil,Oilseeds,Europe,South Africa,AgroGlobal,1806.65,USD,693,2025-02-26 11:36:41
+904,Tomato,Vegetables,South America,Spain,AgroPalm Corp,628.98,INR,3898,2025-08-21 08:18:38
+905,Palm Oil,Oilseeds,Africa,Spain,FruitEx Intl,185.2,USD,235,2025-03-29 07:51:49
+906,Mango,Fruits,Asia,Ghana,AgroPalm Corp,1452.26,EUR,4453,2025-05-21 05:58:35
+907,Flour,Processed,South America,Brazil,FruitEx Intl,697.62,INR,3222,2025-11-03 09:10:05
+908,Barley,Grains,North America,China,AgroPalm Corp,1630.36,USD,2802,2025-01-31 02:26:31
+909,Orange,Fruits,South America,India,AgroPalm Corp,1549.64,INR,2874,2025-06-27 15:18:56
+910,Orange,Fruits,North America,Mexico,DairyWorld,1940.25,EUR,3570,2025-01-11 21:33:40
+911,Soybean,Oilseeds,Asia,France,DairyWorld,1870.58,INR,4338,2025-10-24 01:11:22
+912,Barley,Grains,South America,South Africa,BioAgro Ltd,696.08,EUR,4210,2025-09-29 03:08:37
+913,Flour,Processed,Africa,Ghana,BeverageWorld,1306.49,EUR,1456,2025-03-08 07:36:12
+914,Broccoli,Vegetables,Europe,China,SweetHarvest,1456.51,EUR,3687,2025-09-20 16:56:55
+915,Soybean,Oilseeds,Europe,South Africa,SweetHarvest,713.25,INR,3255,2025-10-24 13:42:35
+916,Orange,Fruits,South America,USA,Fromage Global,1070.32,INR,509,2025-02-02 16:17:18
+917,Mango,Fruits,Asia,France,SweetHarvest,1937.56,USD,4849,2025-03-08 21:48:12
+918,Wheat,Grains,Asia,Australia,Fromage Global,822.73,INR,4721,2025-02-22 15:37:21
+919,Mango,Fruits,South America,Ghana,AgroPalm Corp,1218.0,USD,3819,2025-09-09 22:27:39
+920,Yogurt,Dairy,South America,Italy,DairyWorld,1905.54,USD,3227,2025-08-12 16:29:03
+921,Palm Oil,Oilseeds,North America,Indonesia,AgriFoods Inc,275.68,EUR,2534,2025-09-12 16:53:20
+922,Palm Oil,Oilseeds,Asia,South Africa,VeggieCorp,608.53,EUR,621,2025-10-31 05:30:06
+923,Apple,Fruits,Europe,South Africa,ThaiAgri Export,1410.54,EUR,4481,2025-10-26 18:22:16
+924,Broccoli,Vegetables,Oceania,Australia,SweetHarvest,817.29,EUR,1872,2025-09-23 00:07:18
+925,Olive Oil,Processed,Asia,India,AgroGlobal,1538.14,INR,1247,2025-02-12 11:35:22
+926,Wheat,Grains,Asia,Ghana,AgriFoods Inc,626.2,INR,4022,2025-06-26 22:09:25
+927,Palm Oil,Oilseeds,South America,Mexico,BioAgro Ltd,325.14,EUR,1410,2024-11-23 04:35:15
+928,Butter,Dairy,Asia,Mexico,AgroGlobal,560.58,USD,2763,2024-12-10 12:10:35
+929,Cheddar Cheese,Dairy,South America,France,BioAgro Ltd,1554.91,EUR,1301,2025-05-14 04:42:43
+930,Mango,Fruits,North America,Mexico,BioAgro Ltd,367.39,INR,2100,2025-06-10 06:54:50
+931,Barley,Grains,Africa,Spain,FruitEx Intl,1388.39,INR,4978,2025-01-24 09:39:21
+932,Milk Powder,Dairy,South America,Australia,AgriFoods Inc,874.72,USD,1971,2025-09-26 06:02:19
+933,Oats,Grains,Africa,Ghana,Mediterraneo S.A.,1045.55,EUR,588,2025-07-27 06:34:42
+934,Flour,Processed,South America,Spain,Mediterraneo S.A.,502.35,INR,2685,2025-08-01 02:13:54
+935,Palm Oil,Oilseeds,Africa,Australia,FruitEx Intl,698.27,USD,1942,2025-04-10 04:53:11
+936,Palm Oil,Oilseeds,Oceania,Thailand,AgroGlobal,1965.12,EUR,1574,2025-03-28 19:04:58
+937,Orange Juice,Beverages,North America,Australia,ChocoTrade Ltd,565.58,INR,1029,2025-01-06 21:05:26
+938,Olive Oil,Processed,Europe,Spain,VeggieCorp,1287.56,USD,2627,2025-01-05 10:12:03
+939,Orange Juice,Beverages,Europe,Mexico,VeggieCorp,1439.0,INR,657,2025-10-02 04:23:27
+940,Flour,Processed,Asia,India,ThaiAgri Export,451.53,EUR,442,2025-07-21 12:15:20
+941,Cocoa Powder,Processed,Oceania,India,AgriFoods Inc,1258.22,INR,633,2025-05-02 12:04:38
+942,Onion,Vegetables,Asia,Spain,Mediterraneo S.A.,850.17,USD,368,2025-03-27 17:27:11
+943,Cheddar Cheese,Dairy,Africa,Brazil,ChocoTrade Ltd,1653.27,INR,3944,2025-01-03 10:08:57
+944,Barley,Grains,Asia,Australia,DairyWorld,1577.72,INR,2642,2025-02-09 02:23:16
+945,Yogurt,Dairy,Asia,Thailand,SweetHarvest,677.69,INR,3626,2024-12-10 18:02:45
+946,Grapes,Fruits,Europe,India,AgroPalm Corp,142.58,EUR,4856,2024-12-29 08:56:44
+947,Olive Oil,Processed,Asia,Indonesia,FruitEx Intl,673.87,INR,296,2025-05-19 07:45:54
+948,Orange Juice,Beverages,Asia,USA,Fromage Global,336.98,USD,2801,2025-07-31 06:17:52
+949,Soft Drink,Beverages,Asia,Thailand,AgriFoods Inc,975.21,EUR,4113,2025-06-18 04:19:37
+950,Olive Oil,Processed,Asia,Italy,Mediterraneo S.A.,1036.52,EUR,1188,2025-03-18 10:38:00
+951,Sugar,Processed,Oceania,Australia,VeggieCorp,130.68,USD,3012,2025-07-18 00:44:00
+952,Oats,Grains,Oceania,China,SweetHarvest,422.81,INR,1568,2025-05-06 13:15:30
+953,Banana,Fruits,Asia,Brazil,BeverageWorld,1373.14,INR,4213,2025-07-29 00:06:41
+954,Corn,Grains,Europe,China,VeggieCorp,1176.5,USD,1611,2025-07-04 02:38:15
+955,Olive Oil,Processed,Europe,Thailand,AgroGlobal,1920.77,EUR,2745,2025-04-25 04:21:48
+956,Wheat,Grains,Asia,India,FruitEx Intl,1976.89,EUR,2875,2025-09-10 03:29:12
+957,Olive Oil,Processed,North America,South Africa,AgriFoods Inc,1472.48,INR,1875,2025-05-03 23:27:20
+958,Olive Oil,Processed,Oceania,Australia,FruitEx Intl,177.38,USD,134,2025-10-04 10:09:42
+959,Apple Juice,Beverages,Asia,Thailand,AgroGlobal,307.18,INR,2227,2025-01-05 16:15:07
+960,Potato,Vegetables,Europe,Australia,VeggieCorp,245.5,INR,2609,2025-01-21 08:19:18
+961,Butter,Dairy,North America,Italy,Mediterraneo S.A.,1480.22,USD,1171,2025-01-17 08:26:41
+962,Mango,Fruits,South America,France,FruitEx Intl,1933.16,USD,2685,2025-01-06 04:03:25
+963,Orange Juice,Beverages,Europe,USA,BeverageWorld,1623.38,USD,310,2024-12-29 18:46:03
+964,Sunflower Oil,Oilseeds,North America,South Africa,ThaiAgri Export,1485.16,USD,4677,2025-05-19 09:21:45
+965,Banana,Fruits,Oceania,Australia,BeverageWorld,1675.01,EUR,1843,2025-03-21 12:35:32
+966,Banana,Fruits,South America,Australia,ChocoTrade Ltd,1952.79,USD,4718,2025-09-23 23:28:48
+967,Palm Oil,Oilseeds,Asia,USA,AgriFoods Inc,1001.74,EUR,2786,2024-11-21 21:50:56
+968,Carrot,Vegetables,Europe,France,FruitEx Intl,225.52,USD,2543,2025-10-05 11:27:56
+969,Potato,Vegetables,Africa,Ghana,ThaiAgri Export,1307.47,EUR,2409,2025-01-01 07:33:35
+970,Tea,Beverages,Africa,Australia,AgroGlobal,1055.17,USD,2946,2025-04-18 17:03:29
+971,Carrot,Vegetables,North America,Italy,FruitEx Intl,916.78,USD,1956,2025-11-14 07:34:21
+972,Sugar,Processed,North America,India,SweetHarvest,468.44,INR,2737,2025-10-31 05:47:16
+973,Oats,Grains,Asia,Brazil,AgroGlobal,367.56,INR,607,2025-04-07 19:06:28
+974,Rice,Grains,Europe,USA,BioAgro Ltd,839.81,EUR,1300,2024-12-31 22:40:13
+975,Sunflower Oil,Oilseeds,Asia,South Africa,SweetHarvest,727.78,INR,1902,2025-04-16 08:54:34
+976,Banana,Fruits,Oceania,Brazil,BeverageWorld,1647.45,USD,3368,2025-06-19 02:31:54
+977,Cocoa Powder,Processed,North America,Ghana,AgriFoods Inc,1545.8,INR,1099,2025-06-04 05:15:02
+978,Banana,Fruits,Asia,India,AgroGlobal,1675.43,EUR,1761,2025-01-06 03:41:14
+979,Orange,Fruits,Africa,Mexico,ChocoTrade Ltd,448.55,INR,2904,2025-06-21 13:09:07
+980,Apple Juice,Beverages,Africa,Italy,DairyWorld,1323.22,EUR,4405,2025-03-23 07:53:21
+981,Soft Drink,Beverages,North America,South Africa,ThaiAgri Export,1448.42,EUR,318,2025-06-07 20:09:11
+982,Apple,Fruits,Europe,Ghana,AgroGlobal,1294.01,USD,985,2025-01-03 18:55:05
+983,Wheat,Grains,Asia,Ghana,BeverageWorld,1765.83,INR,3057,2025-09-10 02:10:46
+984,Carrot,Vegetables,Europe,Mexico,BioAgro Ltd,1715.84,USD,4873,2025-09-22 07:46:00
+985,Tea,Beverages,Oceania,Thailand,AgriFoods Inc,246.02,USD,1087,2025-09-02 22:29:55
+986,Wheat,Grains,Asia,India,VeggieCorp,751.19,INR,3129,2025-07-09 03:56:35
+987,Soybean,Oilseeds,Europe,Ghana,Mediterraneo S.A.,1966.53,EUR,2994,2025-09-19 09:14:57
+988,Yogurt,Dairy,Asia,Brazil,DairyWorld,551.18,INR,3958,2025-03-12 09:22:14
+989,Tea,Beverages,Asia,Australia,Fromage Global,1631.16,USD,4826,2025-08-24 17:35:52
+990,Flour,Processed,North America,South Africa,BioAgro Ltd,788.12,EUR,4702,2025-05-09 13:54:22
+991,Apple,Fruits,North America,South Africa,Mediterraneo S.A.,551.99,USD,4446,2025-10-16 05:23:15
+992,Milk Powder,Dairy,South America,Indonesia,Mediterraneo S.A.,1619.34,INR,3272,2025-10-21 02:25:39
+993,Flour,Processed,Europe,Mexico,ChocoTrade Ltd,1159.98,USD,2751,2025-06-10 07:53:18
+994,Butter,Dairy,North America,France,BeverageWorld,227.09,USD,4163,2025-01-13 20:08:29
+995,Yogurt,Dairy,Europe,Ghana,BioAgro Ltd,1523.99,EUR,1754,2025-03-28 12:10:40
+996,Wheat,Grains,Oceania,Ghana,SweetHarvest,1704.72,USD,1168,2025-07-04 23:16:28
+997,Apple,Fruits,Asia,Australia,ThaiAgri Export,1937.07,USD,4315,2025-02-01 01:44:22
+998,Grapes,Fruits,South America,Mexico,BioAgro Ltd,1647.57,EUR,2248,2025-01-20 02:07:31
+999,Tea,Beverages,Oceania,South Africa,AgroGlobal,514.52,INR,2691,2025-11-18 14:47:14
+1000,Onion,Vegetables,Asia,Italy,Fromage Global,1164.06,INR,3126,2025-04-18 08:04:48
