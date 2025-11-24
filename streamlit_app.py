@@ -69,7 +69,7 @@ if not st.session_state.perfilado_iniciado:
     st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
 
     # Botón centrado
-    col_left, col_center, col_right = st.columns([3, 2, 5.3])
+    col_left, col_center, col_right = st.columns([3, 2, 3])
     with col_center:
         if st.button("🚀 Iniciar Perfilado de Datos", key="start_button", use_container_width=True):
             st.session_state.perfilado_iniciado = True
