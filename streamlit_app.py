@@ -2,7 +2,7 @@
 import streamlit as st
 import yaml
 import random
-from datetime import datetime
+from datetime import datetime, date
 import plotly.express as px
 import plotly.graph_objects as go
 
@@ -47,7 +47,7 @@ else:
 # Pantalla inicial
 # ==========================
 if not st.session_state.perfilado_iniciado:
-    # Portada con logo, título y subtítulo
+    # Portada con logo, título y subtítulo (HTML correcto)
     st.markdown("""
         <div style="text-align: center; margin-top: 80px;">
             <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 20px;">
@@ -208,7 +208,7 @@ else:
     ]
 
     # ==========================
-    # Función para métricas
+    # Función para métricas (tablas demo)
     # ==========================
     def generar_metricas():
         return {
@@ -296,15 +296,15 @@ else:
         elif tabla_seleccionada == "pedidos":
             st.table(pedidos_data)
 
-    # --- 📄 CSV adjunto (tabla con selección) ---
+    # ========= 📄 CSV adjunto: Reglas, Métricas, Gráficos, YAML, Datos =========
     with tab6:
-        st.markdown('<p class="subtitle">CSV adjunto: seleccione filas</p>', unsafe_allow_html=True)
-
-        # Uploader opcional para reemplazar el CSV (por defecto usa el incluido)
-        csv_file = st.file_uploader("Sube un CSV con el mismo esquema (opcional)", type=["csv"], key="csv_uploader")
+        st.markdown('<p class="subtitle">CSV adjunto: reglas, métricas, gráficos y YAML</p>', unsafe_allow_html=True)
 
         import pandas as pd
+        import numpy as np
 
+        # ---- Carga del CSV ----
+        csv_file = st.file_uploader("Sube un CSV con el mismo esquema (opcional)", type=["csv"], key="csv_uploader")
         def load_csv_to_df(uploaded) -> pd.DataFrame:
             if uploaded is not None:
                 return pd.read_csv(uploaded)
@@ -314,117 +314,210 @@ else:
         try:
             df = load_csv_to_df(csv_file)
 
-            # Tipado y limpieza ligera
-            if "LastUpdated" in df.columns:
-                df["LastUpdated"] = pd.to_datetime(df["LastUpdated"], errors="coerce")
+            # Tipado y limpieza
+            expected_cols = ["ProductID","ProductName","Category","Region","Country","Supplier","UnitPrice","Currency","StockQuantity","LastUpdated"]
+            missing = [c for c in expected_cols if c not in df.columns]
+            if missing:
+                st.error(f"El CSV no contiene columnas esperadas: {missing}")
+                st.stop()
+
+            df["LastUpdated"] = pd.to_datetime(df["LastUpdated"], errors="coerce")
             for col in ["UnitPrice", "StockQuantity", "ProductID"]:
-                if col in df.columns:
-                    df[col] = pd.to_numeric(df[col], errors="coerce")
-            # Normaliza strings
+                df[col] = pd.to_numeric(df[col], errors="coerce")
             for col in df.select_dtypes(include=["object"]).columns:
                 df[col] = df[col].astype(str).str.strip()
 
-            # Filtros
-            with st.expander("🔎 Filtros"):
-                c1, c2, c3, c4, c5 = st.columns(5)
-                category = c1.multiselect("Category", sorted(df["Category"].dropna().unique().tolist())) if "Category" in df.columns else []
-                region = c2.multiselect("Region", sorted(df["Region"].dropna().unique().tolist())) if "Region" in df.columns else []
-                country = c3.multiselect("Country", sorted(df["Country"].dropna().unique().tolist())) if "Country" in df.columns else []
-                supplier = c4.multiselect("Supplier", sorted(df["Supplier"].dropna().unique().tolist())) if "Supplier" in df.columns else []
-                currency = c5.multiselect("Currency", sorted(df["Currency"].dropna().unique().tolist())) if "Currency" in df.columns else []
+            # ---- Definición/derivación de reglas desde el CSV ----
+            allowed_currency = {"USD","EUR","INR"}
+            allowed_regions  = {"North America","South America","Europe","Africa","Asia","Oceania"}
 
-                # Búsqueda libre
-                search_text = st.text_input("Buscar texto (ProductName o Supplier)", "")
+            # Rango sugerido de precio (puedes ajustar)
+            min_rule_price, max_rule_price = 100, 2000
 
-                # Rango de precio
-                if "UnitPrice" in df.columns and not df["UnitPrice"].isna().all():
-                    min_price = float(df["UnitPrice"].min())
-                    max_price = float(df["UnitPrice"].max())
-                else:
-                    min_price, max_price = 0.0, 0.0
-                price_range = st.slider("Rango de UnitPrice", min_value=min_price, max_value=max_price,
-                                        value=(min_price, max_price))
+            reglas_csv = [
+                {"name": "product_id_not_null", "description": "ProductID no debe ser nulo", "condition": "ProductID IS NOT NULL", "dimension": "Completitud"},
+                {"name": "product_name_not_null", "description": "ProductName no debe ser nulo", "condition": "ProductName IS NOT NULL", "dimension": "Completitud"},
+                {"name": "category_not_null", "description": "Category no debe ser nulo", "condition": "Category IS NOT NULL", "dimension": "Completitud"},
+                {"name": "region_valid", "description": "Region válida", "condition": f"Region IN {sorted(list(allowed_regions))}", "dimension": "Consistencia"},
+                {"name": "country_not_null", "description": "Country no debe ser nulo", "condition": "Country IS NOT NULL", "dimension": "Completitud"},
+                {"name": "supplier_not_null", "description": "Supplier no debe ser nulo", "condition": "Supplier IS NOT NULL", "dimension": "Completitud"},
+                {"name": "currency_valid", "description": "Moneda válida (USD, EUR, INR)", "condition": f"Currency IN {sorted(list(allowed_currency))}", "dimension": "Consistencia"},
+                {"name": "unit_price_range", "description": f"UnitPrice entre {min_rule_price} y {max_rule_price}", "condition": f"UnitPrice BETWEEN {min_rule_price} AND {max_rule_price}", "dimension": "Validez"},
+                {"name": "unit_price_positive", "description": "UnitPrice > 0", "condition": "UnitPrice > 0", "dimension": "Validez"},
+                {"name": "stock_non_negative", "description": "StockQuantity ≥ 0", "condition": "StockQuantity >= 0", "dimension": "Validez"},
+                {"name": "last_updated_not_future", "description": "LastUpdated no puede ser futura", "condition": "LastUpdated <= CURRENT_DATE", "dimension": "Validez"},
+                {"name": "product_id_unique", "description": "ProductID único", "condition": "ProductID IS UNIQUE", "dimension": "Unicidad"},
+            ]
 
-            # Aplica filtros
-            dff = df.copy()
-            if category:
-                dff = dff[dff["Category"].isin(category)]
-            if region:
-                dff = dff[dff["Region"].isin(region)]
-            if country:
-                dff = dff[dff["Country"].isin(country)]
-            if supplier:
-                dff = dff[dff["Supplier"].isin(supplier)]
-            if currency:
-                dff = dff[dff["Currency"].isin(currency)]
-            if search_text:
-                pcol = "ProductName" if "ProductName" in dff.columns else None
-                scol = "Supplier" if "Supplier" in dff.columns else None
-                if pcol or scol:
-                    mask = False
-                    if pcol:
-                        mask = dff[pcol].astype(str).str.contains(search_text, case=False, na=False)
-                    if scol:
-                        mask = mask | dff[scol].astype(str).str.contains(search_text, case=False, na=False)
-                    dff = dff[mask]
-            if "UnitPrice" in dff.columns:
-                dff = dff[(dff["UnitPrice"] >= price_range[0]) & (dff["UnitPrice"] <= price_range[1])]
+            # ---- Cálculo de métricas de calidad sobre el CSV ----
+            total_rows = len(df)
 
-            # Añade columna de selección si no existe
-            if "selected" not in dff.columns:
-                dff.insert(0, "selected", False)
+            # Completitud: % de valores no nulos sobre columnas críticas
+            critical_cols = ["ProductID","ProductName","Category","Region","Country","Supplier","UnitPrice","Currency","StockQuantity","LastUpdated"]
+            completeness = float(
+                df[critical_cols].notna().sum().sum()
+            ) / (len(df) * len(critical_cols)) * 100 if total_rows > 0 else 0.0
 
-            # Ordena por fecha (si existe)
-            sort_col = "LastUpdated" if "LastUpdated" in dff.columns else None
-            if sort_col:
-                dff = dff.sort_values(by=sort_col, ascending=False)
+            # Unicidad: % de ProductID únicos
+            uniqueness = df["ProductID"].nunique() / total_rows * 100 if total_rows > 0 else 0.0
 
-            st.caption(f"Filas mostradas: {len(dff):,} de {len(df):,}")
+            # Consistencia: Currency y Region dentro de listados permitidos
+            consistency_mask = df["Currency"].isin(allowed_currency) & df["Region"].isin(allowed_regions)
+            consistency = consistency_mask.mean() * 100 if total_rows > 0 else 0.0
 
-            # Editor con selección (checkbox por fila)
-            edited = st.data_editor(
-                dff,
-                use_container_width=True,
-                height=520,
-                # Solo permitir editar la columna de selección
-                disabled=[c for c in dff.columns if c != "selected"],
-                column_config={
-                    "selected": st.column_config.CheckboxColumn(
-                        "Seleccionar", help="Marca para seleccionar esta fila", default=False
-                    ),
-                    "UnitPrice": st.column_config.NumberColumn(format="%.2f"),
-                    "StockQuantity": st.column_config.NumberColumn(format="%d"),
-                    "LastUpdated": st.column_config.DatetimeColumn()
-                }
+            # Validez: reglas numéricas y de fecha
+            today = pd.Timestamp(date.today())
+            validity_mask = (
+                (df["UnitPrice"] > 0) &
+                (df["UnitPrice"].between(min_rule_price, max_rule_price, inclusive="both")) &
+                (df["StockQuantity"] >= 0) &
+                (df["LastUpdated"] <= today)
+            )
+            validity = validity_mask.mean() * 100 if total_rows > 0 else 0.0
+
+            # Integridad referencial (simplificada): Supplier y Category presentes + ProductID no duplicado
+            referential_mask = (
+                df["Supplier"].notna() &
+                df["Category"].notna()
+            )
+            referential = referential_mask.mean() * 100 if total_rows > 0 else 0.0
+
+            # Exactitud (proxy): valores de UnitPrice dentro del IQR ampliado (Q1-1.5*IQR, Q3+1.5*IQR)
+            if total_rows > 0 and df["UnitPrice"].notna().sum() > 0:
+                q1 = df["UnitPrice"].quantile(0.25)
+                q3 = df["UnitPrice"].quantile(0.75)
+                iqr = q3 - q1
+                low, high = q1 - 1.5*iqr, q3 + 1.5*iqr
+                accuracy_mask = df["UnitPrice"].between(low, high, inclusive="both")
+                accuracy = accuracy_mask.mean() * 100
+            else:
+                accuracy = 0.0
+
+            metricas_csv = {
+                "Completitud": round(completeness, 2),
+                "Unicidad": round(uniqueness, 2),
+                "Consistencia": round(consistency, 2),
+                "Validez": round(validity, 2),
+                "Integridad Referencial": round(referential, 2),
+                "Exactitud": round(accuracy, 2)
+            }
+            umbral_csv = 90
+
+            # ---- Subpestañas para el CSV ----
+            ctab1, ctab2, ctab3, ctab4, ctab5 = st.tabs(
+                ["📋 Reglas CSV", "📊 Métricas CSV", "📈 Gráficos CSV", "⬇️ Descargar YAML CSV", "📂 Vista CSV"]
             )
 
-            # Filas seleccionadas
-            selected_rows = edited[edited["selected"] == True] if "selected" in edited.columns else edited.iloc[0:0]
+            # --- Reglas CSV ---
+            with ctab1:
+                st.markdown('<p class="subtitle">Reglas generadas para el CSV:</p>', unsafe_allow_html=True)
+                st.table(reglas_csv)
 
-            st.markdown("### ✅ Selección")
-            cA, cB = st.columns(2)
-            cA.metric("Filas seleccionadas", f"{len(selected_rows):,}")
-            if "UnitPrice" in selected_rows.columns and not selected_rows.empty:
-                cB.metric("Precio medio selección", f"{selected_rows['UnitPrice'].mean():,.2f}")
+            # --- Métricas CSV ---
+            with ctab2:
+                st.markdown('<p class="subtitle">Métricas de calidad calculadas sobre el CSV:</p>', unsafe_allow_html=True)
+                cols = st.columns(len(metricas_csv))
+                for i, (k, v) in enumerate(metricas_csv.items()):
+                    color = "normal" if v >= umbral_csv else "inverse"
+                    estado = "✅" if v >= umbral_csv else "⚠️"
+                    cols[i].metric(label=k, value=f"{v}% {estado}", delta="", delta_color=color)
 
-            if not selected_rows.empty:
-                st.markdown("#### Vista de selección")
-                st.table(selected_rows.drop(columns=["selected"]))
-
-                # Descarga solo selección
-                sel_bytes = selected_rows.drop(columns=["selected"]).to_csv(index=False).encode("utf-8")
-                st.download_button(
-                    label="⬇️ Descargar selección (CSV)",
-                    data=sel_bytes,
-                    file_name="agribusiness_selection.csv",
-                    mime="text/csv"
+            # --- Gráficos CSV ---
+            with ctab3:
+                st.markdown('<p class="subtitle">Visualización de métricas del CSV:</p>', unsafe_allow_html=True)
+                fig_bar_csv = px.bar(
+                    x=list(metricas_csv.keys()),
+                    y=list(metricas_csv.values()),
+                    color=list(metricas_csv.keys()),
+                    title="Métricas de Calidad (CSV)",
+                    labels={"x": "Dimensión", "y": "Porcentaje"}
                 )
-            else:
-                st.info("Marca filas en la columna **Seleccionar** para ver/descargar la selección.")
+                st.plotly_chart(fig_bar_csv, use_container_width=True)
+
+                fig_radar_csv = go.Figure()
+                fig_radar_csv.add_trace(go.Scatterpolar(
+                    r=list(metricas_csv.values()),
+                    theta=list(metricas_csv.keys()),
+                    fill='toself',
+                    name='Calidad CSV'
+                ))
+                # Ajusta el rango en función de las métricas observadas
+                min_axis = max(0, min(metricas_csv.values()) - 10)
+                max_axis = min(100, max(metricas_csv.values()) + 5)
+                fig_radar_csv.update_layout(
+                    polar=dict(radialaxis=dict(visible=True, range=[min_axis, 100])),
+                    showlegend=False,
+                    title="Radar de Calidad (CSV)"
+                )
+                st.plotly_chart(fig_radar_csv, use_container_width=True)
+
+            # --- Descargar YAML CSV ---
+            with ctab4:
+                yaml_csv = {
+                    "metadata": {
+                        "company": "Bunge Global SA",
+                        "generated_by": "DQaaS Streamlit App",
+                        "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                        "source_system": "CSV Upload"
+                    },
+                    "table": "agribusiness_products_csv",
+                    "rules": reglas_csv,
+                    "quality_metrics": metricas_csv,
+                    "summary": {
+                        "rows": int(total_rows),
+                        "distinct_products": int(df["ProductID"].nunique())
+                    }
+                }
+                yaml_str_csv = yaml.dump(yaml_csv, allow_unicode=True, sort_keys=False)
+                st.download_button(
+                    label="Descargar reglas y métricas del CSV en YAML",
+                    data=yaml_str_csv,
+                    file_name="agribusiness_products_csv_quality.yaml",
+                    mime="text/yaml"
+                )
+
+            # --- Vista CSV (con filtros opcionales) ---
+            with ctab5:
+                st.markdown('<p class="subtitle">Vista de datos del CSV:</p>', unsafe_allow_html=True)
+
+                with st.expander("🔎 Filtros"):
+                    c1, c2, c3, c4, c5 = st.columns(5)
+                    category = c1.multiselect("Category", sorted(df["Category"].dropna().unique().tolist()))
+                    region = c2.multiselect("Region", sorted(df["Region"].dropna().unique().tolist()))
+                    country = c3.multiselect("Country", sorted(df["Country"].dropna().unique().tolist()))
+                    supplier = c4.multiselect("Supplier", sorted(df["Supplier"].dropna().unique().tolist()))
+                    currency = c5.multiselect("Currency", sorted(df["Currency"].dropna().unique().tolist()))
+                    search_text = st.text_input("Buscar (ProductName o Supplier)", "")
+                    # slider de precios
+                    min_price = float(df["UnitPrice"].min())
+                    max_price = float(df["UnitPrice"].max())
+                    price_range = st.slider("Rango UnitPrice", min_value=min_price, max_value=max_price,
+                                            value=(min_price, max_price))
+
+                dff = df.copy()
+                if category: dff = dff[dff["Category"].isin(category)]
+                if region: dff = dff[dff["Region"].isin(region)]
+                if country: dff = dff[dff["Country"].isin(country)]
+                if supplier: dff = dff[dff["Supplier"].isin(supplier)]
+                if currency: dff = dff[dff["Currency"].isin(currency)]
+                if search_text:
+                    mask = (
+                        dff["ProductName"].astype(str).str.contains(search_text, case=False, na=False) |
+                        dff["Supplier"].astype(str).str.contains(search_text, case=False, na=False)
+                    )
+                    dff = dff[mask]
+                dff = dff[(dff["UnitPrice"] >= price_range[0]) & (dff["UnitPrice"] <= price_range[1])]
+
+                st.caption(f"Filas mostradas: {len(dff):,} de {len(df):,}")
+                st.dataframe(
+                    dff.sort_values(by="LastUpdated", ascending=False),
+                    use_container_width=True,
+                    height=520
+                )
 
         except Exception as e:
-            st.error(f"Error leyendo el CSV: {e}")
-            st.info("Verifica el esquema: ProductID, ProductName, Category, Region, Country, Supplier, UnitPrice, Currency, StockQuantity, LastUpdated.")
+            st.error(f"Error procesando el CSV: {e}")
+            st.info("Verifica el esquema esperado: ProductID, ProductName, Category, Region, Country, Supplier, UnitPrice, Currency, StockQuantity, LastUpdated.")
 
     # ==========================
     # Footer
