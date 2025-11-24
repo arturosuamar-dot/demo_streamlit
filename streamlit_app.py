@@ -47,7 +47,7 @@ else:
 if not st.session_state.perfilado_iniciado:
     st.markdown("""
         <div style="text-align: center; margin-top: 80px;">
-            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 20px;">
+            https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold;">
                 Bunge Global SA - Viterra Data Products Squad Extension
@@ -89,7 +89,7 @@ else:
     # ==========================
     st.markdown("""
         <div style="text-align: center; margin-bottom: 30px;">
-            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 10px;">
+            https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold; margin-top: 10px;">
                 Bunge Global SA - Viterra Data Products Squad Extension
@@ -111,7 +111,7 @@ else:
     # Único Dataproduct -> CSV local
     # ==========================
     DATASETS = {
-        "Dataproduct_Prueba": "./datos_prueba.csv",  # ajusta ruta si lo mueves
+        "Dataproduct_Prueba": "./datos_prueba.csv",
     }
 
     st.markdown('<p class="subtitle">Seleccione el dataproduct:</p>', unsafe_allow_html=True)
@@ -163,20 +163,21 @@ else:
                             if (df[c].dtype.name in ("object", "category")) and c not in datetime_cols]
         return df, numeric_cols, datetime_cols, categorical_cols
 
-    # ---- Parámetros por defecto fijos ----
-    P_LOW_DEFAULT = 5.0        # P5
-    P_HIGH_DEFAULT = 95.0      # P95
-    MAX_CAT_DEFAULT = 20       # Top-N categorías
-    ALLOW_FUTURE_DEFAULT = False
-
-    def derive_default_keys(df_local: pd.DataFrame):
-        id_like = [c for c in df_local.columns if re.search(r"\bid\b", c, flags=re.IGNORECASE)]
+    def derive_default_keys(df: pd.DataFrame):
+        id_like = [c for c in df.columns if re.search(r"\bid\b", c, flags=re.IGNORECASE)]
         if id_like:
             return id_like
-        num_local = [c for c in df_local.columns if is_numeric_dtype(df_local[c])]
-        if num_local:
+        elif any(is_numeric_dtype(df[c]) for c in df.columns):
+            num_local = [c for c in df.columns if is_numeric_dtype(df[c])]
             return [num_local[0]]
-        return [df_local.columns[0]] if len(df_local.columns) > 0 else []
+        else:
+            return [df.columns[0]] if len(df.columns) > 0 else []
+
+    # ---- Parámetros por defecto fijos ----
+    P_LOW_DEFAULT = 5.0       # Percentil inferior para rangos numéricos
+    P_HIGH_DEFAULT = 95.0     # Percentil superior para rangos numéricos
+    MAX_CAT_DEFAULT = 20      # Top-N categorías permitidas en categóricas
+    ALLOW_FUTURE_DEFAULT = False  # Fechas futuras no permitidas
 
     def make_rules_and_metrics(df: pd.DataFrame,
                                numeric_cols: list,
@@ -300,221 +301,183 @@ else:
         return reglas, metrics
 
     # ==========================
-    # Carga + tipado
+    # Carga + perfilado (Global/Segmento según selección inmediata)
     # ==========================
     try:
         df = load_csv_local(path_csv)
         df, numeric_cols, datetime_cols, categorical_cols = infer_types(df)
 
-        # ==========================
-        # ⚙️ Configurar reglas (Global) -> aquí movemos la segmentación
-        # ==========================
-        with st.expander("⚙️ Configurar reglas (Global)"):
-            # Campo de filtro (segmentación)
-            default_filter_col = "Country" if "Country" in df.columns else (categorical_cols[0] if categorical_cols else df.columns[0])
+        # ---- Selección inmediata de campo de filtro y segmento (SIN DEFAULTS) ----
+        # Campo de filtro sugerido: 'Country' si existe, sino primer categórico o la primera columna
+        default_filter_col = "Country" if "Country" in df.columns else (categorical_cols[0] if categorical_cols else df.columns[0])
+        st.markdown('<p class="subtitle">🎯 Segmentación</p>', unsafe_allow_html=True)
+        col_f1, col_f2 = st.columns([1, 2])
+        with col_f1:
             seg_col = st.selectbox(
-                "Columna de segmento",
+                "Campo de filtro",
                 options=df.columns.tolist(),
                 index=df.columns.tolist().index(default_filter_col) if default_filter_col in df.columns else 0,
-                key="seg_col_global"
+                key="filter_col_immediate"
             )
-            # Valores del segmento
+        with col_f2:
+            # SIN preselección de valores (global por defecto)
             unique_vals = sorted(df[seg_col].dropna().unique().tolist())
-            default_vals = ["Spain"] if seg_col == "Country" and "Spain" in unique_vals else []
-            seg_vals = st.multiselect(f"Valores para {seg_col}", options=unique_vals, default=default_vals, key="seg_vals_global")
+            seg_vals = st.multiselect(f"Valores para {seg_col}", options=unique_vals, default=[], key="seg_vals_immediate")
 
-        # Claves inferidas para métricas (no expuestas en UI)
-        key_cols_default = derive_default_keys(df)
+        # ---- Dataset actual según selección ----
+        df_current = df[df[seg_col].isin(seg_vals)].copy() if seg_vals else df.copy()
 
-        # Global
-        reglas_global, metricas_global = make_rules_and_metrics(
-            df, numeric_cols, datetime_cols, categorical_cols,
-            key_cols_default, P_LOW_DEFAULT, P_HIGH_DEFAULT, MAX_CAT_DEFAULT, ALLOW_FUTURE_DEFAULT
+        # ---- Inferir tipos y construir reglas/métricas sobre el ámbito actual ----
+        df_current, num_cur, dt_cur, cat_cur = infer_types(df_current)
+        key_cols_cur = derive_default_keys(df_current)
+
+        reglas_cur, metricas_cur = make_rules_and_metrics(
+            df_current, num_cur, dt_cur, cat_cur,
+            key_cols_cur, P_LOW_DEFAULT, P_HIGH_DEFAULT, MAX_CAT_DEFAULT, ALLOW_FUTURE_DEFAULT
         )
-        umbral_csv = 90
+
+        # Regla de contexto si hay segmento seleccionado
+        if seg_vals:
+            reglas_cur.insert(0, {
+                "name": f"segment_filter_{seg_col}",
+                "description": f"Reglas calculadas sobre el segmento: {seg_col} IN {seg_vals}",
+                "condition": f"{seg_col} IN {seg_vals}",
+                "dimension": "Contexto"
+            })
+
+        # Umbral para métricas
+        umbral = 90
 
         # ==========================
-        # Pestañas principales
+        # Pestañas principales (reflejan el ámbito actual)
         # ==========================
+        scope_label = "Global" if not seg_vals else f"Segmento: {seg_col} ∈ {seg_vals}"
         tab1, tab2, tab3, tab4, tab5 = st.tabs(
             ["📋 Reglas", "📊 Métricas", "📈 Gráficos", "⬇️ Descargar YAML", "📂 Vista de datos"]
         )
 
-        # --- Reglas (Global) ---
+        # --- Reglas (Ámbito actual) ---
         with tab1:
-            st.markdown('<p class="subtitle">📋 Reglas (Global)</p>', unsafe_allow_html=True)
-            st.table(reglas_global)
+            st.markdown(f'<p class="subtitle">📋 Reglas ({scope_label})</p>', unsafe_allow_html=True)
+            st.table(reglas_cur)
 
-        # --- Métricas (Global) ---
+        # --- Métricas (Ámbito actual) ---
         with tab2:
-            st.markdown('<p class="subtitle">📊 Métricas (Global)</p>', unsafe_allow_html=True)
-            cols = st.columns(len(metricas_global))
-            for i, (k, v) in enumerate(metricas_global.items()):
-                color = "normal" if v >= umbral_csv else "inverse"
-                estado = "✅" if v >= umbral_csv else "⚠️"
+            st.markdown(f'<p class="subtitle">📊 Métricas ({scope_label})</p>', unsafe_allow_html=True)
+            cols = st.columns(len(metricas_cur))
+            for i, (k, v) in enumerate(metricas_cur.items()):
+                color = "normal" if v >= umbral else "inverse"
+                estado = "✅" if v >= umbral else "⚠️"
                 cols[i].metric(label=k, value=f"{v}% {estado}", delta="", delta_color=color)
 
-        # --- Gráficos (Global) ---
+        # --- Gráficos (Ámbito actual) ---
         with tab3:
-            st.markdown('<p class="subtitle">📈 Gráficos (Global)</p>', unsafe_allow_html=True)
-            fig_bar_csv = px.bar(x=list(metricas_global.keys()), y=list(metricas_global.values()),
-                                 color=list(metricas_global.keys()), title=f"Métricas de Calidad (Global) — {dataproduct_visible}",
-                                 labels={"x": "Dimensión", "y": "Porcentaje"})
-            st.plotly_chart(fig_bar_csv, use_container_width=True)
-            fig_radar_csv = go.Figure()
-            fig_radar_csv.add_trace(go.Scatterpolar(
-                r=list(metricas_global.values()), theta=list(metricas_global.keys()),
-                fill='toself', name='Calidad Global'
+            st.markdown(f'<p class="subtitle">📈 Gráficos ({scope_label})</p>', unsafe_allow_html=True)
+            fig_bar = px.bar(
+                x=list(metricas_cur.keys()), y=list(metricas_cur.values()),
+                color=list(metricas_cur.keys()),
+                title=f"Métricas de Calidad — {dataproduct_visible} ({scope_label})",
+                labels={"x": "Dimensión", "y": "Porcentaje"}
+            )
+            st.plotly_chart(fig_bar, use_container_width=True)
+
+            fig_radar = go.Figure()
+            fig_radar.add_trace(go.Scatterpolar(
+                r=list(metricas_cur.values()), theta=list(metricas_cur.keys()),
+                fill='toself', name='Calidad'
             ))
-            min_axis = max(0, min(metricas_global.values()) - 10)
-            fig_radar_csv.update_layout(
+            min_axis = max(0, min(metricas_cur.values()) - 10) if metricas_cur else 0
+            fig_radar.update_layout(
                 polar=dict(radialaxis=dict(visible=True, range=[min_axis, 100])),
-                showlegend=False, title=f"Radar de Calidad (Global) — {dataproduct_visible}"
+                showlegend=False, title=f"Radar de Calidad — {dataproduct_visible} ({scope_label})"
             )
-            st.plotly_chart(fig_radar_csv, use_container_width=True)
+            st.plotly_chart(fig_radar, use_container_width=True)
 
-        # --- Descargar YAML (Global) ---
+        # --- Descargar YAML (Ámbito actual) ---
         with tab4:
-            yaml_global = {
-                "metadata": {
-                    "company": "Bunge Global SA",
-                    "generated_by": "DQaaS Streamlit App",
-                    "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                    "source_system": f"Local file ({dataproduct_visible})"
-                },
-                "dataset": {
-                    "name": dataproduct_visible,
-                    "source": path_csv,
-                    "rows": int(len(df)),
-                    "columns": int(len(df.columns)),
-                    "numeric_columns": numeric_cols,
-                    "datetime_columns": datetime_cols,
-                    "categorical_columns": categorical_cols,
-                    "key_columns_inferred": key_cols_default
-                },
-                "rules": reglas_global,
-                "quality_metrics": metricas_global,
-                "parameters": {
-                    "percentile_low": P_LOW_DEFAULT,
-                    "percentile_high": P_HIGH_DEFAULT,
-                    "max_allowed_categories": MAX_CAT_DEFAULT,
-                    "allow_future_dates": ALLOW_FUTURE_DEFAULT
-                },
-                "filter": {
-                    "column": seg_col,
-                    "values": seg_vals
+            if not seg_vals:
+                # YAML Global
+                yaml_current = {
+                    "metadata": {
+                        "company": "Bunge Global SA",
+                        "generated_by": "DQaaS Streamlit App",
+                        "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                        "source_system": f"Local file ({dataproduct_visible})"
+                    },
+                    "dataset": {
+                        "name": dataproduct_visible,
+                        "source": path_csv,
+                        "rows": int(len(df_current)),
+                        "columns": int(len(df_current.columns)),
+                        "numeric_columns": num_cur,
+                        "datetime_columns": dt_cur,
+                        "categorical_columns": cat_cur,
+                        "key_columns_inferred": key_cols_cur
+                    },
+                    "rules": reglas_cur,
+                    "quality_metrics": metricas_cur,
+                    "parameters": {
+                        "percentile_low": P_LOW_DEFAULT,
+                        "percentile_high": P_HIGH_DEFAULT,
+                        "max_allowed_categories": MAX_CAT_DEFAULT,
+                        "allow_future_dates": ALLOW_FUTURE_DEFAULT
+                    },
+                    "filter_field": seg_col
                 }
-            }
-            yaml_str_global = yaml.dump(yaml_global, allow_unicode=True, sort_keys=False)
+                file_name = f"csv_quality_profile_global_{dataproduct_visible.replace(' ', '_')}.yaml"
+                button_label = f"Descargar YAML (Global) — {dataproduct_visible}"
+            else:
+                # YAML Segmento
+                yaml_current = {
+                    "metadata": {
+                        "company": "Bunge Global SA",
+                        "generated_by": "DQaaS Streamlit App",
+                        "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                        "source_system": f"Local file ({dataproduct_visible})"
+                    },
+                    "segment": {
+                        "column": seg_col,
+                        "values": seg_vals,
+                        "rows": int(len(df_current)),
+                        "columns": int(len(df_current.columns))
+                    },
+                    "dataset_columns": {
+                        "numeric": num_cur,
+                        "datetime": dt_cur,
+                        "categorical": cat_cur,
+                        "key_columns_inferred": key_cols_cur
+                    },
+                    "rules": reglas_cur,
+                    "quality_metrics": metricas_cur,
+                    "parameters": {
+                        "percentile_low": P_LOW_DEFAULT,
+                        "percentile_high": P_HIGH_DEFAULT,
+                        "max_allowed_categories": MAX_CAT_DEFAULT,
+                        "allow_future_dates": ALLOW_FUTURE_DEFAULT
+                    }
+                }
+                file_name = f"csv_quality_profile_segment_{dataproduct_visible}_{seg_col}.yaml"
+                button_label = f"Descargar YAML (Segmento) — {dataproduct_visible}"
+
+            yaml_str = yaml.dump(yaml_current, allow_unicode=True, sort_keys=False)
             st.download_button(
-                label=f"Descargar YAML (Global) — {dataproduct_visible}",
-                data=yaml_str_global,
-                file_name=f"csv_quality_profile_global_{dataproduct_visible.replace(' ', '_')}.yaml",
+                label=button_label,
+                data=yaml_str,
+                file_name=file_name,
                 mime="text/yaml"
             )
 
-        # --- Vista de datos (Global + Segmento; SIN controles, usa los del expander) ---
+        # --- Vista de datos (Ámbito actual) ---
         with tab5:
-            # Global
-            st.markdown('<p class="subtitle">📂 Vista CSV (Global)</p>', unsafe_allow_html=True)
-            st.dataframe(df, use_container_width=True, height=420)
-
-            # Segmento (controlado desde el expander)
-            st.markdown('<p class="subtitle">🎯 Vista y métricas del segmento (controlado en ⚙️ Configurar reglas)</p>', unsafe_allow_html=True)
-
-            # Aplica el filtro de segmento
-            df_segment = df[df[seg_col].isin(seg_vals)].copy() if seg_vals else df.copy()
-            # Re-inferir tipos tras el filtro
-            df_segment, num_seg, dt_seg, cat_seg = infer_types(df_segment)
-
-            # Reglas/métricas del segmento con parámetros por defecto
-            key_cols_seg_inferred = derive_default_keys(df_segment)
-            reglas_seg, metricas_seg = make_rules_and_metrics(
-                df_segment, num_seg, dt_seg, cat_seg,
-                key_cols_seg_inferred, P_LOW_DEFAULT, P_HIGH_DEFAULT, MAX_CAT_DEFAULT, ALLOW_FUTURE_DEFAULT
-            )
-
+            st.markdown(f'<p class="subtitle">📂 Vista CSV ({scope_label})</p>', unsafe_allow_html=True)
             if seg_vals:
-                reglas_seg.insert(0, {
-                    "name": f"segment_filter_{seg_col}",
-                    "description": f"Reglas calculadas sobre el segmento: {seg_col} IN {seg_vals}",
-                    "condition": f"{seg_col} IN {seg_vals}",
-                    "dimension": "Contexto"
-                })
-
-            # Mostrar resultados del segmento
-            st.markdown('<p class="subtitle">📋 Reglas (Segmento)</p>', unsafe_allow_html=True)
-            st.table(reglas_seg)
-
-            umbral_seg = 90
-            st.markdown('<p class="subtitle">📊 Métricas (Segmento)</p>', unsafe_allow_html=True)
-            cols = st.columns(len(metricas_seg))
-            for i, (k, v) in enumerate(metricas_seg.items()):
-                color = "normal" if v >= umbral_seg else "inverse"
-                estado = "✅" if v >= umbral_seg else "⚠️"
-                cols[i].metric(label=k, value=f"{v}% {estado}", delta="", delta_color=color)
-
-            st.markdown('<p class="subtitle">📈 Gráficos (Segmento)</p>', unsafe_allow_html=True)
-            fig_bar_seg = px.bar(x=list(metricas_seg.keys()), y=list(metricas_seg.values()),
-                                 color=list(metricas_seg.keys()), title=f"Métricas de Calidad (Segmento: {seg_col}) — {dataproduct_visible}",
-                                 labels={"x": "Dimensión", "y": "Porcentaje"})
-            st.plotly_chart(fig_bar_seg, use_container_width=True)
-            fig_radar_seg = go.Figure()
-            fig_radar_seg.add_trace(go.Scatterpolar(
-                r=list(metricas_seg.values()), theta=list(metricas_seg.keys()),
-                fill='toself', name='Calidad Segmento'
-            ))
-            min_axis_seg = max(0, min(metricas_seg.values()) - 10)
-            fig_radar_seg.update_layout(
-                polar=dict(radialaxis=dict(visible=True, range=[min_axis_seg, 100])),
-                showlegend=False, title=f"Radar de Calidad (Segmento: {seg_col}) — {dataproduct_visible}"
-            )
-            st.plotly_chart(fig_radar_seg, use_container_width=True)
-
-            # YAML Segmento
-            st.markdown('<p class="subtitle">⬇️ Descargar YAML (Segmento)</p>', unsafe_allow_html=True)
-            yaml_seg = {
-                "metadata": {
-                    "company": "Bunge Global SA",
-                    "generated_by": "DQaaS Streamlit App",
-                    "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                    "source_system": f"Local file ({dataproduct_visible})"
-                },
-                "segment": {
-                    "column": seg_col,
-                    "values": seg_vals,
-                    "rows": int(len(df_segment)),
-                    "columns": int(len(df_segment.columns))
-                },
-                "dataset_columns": {
-                    "numeric": num_seg,
-                    "datetime": dt_seg,
-                    "categorical": cat_seg,
-                    "key_columns_inferred": key_cols_seg_inferred
-                },
-                "rules": reglas_seg,
-                "quality_metrics": metricas_seg,
-                "parameters": {
-                    "percentile_low": P_LOW_DEFAULT,
-                    "percentile_high": P_HIGH_DEFAULT,
-                    "max_allowed_categories": MAX_CAT_DEFAULT,
-                    "allow_future_dates": ALLOW_FUTURE_DEFAULT
-                }
-            }
-            yaml_str_seg = yaml.dump(yaml_seg, allow_unicode=True, sort_keys=False)
-            st.download_button(
-                label=f"Descargar YAML (Segmento) — {dataproduct_visible}",
-                data=yaml_str_seg,
-                file_name=f"csv_quality_profile_segment_{dataproduct_visible}_{seg_col}.yaml",
-                mime="text/yaml"
-            )
-
-            # Vista de datos (Segmento)
-            st.caption(
-                f"Filas segmento: {len(df_segment):,} / {len(df):,} "
-                + (f"[{seg_col} ∈ {seg_vals}]" if seg_vals else "[sin filtro: dataset completo]")
-            )
-            st.dataframe(df_segment, use_container_width=True, height=420)
+                st.caption(f"Filas segmento: {len(df_current):,} / {len(df):,} [{seg_col} ∈ {seg_vals}]")
+            else:
+                st.caption(f"Global: mostrando dataset completo ({len(df):,} filas)")
+            if len(df_current) == 0:
+                st.warning("El segmento seleccionado no tiene filas. Ajusta los valores del filtro.")
+            else:
+                st.dataframe(df_current, use_container_width=True, height=520)
 
     except Exception as e:
         st.error(f"Error procesando el CSV: {e}")
