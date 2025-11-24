@@ -411,7 +411,13 @@ else:
         # ==========================
         # Pestañas principales (reflejan el ámbito actual)
         # ==========================
-        scope_label = "Global" if not seg_vals else f"Segmento: {seg_col} ∈ {seg_vals}"
+
+        if seg_vals:
+            valores_str = ", ".join(seg_vals)  # convierte ['Brazil', 'Spain'] → "Brazil, Spain"
+            scope_label = f"Segmento: {seg_col} → {valores_str}"
+        else:
+            scope_label = "Global"
+
         tab1, tab2, tab3, tab4, tab5 = st.tabs(
             ["📋 Reglas", "📊 Métricas", "📈 Gráficos", "⬇️ Descargar YAML", "📂 Vista de datos"]
         )
