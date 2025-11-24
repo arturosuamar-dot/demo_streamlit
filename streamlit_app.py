@@ -224,9 +224,11 @@ else:
     umbral = 90
 
     # ==========================
-    # Pestañas
+    # Pestañas (añadimos CSV adjunto)
     # ==========================
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["📋 Reglas", "📊 Métricas", "📈 Gráficos", "⬇️ Descargar YAML", "📂 Datos de prueba"])
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(
+        ["📋 Reglas", "📊 Métricas", "📈 Gráficos", "⬇️ Descargar YAML", "📂 Datos de prueba", "📄 CSV adjunto"]
+    )
 
     # --- Reglas ---
     with tab1:
@@ -294,7 +296,118 @@ else:
         elif tabla_seleccionada == "pedidos":
             st.table(pedidos_data)
 
+    # --- 📄 CSV adjunto ---
+    with tab6:
+        st.markdown('<p class="subtitle">Vista del CSV adjunto:</p>', unsafe_allow_html=True)
+
+        # Uploader opcional para reemplazar el CSV (por defecto usa el incluido)
+        csv_file = st.file_uploader("Sube un CSV con el mismo esquema (opcional)", type=["csv"], key="csv_uploader")
+
+        # Si no se sube nada, usamos el CSV por defecto (ruta/stream que tengas disponible)
+        # En tu entorno real, reemplaza la lectura de archivo local por tu origen preferido (GCS/BigQuery/SharePoint, etc.).
+        import pandas as pd
+
+        def load_csv_to_df(uploaded) -> pd.DataFrame:
+            if uploaded is not None:
+                return pd.read_csv(uploaded)
+            else:
+                return pd.read_csv("global_agribusiness_food_company_1000_2.csv")
+
+        try:
+            df = load_csv_to_df(csv_file)
+
+            # Tipado y limpieza ligera:
+            # - LastUpdated a datetime
+            # - UnitPrice y StockQuantity a numéricos
+            # - Normalización de espacios en strings
+            if "LastUpdated" in df.columns:
+                df["LastUpdated"] = pd.to_datetime(df["LastUpdated"], errors="coerce")
+            for col in ["UnitPrice", "StockQuantity", "ProductID"]:
+                if col in df.columns:
+                    df[col] = pd.to_numeric(df[col], errors="coerce")
+            for col in df.select_dtypes(include=["object"]).columns:
+                df[col] = df[col].astype(str).str.strip()
+
+            # Panel de filtros
+            with st.expander("🔎 Filtros"):
+                c1, c2, c3, c4, c5 = st.columns(5)
+                category = c1.multiselect("Category", sorted(df["Category"].dropna().unique().tolist())) if "Category" in df.columns else []
+                region = c2.multiselect("Region", sorted(df["Region"].dropna().unique().tolist())) if "Region" in df.columns else []
+                country = c3.multiselect("Country", sorted(df["Country"].dropna().unique().tolist())) if "Country" in df.columns else []
+                supplier = c4.multiselect("Supplier", sorted(df["Supplier"].dropna().unique().tolist())) if "Supplier" in df.columns else []
+                currency = c5.multiselect("Currency", sorted(df["Currency"].dropna().unique().tolist())) if "Currency" in df.columns else []
+
+                # Búsqueda libre
+                search_text = st.text_input("Buscar texto (ProductName o Supplier)", "")
+
+                # Rango de precio
+                if "UnitPrice" in df.columns and not df["UnitPrice"].isna().all():
+                    min_price = float(df["UnitPrice"].min())
+                    max_price = float(df["UnitPrice"].max())
+                else:
+                    min_price, max_price = 0.0, 0.0
+                price_range = st.slider("Rango de UnitPrice", min_value=min_price, max_value=max_price,
+                                        value=(min_price, max_price))
+
+            # Aplicar filtros
+            dff = df.copy()
+            if category:
+                dff = dff[dff["Category"].isin(category)]
+            if region:
+                dff = dff[dff["Region"].isin(region)]
+            if country:
+                dff = dff[dff["Country"].isin(country)]
+            if supplier:
+                dff = dff[dff["Supplier"].isin(supplier)]
+            if currency:
+                dff = dff[dff["Currency"].isin(currency)]
+            if search_text:
+                st.write(f"Filtrando por texto: **{search_text}**")
+                # Evita errores si faltan columnas
+                pcol = "ProductName" if "ProductName" in dff.columns else None
+                scol = "Supplier" if "Supplier" in dff.columns else None
+                if pcol or scol:
+                    mask = False
+                    if pcol:
+                        mask = dff[pcol].astype(str).str.contains(search_text, case=False, na=False)
+                    if scol:
+                        mask = mask | dff[scol].astype(str).str.contains(search_text, case=False, na=False)
+                    dff = dff[mask]
+            if "UnitPrice" in dff.columns:
+                dff = dff[(dff["UnitPrice"] >= price_range[0]) & (dff["UnitPrice"] <= price_range[1])]
+
+            # Contador y tabla
+            st.caption(f"Filas mostradas: {len(dff):,} de {len(df):,}")
+            sort_col = "LastUpdated" if "LastUpdated" in dff.columns else None
+            if sort_col:
+                dff = dff.sort_values(by=sort_col, ascending=False)
+            st.dataframe(dff, use_container_width=True, height=500)
+
+            # Descarga del subconjunto filtrado
+            csv_bytes = dff.to_csv(index=False).encode("utf-8")
+            st.download_button(
+                label="⬇️ Descargar CSV filtrado",
+                data=csv_bytes,
+                file_name="agribusiness_filtered.csv",
+                mime="text/csv"
+            )
+
+            # Métricas rápidas (ejemplo: precio medio y stock total)
+            st.markdown("### 📌 Resumen rápido")
+            cA, cB, cC = st.columns(3)
+            if "UnitPrice" in dff.columns and not dff["UnitPrice"].isna().all():
+                cA.metric("Precio medio (UnitPrice)", f"{dff['UnitPrice'].mean():,.2f}")
+            if "StockQuantity" in dff.columns and not dff["StockQuantity"].isna().all():
+                cB.metric("Stock total", f"{int(dff['StockQuantity'].sum()):,}")
+            if "ProductID" in dff.columns:
+                cC.metric("Productos únicos", f"{dff['ProductID'].nunique():,}")
+
+        except Exception as e:
+            st.error(f"Error leyendo el CSV: {e}")
+            st.info("Verifica que el archivo tenga el esquema esperado: ProductID, ProductName, Category, Region, Country, Supplier, UnitPrice, Currency, StockQuantity, LastUpdated.")
+
     # ==========================
     # Footer
     # ==========================
+
     st.markdown('<footer>© 2025 Bunge Global SA - Todos los derechos reservados</footer>', unsafe_allow_html=True)
