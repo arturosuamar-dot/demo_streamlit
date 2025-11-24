@@ -11,13 +11,28 @@ import plotly.graph_objects as go
 # ==========================
 st.set_page_config(page_title="DQaaS - Bunge Global SA", page_icon="🌐", layout="wide")
 
+# ==========================
+# Centrar el contenedor principal
+# ==========================
 st.markdown("""
     <style>
-    /* Centra el contenedor principal de Streamlit y limita su ancho para un centrado visual perfecto */
+    /* Centra el contenido en pantallas anchas y da un ancho máximo estable */
     .block-container {
-        max-width: 900px;        /* ajusta este valor a tu gusto: 800, 900, 1000… */
+        max-width: 900px;   /* ajusta: 840, 900, 960 según prefieras */
         margin-left: auto;
         margin-right: auto;
+    }
+    /* Subtítulo reutilizable y footer */
+    .subtitle {
+        font-size: 24px;
+        font-weight: bold;
+        color: #004C97;
+        margin-bottom: -10px;
+    }
+    footer {
+        text-align: center;
+        color: #6b6b6b;
+        margin-top: 40px;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -28,49 +43,52 @@ st.markdown("""
 if "perfilado_iniciado" not in st.session_state:
     st.session_state.perfilado_iniciado = False
 
+# URL del logo
+LOGO_URL = "https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28"
+
 # ==========================
 # Pantalla inicial
 # ==========================
 if not st.session_state.perfilado_iniciado:
-    # Portada con logo, título y subtítulo (HTML correcto)
+    # Encabezado (logo + títulos)
+    st.markdown('<div style="text-align: center; margin-top: 60px;"></div>', unsafe_allow_html=True)
+    st.image(LOGO_URL, width=140)
     st.markdown("""
-        <div style="text-align: center; margin-top: 80px;">
-            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 20px;">
-            <h1 style="color: #004C97; font-size: 48px; font-weight: bold;">DQaaS - Data Quality as a Service</h1>
-            <p style="color: #003366; font-size: 22px; font-weight: bold;">
+        <div style="text-align: center;">
+            <h1 style="color: #004C97; font-size: 42px; font-weight: bold; margin: 8px 0;">
+                DQaaS - Data Quality as a Service
+            </h1>
+            <p style="color: #003366; font-size: 18px; font-weight: bold; margin-top: 6px;">
                 Bunge Global SA - Viterra Data Products Squad Extension
             </p>
         </div>
     """, unsafe_allow_html=True)
 
-    # Estilo SOLO del botón (sin cambiar el layout)
+    # Estilo del botón (solo aspecto, no layout)
     st.markdown("""
         <style>
         div.stButton > button {
             width: 300px;
-            height: 60px;
-            font-size: 24px;
-            font-weight: bold;
+            height: 52px;
+            font-size: 18px;
+            font-weight: 700;
             background-color: #004C97;
-            color: white;
+            color: #ffffff;
             border-radius: 10px;
             border: none;
-            transition: 0.3s;
+            transition: 0.2s ease;
         }
         div.stButton > button:hover {
             background-color: #003366;
-            transform: scale(1.05);
+            transform: translateY(-1px);
         }
         </style>
     """, unsafe_allow_html=True)
 
-    # Espaciado bajo el título
-    st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
-
-    # Botón centrado de forma robusta con columnas (3-2-3 da un centrado visual muy preciso)
-    col_left, col_center, col_right = st.columns([3, 2, 3])
-    with col_center:
-        # usa use_container_width para que el botón ocupe la columna y no “parezca” desviado
+    # Botón centrado con columnas simétricas
+    st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+    col_l, col_c, col_r = st.columns([1, 1, 1])  # columnas simétricas
+    with col_c:
         if st.button("🚀 Iniciar Perfilado de Datos", key="start_button", use_container_width=True):
             st.session_state.perfilado_iniciado = True
             st.rerun()
@@ -79,11 +97,14 @@ else:
     # ==========================
     # Encabezado con logo y título
     # ==========================
+    st.markdown('<div style="text-align: center; margin-top: 20px;"></div>', unsafe_allow_html=True)
+    st.image(LOGO_URL, width=120)
     st.markdown("""
-        <div style="text-align: center; margin-bottom: 30px;">
-            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 10px;">
-            <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">DQaaS - Data Quality as a Service</h1>
-            <p style="color: #003366; font-size: 22px; font-weight: bold; margin-top: 10px;">
+        <div style="text-align: center;">
+            <h1 style="color: #004C97; font-size: 38px; font-weight: bold; margin: 8px 0;">
+                DQaaS - Data Quality as a Service
+            </h1>
+            <p style="color: #003366; font-size: 18px; font-weight: bold; margin-top: 4px;">
                 Bunge Global SA - Viterra Data Products Squad Extension
             </p>
         </div>
@@ -108,28 +129,7 @@ else:
         "Pedidos": "pedidos"
     }
 
-    # ==========================
-    # Estilos (solo títulos y footer)
-    # ==========================
-    st.markdown("""
-        <style>
-        .subtitle {
-            font-size: 24px;
-            font-weight: bold;
-            color: #004C97;
-            margin-bottom: -10px;
-        }
-        footer {
-            text-align: center;
-            color: #6b6b6b;
-            margin-top: 40px;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
-    # ==========================
     # Select tabla
-    # ==========================
     st.markdown('<p class="subtitle">Selecciona una tabla:</p>', unsafe_allow_html=True)
     tabla_visible = st.selectbox("", list(tablas_map.keys()))
     tabla_seleccionada = tablas_map[tabla_visible]
