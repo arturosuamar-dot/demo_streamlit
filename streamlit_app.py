@@ -18,13 +18,47 @@ if "perfilado_iniciado" not in st.session_state:
     st.session_state.perfilado_iniciado = False
 
 # ==========================
+# CSS inicial (contenedor más estrecho)
+# Solo se aplica antes de iniciar el perfilado
+# ==========================
+if not st.session_state.perfilado_iniciado:
+    st.markdown("""
+        <style>
+        .main .block-container {
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        /* Botón inicial estilizado */
+        div.stButton > button {
+            width: 320px;
+            height: 60px;
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #004C97;
+            color: white;
+            border-radius: 10px;
+            border: none;
+            transition: 0.3s;
+        }
+        div.stButton > button:hover {
+            background-color: #003366;
+            transform: scale(1.05);
+        }
+        /* Subtítulo y footer básicos para la portada */
+        .subtitle { font-size: 24px; font-weight: bold; color: #004C97; margin-bottom: -10px; }
+        footer { text-align: center; color: #6b6b6b; margin-top: 40px; }
+        </style>
+    """, unsafe_allow_html=True)
+
+# ==========================
 # Pantalla inicial
 # ==========================
 if not st.session_state.perfilado_iniciado:
     st.markdown("""
         <div style="text-align: center; margin-top: 80px;">
             <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28"
-                 alt="Bunge Logo" style="width:180px; margin-bottom:20px;" />
+                 style="width:180px; margin-bottom:20px;" />
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold;">
                 Bunge Global SA - Viterra Data Products Squad Extension
@@ -34,6 +68,7 @@ if not st.session_state.perfilado_iniciado:
 
     st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
 
+    # Botón centrado
     col_left, col_center, col_right = st.columns([3, 2, 5.3])
     with col_center:
         if st.button("🚀 Iniciar Perfilado de Datos", key="start_button", use_container_width=True):
@@ -42,39 +77,37 @@ if not st.session_state.perfilado_iniciado:
 
 else:
     # ==========================
-    # CSS global para ancho, tabs y emojis
+    # CSS ancho y soporte de emojis (solo tras iniciar perfilado)
     # ==========================
     st.markdown("""
         <style>
-        /* Ancho global del contenedor principal (siempre ancho) */
+        /* Ancho global del contenedor principal (siempre ancho tras iniciar) */
         .main .block-container {
-            max-width: 1800px;         /* ancho amplio por defecto */
+            max-width: 1800px;
             margin-left: auto;
             margin-right: auto;
         }
         @media (min-width: 1800px) {
             .main .block-container {
-                max-width: 96vw;       /* aprovechar casi todo el viewport en pantallas muy grandes */
+                max-width: 96vw;
             }
         }
-    
-        /* Asegurar que los elementos dentro aprovechen el ancho */
-        .stApp, .main, .block-container {
-            width: 100%;
-        }
-    
-        /* Estilos de Tabs: evitar recorte de emojis y mejorar legibilidad */
+
+        /* Asegurar que los elementos aprovechen el ancho */
+        .stApp, .main, .block-container { width: 100%; }
+
+        /* Tabs: evitar recorte de emojis, mejorar legibilidad */
         .stTabs [data-baseweb="tab-list"] {
-            flex-wrap: wrap;             /* permite bajar de línea si hay muchas pestañas */
+            flex-wrap: wrap;
             gap: 4px;
         }
         .stTabs [data-baseweb="tab"] {
             padding: 12px 18px;
             font-size: 18px;
             line-height: 1.3;
-            white-space: nowrap;         /* mantener el emoji pegado al texto */
+            white-space: nowrap;
         }
-    
+
         /* Tipografía con soporte de emojis de color */
         html, body, .stApp {
             font-family: "Segoe UI", "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji",
@@ -82,8 +115,8 @@ else:
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-    
-        /* Botón principal más ancho (pantalla inicial) */
+
+        /* Botón (si aparece alguno adicional en la vista ya iniciada) */
         div.stButton > button {
             width: 420px;
             height: 64px;
@@ -99,11 +132,11 @@ else:
             background-color: #003366;
             transform: scale(1.05);
         }
-    
+
         /* Subtítulos y footer */
         .subtitle { font-size: 24px; font-weight: bold; color: #004C97; margin-bottom: -10px; }
         footer { text-align: center; color: #6b6b6b; margin-top: 40px; }
-    
+
         /* Evitar que tablas y charts se limiten por un ancho menor */
         .element-container { width: 100%; max-width: 100%; }
         </style>
@@ -115,7 +148,7 @@ else:
     st.markdown("""
         <div style="text-align: center; margin-bottom: 30px;">
             <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28"
-                 alt="Bunge Logo" style="width:180px; margin-bottom:20px;" />
+                 style="width:180px; margin-bottom:20px;" />
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold; margin-top: 10px;">
                 Bunge Global SA - Viterra Data Products Squad Extension
