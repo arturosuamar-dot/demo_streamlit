@@ -21,22 +21,20 @@ if "perfilado_iniciado" not in st.session_state:
 # CSS condicional para el ancho del contenedor
 # ==========================
 if not st.session_state.perfilado_iniciado:
-    # Portada: contenedor más estrecho y centrado
     st.markdown("""
         <style>
         .block-container {
-            max-width: 900px;  /* landing centrada y cómoda */
+            max-width: 900px;
             margin-left: auto;
             margin-right: auto;
         }
         </style>
     """, unsafe_allow_html=True)
 else:
-    # App iniciada: contenedor más ancho para desktop
     st.markdown("""
         <style>
         .block-container {
-            max-width: 1200px;  /* ajusta 1100-1400 según tu preferencia */
+            max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -47,10 +45,10 @@ else:
 # Pantalla inicial
 # ==========================
 if not st.session_state.perfilado_iniciado:
-    # Portada con logo, título y subtítulo (HTML correcto)
     st.markdown("""
         <div style="text-align: center; margin-top: 80px;">
-            https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28
+            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28"
+                 width="180" style="margin-bottom: 20px;">
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold;">
                 Bunge Global SA - Viterra Data Products Squad Extension
@@ -58,7 +56,6 @@ if not st.session_state.perfilado_iniciado:
         </div>
     """, unsafe_allow_html=True)
 
-    # Estilo SOLO del botón (sin cambiar el layout)
     st.markdown("""
         <style>
         div.stButton > button {
@@ -79,10 +76,8 @@ if not st.session_state.perfilado_iniciado:
         </style>
     """, unsafe_allow_html=True)
 
-    # Espaciado bajo el título
     st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
 
-    # Botón ligeramente desplazado a la izquierda (asimetría en columnas)
     col_left, col_center, col_right = st.columns([3, 2, 5.3])
     with col_center:
         if st.button("🚀 Iniciar Perfilado de Datos", key="start_button", use_container_width=True):
@@ -95,7 +90,8 @@ else:
     # ==========================
     st.markdown("""
         <div style="text-align: center; margin-bottom: 30px;">
-            https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28
+            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28"
+                 width="180" style="margin-bottom: 10px;">
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold; margin-top: 10px;">
                 Bunge Global SA - Viterra Data Products Squad Extension
@@ -112,44 +108,29 @@ else:
         st.sidebar.success("Conexión simulada con BigQuery ✅")
 
     # ==========================
-    # Mapeo de tablas
+    # Mapeo de tablas (demo)
     # ==========================
-    tablas_map = {
-        "Clientes": "clientes",
-        "Ventas": "ventas",
-        "Productos": "productos",
-        "Proveedores": "proveedores",
-        "Pedidos": "pedidos"
-    }
+    tablas_map = {"Clientes": "clientes", "Ventas": "ventas", "Productos": "productos", "Proveedores": "proveedores", "Pedidos": "pedidos"}
 
     # ==========================
     # Estilos (solo títulos y footer)
     # ==========================
     st.markdown("""
         <style>
-        .subtitle {
-            font-size: 24px;
-            font-weight: bold;
-            color: #004C97;
-            margin-bottom: -10px;
-        }
-        footer {
-            text-align: center;
-            color: #6b6b6b;
-            margin-top: 40px;
-        }
+        .subtitle { font-size: 24px; font-weight: bold; color: #004C97; margin-bottom: -10px; }
+        footer { text-align: center; color: #6b6b6b; margin-top: 40px; }
         </style>
     """, unsafe_allow_html=True)
 
     # ==========================
-    # Select tabla (demo fija)
+    # Select tabla (demo)
     # ==========================
     st.markdown('<p class="subtitle">Selecciona una tabla:</p>', unsafe_allow_html=True)
     tabla_visible = st.selectbox("", list(tablas_map.keys()))
     tabla_seleccionada = tablas_map[tabla_visible]
 
     # ==========================
-    # Reglas por tabla (demo fija)
+    # Reglas por tabla (demo)
     # ==========================
     reglas_por_tabla = {
         "clientes": [
@@ -224,18 +205,18 @@ else:
     umbral = 90
 
     # ==========================
-    # Pestañas
+    # Pestañas principales
     # ==========================
     tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(
         ["📋 Reglas", "📊 Métricas", "📈 Gráficos", "⬇️ Descargar YAML", "📂 Datos de prueba", "📄 CSV adjunto (auto)"]
     )
 
-    # --- Reglas ---
+    # --- Reglas (demo) ---
     with tab1:
         st.markdown('<p class="subtitle">Reglas para la tabla seleccionada:</p>', unsafe_allow_html=True)
         st.table(reglas_por_tabla[tabla_seleccionada])
 
-    # --- Métricas ---
+    # --- Métricas (demo) ---
     with tab2:
         st.markdown('<p class="subtitle">Métricas de calidad:</p>', unsafe_allow_html=True)
         cols = st.columns(len(metricas))
@@ -244,16 +225,11 @@ else:
             estado = "✅" if v >= umbral else "⚠️"
             cols[i].metric(label=k, value=f"{v}% {estado}", delta="", delta_color=color)
 
-    # --- Gráficos ---
+    # --- Gráficos (demo) ---
     with tab3:
         st.markdown('<p class="subtitle">Visualización de métricas:</p>', unsafe_allow_html=True)
-        fig_bar = px.bar(
-            x=list(metricas.keys()),
-            y=list(metricas.values()),
-            color=list(metricas.keys()),
-            title="Métricas de Calidad",
-            labels={"x": "Dimensión", "y": "Porcentaje"}
-        )
+        fig_bar = px.bar(x=list(metricas.keys()), y=list(metricas.values()), color=list(metricas.keys()),
+                         title="Métricas de Calidad", labels={"x": "Dimensión", "y": "Porcentaje"})
         st.plotly_chart(fig_bar, use_container_width=True)
 
         fig_radar = go.Figure()
@@ -261,7 +237,7 @@ else:
         fig_radar.update_layout(polar=dict(radialaxis=dict(visible=True, range=[70, 100])), showlegend=False, title="Radar de Calidad")
         st.plotly_chart(fig_radar, use_container_width=True)
 
-    # --- Descargar YAML (demo tabla) ---
+    # --- Descargar YAML (demo) ---
     with tab4:
         yaml_data = {
             "metadata": {
@@ -275,14 +251,10 @@ else:
             "quality_metrics": metricas
         }
         yaml_str = yaml.dump(yaml_data, allow_unicode=True)
-        st.download_button(
-            label="Descargar reglas y métricas en YAML",
-            data=yaml_str,
-            file_name=f"{tabla_seleccionada}_quality.yaml",
-            mime="text/yaml"
-        )
+        st.download_button(label="Descargar reglas y métricas en YAML", data=yaml_str,
+                           file_name=f"{tabla_seleccionada}_quality.yaml", mime="text/yaml")
 
-    # --- Datos de prueba ---
+    # --- Datos de prueba (demo) ---
     with tab5:
         st.markdown(f"**Datos de la tabla {tabla_visible}:**")
         if tabla_seleccionada == "clientes":
@@ -296,9 +268,9 @@ else:
         elif tabla_seleccionada == "pedidos":
             st.table(pedidos_data)
 
-    # ========= 📄 CSV adjunto (auto): reglas, métricas, gráficos, YAML, datos =========
+    # ========= 📄 CSV adjunto (auto): Global y Segmento =========
     with tab6:
-        st.markdown('<p class="subtitle">CSV adjunto: perfilado automático (cualquier esquema)</p>', unsafe_allow_html=True)
+        st.markdown('<p class="subtitle">CSV adjunto: perfilado automático (global y por segmento)</p>', unsafe_allow_html=True)
 
         import pandas as pd
         import numpy as np
@@ -311,15 +283,16 @@ else:
             if uploaded is not None:
                 return pd.read_csv(uploaded)
             else:
-                # Por defecto intenta leer el CSV que compartiste previamente
+                # Usa por defecto el CSV que compartiste
                 return pd.read_csv("global_agribusiness_food_company_1000_2.csv")
 
-        try:
-            df = load_csv_to_df(csv_file)
-            n_rows, n_cols = df.shape
+        # ---- Utilidades ----
+        def infer_types(df: pd.DataFrame):
+            # Normaliza strings
+            for col in df.select_dtypes(include=["object"]).columns:
+                df[col] = df[col].astype(str).str.strip()
 
-            # ---- Inferencia de tipos ----
-            # Convertimos objetos a datetime si >60% de parseo posible
+            # Detecta posibles columnas datetime en objetos (>=60% parseables)
             def try_parse_datetime(series: pd.Series) -> bool:
                 try:
                     parsed = pd.to_datetime(series, errors="coerce", infer_datetime_format=True)
@@ -327,149 +300,129 @@ else:
                 except Exception:
                     return False
 
-            # Normaliza strings (espacios)
-            for col in df.select_dtypes(include=["object"]).columns:
-                df[col] = df[col].astype(str).str.strip()
-
-            # Detecta posibles fechas en columnas object
             datetime_candidates = []
             for col in df.columns:
                 if df[col].dtype == "object" and try_parse_datetime(df[col]):
                     datetime_candidates.append(col)
-            # Castea esas columnas a datetime
             for col in datetime_candidates:
                 df[col] = pd.to_datetime(df[col], errors="coerce", infer_datetime_format=True)
 
             numeric_cols = df.select_dtypes(include=["number"]).columns.tolist()
             datetime_cols = df.select_dtypes(include=["datetime"]).columns.tolist()
             categorical_cols = df.select_dtypes(include=["object", "category"]).columns.tolist()
+            return df, numeric_cols, datetime_cols, categorical_cols
 
-            # Heurística para clave(s): columnas que contengan 'id' en el nombre
+        def derive_default_keys(df: pd.DataFrame, numeric_cols: list):
             id_like = [c for c in df.columns if re.search(r"\bid\b", c, flags=re.IGNORECASE)]
-            default_keys = id_like if id_like else ([numeric_cols[0]] if numeric_cols else [df.columns[0]])
+            if id_like:
+                return id_like
+            elif numeric_cols:
+                return [numeric_cols[0]]
+            else:
+                return [df.columns[0]] if len(df.columns) > 0 else []
 
-            # ---- Controles de configuración dinámica ----
-            with st.expander("⚙️ Configurar reglas (CSV)"):
-                key_cols = st.multiselect(
-                    "Columnas clave para Unicidad (puede ser compuesto)",
-                    options=df.columns.tolist(),
-                    default=default_keys
-                )
-                # Percentiles para rangos numéricos (aplican a todas las numéricas)
-                c1, c2, c3 = st.columns(3)
-                p_low = c1.slider("Percentil inferior (rango numérico)", 0.0, 20.0, 5.0, 0.5)
-                p_high = c2.slider("Percentil superior (rango numérico)", 80.0, 100.0, 95.0, 0.5)
-                max_cat = c3.slider("Máx. categorías 'permitidas' por columna", 5, 50, 20, 1)
-                # Fechas: no futuras
-                allow_future_dates = st.checkbox("Permitir fechas futuras", value=False)
+        def make_rules_and_metrics(df: pd.DataFrame,
+                                   numeric_cols: list,
+                                   datetime_cols: list,
+                                   categorical_cols: list,
+                                   key_cols: list,
+                                   p_low: float,
+                                   p_high: float,
+                                   max_cat: int,
+                                   allow_future_dates: bool):
+            n_rows, n_cols = df.shape
+            reglas = []
 
-            # ---- Reglas derivadas del CSV (genéricas) ----
-            reglas_csv = []
-
-            # 1) No nulos por columna
+            # No nulos por columna
             for col in df.columns:
-                reglas_csv.append({
+                reglas.append({
                     "name": f"{col}_not_null",
                     "description": f"{col} no debe ser nulo",
                     "condition": f"{col} IS NOT NULL",
                     "dimension": "Completitud"
                 })
 
-            # 2) Unicidad por columnas clave (si se configuran)
+            # Unicidad por columnas clave
             if key_cols:
-                reglas_csv.append({
+                reglas.append({
                     "name": f"unique_key_{'_'.join(key_cols)}",
                     "description": f"Clave única basada en columnas: {', '.join(key_cols)}",
                     "condition": f"UNIQUE({', '.join(key_cols)})",
                     "dimension": "Unicidad"
                 })
 
-            # 3) Rangos por percentiles para cada columna numérica
+            # Rangos por percentiles para numéricas
             for col in numeric_cols:
                 q_low = df[col].quantile(p_low / 100.0)
                 q_high = df[col].quantile(p_high / 100.0)
-                reglas_csv.append({
+                reglas.append({
                     "name": f"{col}_range",
                     "description": f"{col} entre P{p_low:.1f}={q_low:.3f} y P{p_high:.1f}={q_high:.3f}",
                     "condition": f"{col} BETWEEN {q_low:.3f} AND {q_high:.3f}",
                     "dimension": "Validez"
                 })
-                reglas_csv.append({
+                reglas.append({
                     "name": f"{col}_non_negative",
                     "description": f"{col} ≥ 0 (si aplica)",
                     "condition": f"{col} >= 0",
                     "dimension": "Validez"
                 })
 
-            # 4) Fechas no futuras
+            # Fechas no futuras
             for col in datetime_cols:
-                reglas_csv.append({
+                reglas.append({
                     "name": f"{col}_not_future",
                     "description": f"{col} no puede ser futura",
                     "condition": f"{col} <= CURRENT_DATE",
                     "dimension": "Validez"
                 })
 
-            # 5) Categóricas: lista de valores permitidos (top-N por frecuencia)
+            # Categóricas: top-N permitidas por frecuencia
             for col in categorical_cols:
-                # top-N categorías más frecuentes
                 top_vals = df[col].value_counts(dropna=True).head(max_cat).index.tolist()
-                reglas_csv.append({
+                reglas.append({
                     "name": f"{col}_allowed_values",
                     "description": f"{col} dentro de las {len(top_vals)} categorías más frecuentes",
                     "condition": f"{col} IN {top_vals}",
                     "dimension": "Consistencia"
                 })
 
-            # ---- Métricas de calidad (genéricas) ----
+            # Métricas
             total_cells = n_rows * n_cols if n_rows and n_cols else 0
-
-            # Completitud: % celdas no nulas
             completeness = (df.notna().sum().sum() / total_cells * 100.0) if total_cells > 0 else 0.0
 
-            # Unicidad: si hay key_cols, % de filas con clave no nula y no duplicada
             if key_cols:
                 keys_non_null = df[key_cols].notna().all(axis=1)
-                # clave compuesta como tupla
                 key_tuples = [tuple(x) for x in df[key_cols].values]
                 unique_count = len(set(key_tuples))
                 uniqueness = (unique_count / n_rows * 100.0) if n_rows > 0 else 0.0
-                # integridad clave: filas con clave presente (no nula)
                 integrity_key = keys_non_null.mean() * 100.0
             else:
-                # sin clave definida: unicidad sobre fila completa
                 uniqueness = (df.drop_duplicates().shape[0] / n_rows * 100.0) if n_rows > 0 else 0.0
                 integrity_key = 0.0
 
-            # Validez: promedio de cumplimiento de rangos numéricos + fechas no futuras
             validity_scores = []
-            # numéricos
             for col in numeric_cols:
                 q_low = df[col].quantile(p_low / 100.0)
                 q_high = df[col].quantile(p_high / 100.0)
                 mask_range = df[col].between(q_low, q_high, inclusive="both")
                 mask_nonneg = df[col] >= 0
-                # promedio de ambas
                 validity_scores.append(mask_range.mean() * 100.0 if n_rows > 0 else 0.0)
                 validity_scores.append(mask_nonneg.mean() * 100.0 if n_rows > 0 else 0.0)
-            # fechas
             for col in datetime_cols:
                 if allow_future_dates:
-                    # todo válido
                     validity_scores.append(100.0)
                 else:
                     mask_date = df[col] <= pd.Timestamp(date.today())
                     validity_scores.append(mask_date.mean() * 100.0 if n_rows > 0 else 0.0)
             validity = round(np.mean(validity_scores), 2) if validity_scores else 0.0
 
-            # Consistencia: categóricas dentro del top-N
             consistency_scores = []
             for col in categorical_cols:
                 top_vals = df[col].value_counts(dropna=True).head(max_cat).index.tolist()
                 consistency_scores.append(df[col].isin(top_vals).mean() * 100.0 if n_rows > 0 else 0.0)
             consistency = round(np.mean(consistency_scores), 2) if consistency_scores else 0.0
 
-            # Exactitud (proxy): valores numéricos dentro de IQR (por columna), promedio
             accuracy_scores = []
             for col in numeric_cols:
                 q1 = df[col].quantile(0.25)
@@ -479,7 +432,7 @@ else:
                 accuracy_scores.append(df[col].between(low, high, inclusive="both").mean() * 100.0 if n_rows > 0 else 0.0)
             accuracy = round(np.mean(accuracy_scores), 2) if accuracy_scores else 0.0
 
-            metricas_csv = {
+            metrics = {
                 "Completitud": round(completeness, 2),
                 "Unicidad": round(uniqueness, 2),
                 "Consistencia": round(consistency, 2),
@@ -487,57 +440,67 @@ else:
                 "Integridad Clave": round(integrity_key, 2),
                 "Exactitud": round(accuracy, 2)
             }
-            umbral_csv = 90
+            return reglas, metrics
 
-            # ---- Subpestañas para el CSV ----
-            ctab1, ctab2, ctab3, ctab4, ctab5 = st.tabs(
-                ["📋 Reglas CSV", "📊 Métricas CSV", "📈 Gráficos CSV", "⬇️ Descargar YAML CSV", "📂 Vista CSV"]
-            )
+        # ---- Principal CSV ----
+        try:
+            df = load_csv_to_df(csv_file)
+            df, numeric_cols, datetime_cols, categorical_cols = infer_types(df)
+            default_keys = derive_default_keys(df, numeric_cols)
 
-            # --- Reglas CSV ---
-            with ctab1:
-                st.markdown('<p class="subtitle">Reglas generadas dinámicamente (CSV):</p>', unsafe_allow_html=True)
-                st.table(reglas_csv)
+            # Configuración global
+            with st.expander("⚙️ Configurar reglas (Global)"):
+                key_cols_global = st.multiselect("Columnas clave (unicidad)", options=df.columns.tolist(), default=default_keys)
+                c1, c2, c3 = st.columns(3)
+                p_low_global = c1.slider("Percentil inferior (rangos numéricos)", 0.0, 20.0, 5.0, 0.5)
+                p_high_global = c2.slider("Percentil superior (rangos numéricos)", 80.0, 100.0, 95.0, 0.5)
+                max_cat_global = c3.slider("Máx. categorías permitidas (top-N)", 5, 50, 20, 1)
+                allow_future_global = st.checkbox("Permitir fechas futuras", value=False, key="allow_future_global")
 
-            # --- Métricas CSV ---
-            with ctab2:
-                st.markdown('<p class="subtitle">Métricas de calidad calculadas (CSV):</p>', unsafe_allow_html=True)
-                cols = st.columns(len(metricas_csv))
-                for i, (k, v) in enumerate(metricas_csv.items()):
+            # Subpestañas: Global / Segmento
+            gtab1, gtab2 = st.tabs(["🌍 Global (CSV completo)", "🎯 Segmento (filtrar por columna/valor)"])
+
+            # ----- GLOBAL -----
+            with gtab1:
+                reglas_global, metricas_global = make_rules_and_metrics(
+                    df, numeric_cols, datetime_cols, categorical_cols,
+                    key_cols_global, p_low_global, p_high_global, max_cat_global, allow_future_global
+                )
+                umbral_csv = 90
+
+                # Reglas
+                st.markdown('<p class="subtitle">📋 Reglas (Global)</p>', unsafe_allow_html=True)
+                st.table(reglas_global)
+
+                # Métricas
+                st.markdown('<p class="subtitle">📊 Métricas (Global)</p>', unsafe_allow_html=True)
+                cols = st.columns(len(metricas_global))
+                for i, (k, v) in enumerate(metricas_global.items()):
                     color = "normal" if v >= umbral_csv else "inverse"
                     estado = "✅" if v >= umbral_csv else "⚠️"
                     cols[i].metric(label=k, value=f"{v}% {estado}", delta="", delta_color=color)
 
-            # --- Gráficos CSV ---
-            with ctab3:
-                st.markdown('<p class="subtitle">Visualización de métricas del CSV:</p>', unsafe_allow_html=True)
-                fig_bar_csv = px.bar(
-                    x=list(metricas_csv.keys()),
-                    y=list(metricas_csv.values()),
-                    color=list(metricas_csv.keys()),
-                    title="Métricas de Calidad (CSV)",
-                    labels={"x": "Dimensión", "y": "Porcentaje"}
-                )
+                # Gráficos
+                st.markdown('<p class="subtitle">📈 Gráficos (Global)</p>', unsafe_allow_html=True)
+                fig_bar_csv = px.bar(x=list(metricas_global.keys()), y=list(metricas_global.values()),
+                                     color=list(metricas_global.keys()), title="Métricas de Calidad (Global)",
+                                     labels={"x": "Dimensión", "y": "Porcentaje"})
                 st.plotly_chart(fig_bar_csv, use_container_width=True)
-
                 fig_radar_csv = go.Figure()
                 fig_radar_csv.add_trace(go.Scatterpolar(
-                    r=list(metricas_csv.values()),
-                    theta=list(metricas_csv.keys()),
-                    fill='toself',
-                    name='Calidad CSV'
+                    r=list(metricas_global.values()), theta=list(metricas_global.keys()),
+                    fill='toself', name='Calidad Global'
                 ))
-                min_axis = max(0, min(metricas_csv.values()) - 10)
+                min_axis = max(0, min(metricas_global.values()) - 10)
                 fig_radar_csv.update_layout(
                     polar=dict(radialaxis=dict(visible=True, range=[min_axis, 100])),
-                    showlegend=False,
-                    title="Radar de Calidad (CSV)"
+                    showlegend=False, title="Radar de Calidad (Global)"
                 )
                 st.plotly_chart(fig_radar_csv, use_container_width=True)
 
-            # --- Descargar YAML CSV ---
-            with ctab4:
-                yaml_csv = {
+                # YAML
+                st.markdown('<p class="subtitle">⬇️ Descargar YAML (Global)</p>', unsafe_allow_html=True)
+                yaml_global = {
                     "metadata": {
                         "company": "Bunge Global SA",
                         "generated_by": "DQaaS Streamlit App",
@@ -545,80 +508,154 @@ else:
                         "source_system": "CSV Upload (auto)"
                     },
                     "dataset": {
-                        "rows": int(n_rows),
-                        "columns": int(n_cols),
+                        "rows": int(len(df)),
+                        "columns": int(len(df.columns)),
                         "numeric_columns": numeric_cols,
                         "datetime_columns": datetime_cols,
                         "categorical_columns": categorical_cols,
-                        "key_columns": key_cols
+                        "key_columns": key_cols_global
                     },
-                    "rules": reglas_csv,
-                    "quality_metrics": metricas_csv,
+                    "rules": reglas_global,
+                    "quality_metrics": metricas_global,
                     "parameters": {
-                        "percentile_low": p_low,
-                        "percentile_high": p_high,
-                        "max_allowed_categories": max_cat,
-                        "allow_future_dates": allow_future_dates
+                        "percentile_low": p_low_global,
+                        "percentile_high": p_high_global,
+                        "max_allowed_categories": max_cat_global,
+                        "allow_future_dates": allow_future_global
                     }
                 }
-                yaml_str_csv = yaml.dump(yaml_csv, allow_unicode=True, sort_keys=False)
+                yaml_str_global = yaml.dump(yaml_global, allow_unicode=True, sort_keys=False)
                 st.download_button(
-                    label="Descargar reglas y métricas del CSV (YAML)",
-                    data=yaml_str_csv,
-                    file_name="csv_quality_profile.yaml",
+                    label="Descargar YAML (Global)",
+                    data=yaml_str_global,
+                    file_name="csv_quality_profile_global.yaml",
                     mime="text/yaml"
                 )
 
-            # --- Vista CSV (con filtros opcionales) ---
-            with ctab5:
-                st.markdown('<p class="subtitle">Vista de datos del CSV (filtros dinámicos):</p>', unsafe_allow_html=True)
+                # Vista de datos (Global)
+                st.markdown('<p class="subtitle">📂 Vista CSV (Global)</p>', unsafe_allow_html=True)
+                st.dataframe(df, use_container_width=True, height=520)
 
-                with st.expander("🔎 Filtros"):
-                    # Filtros por cada tipo detectado
-                    # Categóricos: multiselect por columna
-                    filter_vals = {}
-                    if categorical_cols:
-                        st.markdown("**Categóricas**")
-                        for col in categorical_cols:
-                            options = sorted(df[col].dropna().unique().tolist())
-                            filter_vals[col] = st.multiselect(f"{col}", options)
+            # ----- SEGMENTO -----
+            with gtab2:
+                st.markdown('<p class="subtitle">🎯 Configurar segmento</p>', unsafe_allow_html=True)
+                # Selecciona columna para segmentar (por defecto intenta "Country" si existe)
+                default_segment_col = "Country" if "Country" in df.columns else (categorical_cols[0] if categorical_cols else df.columns[0])
+                seg_col = st.selectbox("Columna de segmento", options=df.columns.tolist(), index=df.columns.tolist().index(default_segment_col) if default_segment_col in df.columns else 0)
+                # Valores del segmento (multiselect)
+                unique_vals = sorted(df[seg_col].dropna().unique().tolist())
+                default_vals = ["Spain"] if seg_col == "Country" and "Spain" in unique_vals else []
+                seg_vals = st.multiselect(f"Valores para {seg_col}", options=unique_vals, default=default_vals)
 
-                    # Numéricas: rango por columna (hasta 5 primeras para no saturar UI)
-                    if numeric_cols:
-                        st.markdown("**Numéricas**")
-                        for col in numeric_cols[:5]:
-                            mn = float(df[col].min())
-                            mx = float(df[col].max())
-                            filter_vals[col] = st.slider(f"{col} (rango)", mn, mx, (mn, mx))
+                # Configuración de reglas para el segmento (independiente del global)
+                with st.expander("⚙️ Configurar reglas (Segmento)"):
+                    key_cols_seg = st.multiselect("Columnas clave (unicidad, segmento)", options=df.columns.tolist(), default=default_keys, key="key_cols_seg")
+                    c1, c2, c3 = st.columns(3)
+                    p_low_seg = c1.slider("Percentil inferior (segmento)", 0.0, 20.0, 5.0, 0.5, key="p_low_seg")
+                    p_high_seg = c2.slider("Percentil superior (segmento)", 80.0, 100.0, 95.0, 0.5, key="p_high_seg")
+                    max_cat_seg = c3.slider("Máx. categorías permitidas (segmento)", 5, 50, 20, 1, key="max_cat_seg")
+                    allow_future_seg = st.checkbox("Permitir fechas futuras (segmento)", value=False, key="allow_future_seg")
 
-                    # Texto libre
-                    search_text = st.text_input("Buscar texto en todas las columnas (contiene)", "")
+                # Aplica filtro de segmento
+                if seg_vals:
+                    df_segment = df[df[seg_col].isin(seg_vals)].copy()
+                else:
+                    df_segment = df.copy()  # sin selección → segmento = dataset completo (para no bloquear)
 
-                dff = df.copy()
-                # Aplica filtros categóricos
-                for col in categorical_cols:
-                    vals = filter_vals.get(col)
-                    if vals:
-                        dff = dff[dff[col].isin(vals)]
-                # Aplica filtros numéricos (solo si slider presente)
-                for col in numeric_cols[:5]:
-                    rng = filter_vals.get(col)
-                    if isinstance(rng, tuple):
-                        dff = dff[(dff[col] >= rng[0]) & (dff[col] <= rng[1])]
-                # Búsqueda libre (en columnas de texto)
-                if search_text:
-                    mask_any = pd.Series(False, index=dff.index)
-                    text_cols = dff.select_dtypes(include=["object", "category"]).columns
-                    for col in text_cols:
-                        mask_any = mask_any | dff[col].astype(str).str.contains(search_text, case=False, na=False)
-                    dff = dff[mask_any]
+                # Deriva tipos sobre el segmento (por si difieren tras el filtro)
+                df_segment, num_seg, dt_seg, cat_seg = infer_types(df_segment)
 
-                st.caption(f"Filas mostradas: {len(dff):,} de {len(df):,}")
-                # Ordena por la primera datetime si existe
-                sort_col = datetime_cols[0] if datetime_cols else None
-                if sort_col:
-                    dff = dff.sort_values(by=sort_col, ascending=False)
-                st.dataframe(dff, use_container_width=True, height=520)
+                # Genera reglas y métricas del segmento
+                reglas_seg, metricas_seg = make_rules_and_metrics(
+                    df_segment, num_seg, dt_seg, cat_seg,
+                    key_cols_seg, p_low_seg, p_high_seg, max_cat_seg, allow_future_seg
+                )
+
+                # Inserta al inicio una regla que documente el filtro aplicado
+                if seg_vals:
+                    reglas_seg.insert(0, {
+                        "name": f"segment_filter_{seg_col}",
+                        "description": f"Reglas calculadas sobre el segmento: {seg_col} IN {seg_vals}",
+                        "condition": f"{seg_col} IN {seg_vals}",
+                        "dimension": "Contexto"
+                    })
+
+                # Reglas segmento
+                st.markdown('<p class="subtitle">📋 Reglas (Segmento)</p>', unsafe_allow_html=True)
+                st.table(reglas_seg)
+
+                # Métricas segmento
+                umbral_seg = 90
+                st.markdown('<p class="subtitle">📊 Métricas (Segmento)</p>', unsafe_allow_html=True)
+                cols = st.columns(len(metricas_seg))
+                for i, (k, v) in enumerate(metricas_seg.items()):
+                    color = "normal" if v >= umbral_seg else "inverse"
+                    estado = "✅" if v >= umbral_seg else "⚠️"
+                    cols[i].metric(label=k, value=f"{v}% {estado}", delta="", delta_color=color)
+
+                # Gráficos segmento
+                st.markdown('<p class="subtitle">📈 Gráficos (Segmento)</p>', unsafe_allow_html=True)
+                fig_bar_seg = px.bar(x=list(metricas_seg.keys()), y=list(metricas_seg.values()),
+                                     color=list(metricas_seg.keys()), title=f"Métricas de Calidad (Segmento: {seg_col})",
+                                     labels={"x": "Dimensión", "y": "Porcentaje"})
+                st.plotly_chart(fig_bar_seg, use_container_width=True)
+                fig_radar_seg = go.Figure()
+                fig_radar_seg.add_trace(go.Scatterpolar(
+                    r=list(metricas_seg.values()), theta=list(metricas_seg.keys()),
+                    fill='toself', name='Calidad Segmento'
+                ))
+                min_axis_seg = max(0, min(metricas_seg.values()) - 10)
+                fig_radar_seg.update_layout(
+                    polar=dict(radialaxis=dict(visible=True, range=[min_axis_seg, 100])),
+                    showlegend=False, title=f"Radar de Calidad (Segmento: {seg_col})"
+                )
+                st.plotly_chart(fig_radar_seg, use_container_width=True)
+
+                # YAML segmento
+                st.markdown('<p class="subtitle">⬇️ Descargar YAML (Segmento)</p>', unsafe_allow_html=True)
+                yaml_seg = {
+                    "metadata": {
+                        "company": "Bunge Global SA",
+                        "generated_by": "DQaaS Streamlit App",
+                        "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                        "source_system": "CSV Upload (auto)"
+                    },
+                    "segment": {
+                        "column": seg_col,
+                        "values": seg_vals,
+                        "rows": int(len(df_segment)),
+                        "columns": int(len(df_segment.columns))
+                    },
+                    "dataset_columns": {
+                        "numeric": num_seg,
+                        "datetime": dt_seg,
+                        "categorical": cat_seg,
+                        "key_columns": key_cols_seg
+                    },
+                    "rules": reglas_seg,
+                    "quality_metrics": metricas_seg,
+                    "parameters": {
+                        "percentile_low": p_low_seg,
+                        "percentile_high": p_high_seg,
+                        "max_allowed_categories": max_cat_seg,
+                        "allow_future_dates": allow_future_seg
+                    }
+                }
+                yaml_str_seg = yaml.dump(yaml_seg, allow_unicode=True, sort_keys=False)
+                st.download_button(
+                    label="Descargar YAML (Segmento)",
+                    data=yaml_str_seg,
+                    file_name=f"csv_quality_profile_segment_{seg_col}.yaml",
+                    mime="text/yaml"
+                )
+
+                # Vista de datos (Segmento)
+                st.markdown('<p class="subtitle">📂 Vista CSV (Segmento)</p>', unsafe_allow_html=True)
+                if seg_vals:
+                    st.caption(f"Filas segmento: {len(df_segment):,} / {len(df):,} [{seg_col} ∈ {seg_vals}]")
+                else:
+                    st.caption(f"Sin valores seleccionados: mostrando dataset completo ({len(df):,} filas)")
+                st.dataframe(df_segment, use_container_width=True, height=520)
 
         except Exception as e:
             st.error(f"Error procesando el CSV: {e}")
