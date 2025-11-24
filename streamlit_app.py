@@ -47,7 +47,7 @@ else:
 if not st.session_state.perfilado_iniciado:
     st.markdown("""
         <div style="text-align: center; margin-top: 80px;">
-            https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28
+            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 20px;">
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold;">
                 Bunge Global SA - Viterra Data Products Squad Extension
@@ -89,7 +89,7 @@ else:
     # ==========================
     st.markdown("""
         <div style="text-align: center; margin-bottom: 30px;">
-            https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28
+            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 10px;">
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold; margin-top: 10px;">
                 Bunge Global SA - Viterra Data Products Squad Extension
@@ -111,7 +111,7 @@ else:
     # Único Dataproduct -> CSV local
     # ==========================
     DATASETS = {
-        "Dataproduct_Prueba": "./datos_prueba.csv",
+        "Dataproduct_Prueba": "./datos_prueba.csv",  # ajusta ruta si lo mueves
     }
 
     st.markdown('<p class="subtitle">Seleccione el dataproduct:</p>', unsafe_allow_html=True)
@@ -163,20 +163,20 @@ else:
                             if (df[c].dtype.name in ("object", "category")) and c not in datetime_cols]
         return df, numeric_cols, datetime_cols, categorical_cols
 
-    def derive_default_keys(df: pd.DataFrame, numeric_cols: list):
-        id_like = [c for c in df.columns if re.search(r"\bid\b", c, flags=re.IGNORECASE)]
+    # ---- Parámetros por defecto fijos ----
+    P_LOW_DEFAULT = 5.0        # P5
+    P_HIGH_DEFAULT = 95.0      # P95
+    MAX_CAT_DEFAULT = 20       # Top-N categorías
+    ALLOW_FUTURE_DEFAULT = False
+
+    def derive_default_keys(df_local: pd.DataFrame):
+        id_like = [c for c in df_local.columns if re.search(r"\bid\b", c, flags=re.IGNORECASE)]
         if id_like:
             return id_like
-        elif numeric_cols:
-            return [numeric_cols[0]]
-        else:
-            return [df.columns[0]] if len(df.columns) > 0 else []
-
-    # ---- Parámetros por defecto fijos (ya no configurables en UI) ----
-    P_LOW_DEFAULT = 5.0       # Percentil inferior para rangos numéricos
-    P_HIGH_DEFAULT = 95.0     # Percentil superior para rangos numéricos
-    MAX_CAT_DEFAULT = 20      # Top-N categorías permitidas en categóricas
-    ALLOW_FUTURE_DEFAULT = False  # Fechas futuras no permitidas
+        num_local = [c for c in df_local.columns if is_numeric_dtype(df_local[c])]
+        if num_local:
+            return [num_local[0]]
+        return [df_local.columns[0]] if len(df_local.columns) > 0 else []
 
     def make_rules_and_metrics(df: pd.DataFrame,
                                numeric_cols: list,
@@ -300,39 +300,33 @@ else:
         return reglas, metrics
 
     # ==========================
-    # Carga + perfilado GLOBAL (Dataproduct_Prueba)
+    # Carga + tipado
     # ==========================
     try:
         df = load_csv_local(path_csv)
         df, numeric_cols, datetime_cols, categorical_cols = infer_types(df)
 
-        # Configuración GLOBAL — solo campo de filtro
+        # ==========================
+        # ⚙️ Configurar reglas (Global) -> aquí movemos la segmentación
+        # ==========================
         with st.expander("⚙️ Configurar reglas (Global)"):
-            # Campo de filtro que se usará en la sección Segmento
-            # Proponemos por defecto 'Country' si existe; si no, el primer categórico o la primera columna
+            # Campo de filtro (segmentación)
             default_filter_col = "Country" if "Country" in df.columns else (categorical_cols[0] if categorical_cols else df.columns[0])
-            filter_col = st.selectbox(
-                "Campo de filtro (segmentación)",
+            seg_col = st.selectbox(
+                "Columna de segmento",
                 options=df.columns.tolist(),
                 index=df.columns.tolist().index(default_filter_col) if default_filter_col in df.columns else 0,
-                key="filter_col_global"
+                key="seg_col_global"
             )
+            # Valores del segmento
+            unique_vals = sorted(df[seg_col].dropna().unique().tolist())
+            default_vals = ["Spain"] if seg_col == "Country" and "Spain" in unique_vals else []
+            seg_vals = st.multiselect(f"Valores para {seg_col}", options=unique_vals, default=default_vals, key="seg_vals_global")
 
-        # Deriva claves por defecto únicamente para métricas (no se exponen en UI)
-        def derive_default_keys(df_local: pd.DataFrame):
-            id_like = [c for c in df_local.columns if re.search(r"\bid\b", c, flags=re.IGNORECASE)]
-            if id_like:
-                return id_like
-            # si hay numéricas, usa la primera
-            num_local = [c for c in df_local.columns if is_numeric_dtype(df_local[c])]
-            if num_local:
-                return [num_local[0]]
-            # si no hay nada, usa la primera columna
-            return [df_local.columns[0]] if len(df_local.columns) > 0 else []
-
+        # Claves inferidas para métricas (no expuestas en UI)
         key_cols_default = derive_default_keys(df)
 
-        # Calcula reglas/métricas Global con parámetros por defecto
+        # Global
         reglas_global, metricas_global = make_rules_and_metrics(
             df, numeric_cols, datetime_cols, categorical_cols,
             key_cols_default, P_LOW_DEFAULT, P_HIGH_DEFAULT, MAX_CAT_DEFAULT, ALLOW_FUTURE_DEFAULT
@@ -406,7 +400,10 @@ else:
                     "max_allowed_categories": MAX_CAT_DEFAULT,
                     "allow_future_dates": ALLOW_FUTURE_DEFAULT
                 },
-                "filter_field": filter_col
+                "filter": {
+                    "column": seg_col,
+                    "values": seg_vals
+                }
             }
             yaml_str_global = yaml.dump(yaml_global, allow_unicode=True, sort_keys=False)
             st.download_button(
@@ -416,26 +413,21 @@ else:
                 mime="text/yaml"
             )
 
-        # --- Vista de datos (Global + Segmento) ---
+        # --- Vista de datos (Global + Segmento; SIN controles, usa los del expander) ---
         with tab5:
+            # Global
             st.markdown('<p class="subtitle">📂 Vista CSV (Global)</p>', unsafe_allow_html=True)
-            st.dataframe(df, use_container_width=True, height=520)
+            st.dataframe(df, use_container_width=True, height=420)
 
-            st.markdown('<p class="subtitle">🎯 Segmento (filtrar por valores del campo de filtro)</p>', unsafe_allow_html=True)
-            # Usa el campo seleccionado en Configurar reglas (Global)
-            seg_col = filter_col
-            unique_vals = sorted(df[seg_col].dropna().unique().tolist())
-            # Si el campo es Country y tiene Spain, proponlo por defecto (sigue tu patrón)
-            default_vals = ["Spain"] if seg_col == "Country" and "Spain" in unique_vals else []
-            seg_vals = st.multiselect(f"Valores para {seg_col}", options=unique_vals, default=default_vals, key="seg_vals_main")
+            # Segmento (controlado desde el expander)
+            st.markdown('<p class="subtitle">🎯 Vista y métricas del segmento (controlado en ⚙️ Configurar reglas)</p>', unsafe_allow_html=True)
 
             # Aplica el filtro de segmento
             df_segment = df[df[seg_col].isin(seg_vals)].copy() if seg_vals else df.copy()
             # Re-inferir tipos tras el filtro
             df_segment, num_seg, dt_seg, cat_seg = infer_types(df_segment)
 
-            # Reglas/métricas del segmento con los mismos parámetros por defecto
-            # Claves inferidas sobre el segmento
+            # Reglas/métricas del segmento con parámetros por defecto
             key_cols_seg_inferred = derive_default_keys(df_segment)
             reglas_seg, metricas_seg = make_rules_and_metrics(
                 df_segment, num_seg, dt_seg, cat_seg,
@@ -479,6 +471,7 @@ else:
             )
             st.plotly_chart(fig_radar_seg, use_container_width=True)
 
+            # YAML Segmento
             st.markdown('<p class="subtitle">⬇️ Descargar YAML (Segmento)</p>', unsafe_allow_html=True)
             yaml_seg = {
                 "metadata": {
@@ -517,12 +510,11 @@ else:
             )
 
             # Vista de datos (Segmento)
-            st.markdown('<p class="subtitle">📂 Vista CSV (Segmento)</p>', unsafe_allow_html=True)
-            if seg_vals:
-                st.caption(f"Filas segmento: {len(df_segment):,} / {len(df):,} [{seg_col} ∈ {seg_vals}]")
-            else:
-                st.caption(f"Sin valores seleccionados: mostrando dataset completo ({len(df):,} filas)")
-            st.dataframe(df_segment, use_container_width=True, height=520)
+            st.caption(
+                f"Filas segmento: {len(df_segment):,} / {len(df):,} "
+                + (f"[{seg_col} ∈ {seg_vals}]" if seg_vals else "[sin filtro: dataset completo]")
+            )
+            st.dataframe(df_segment, use_container_width=True, height=420)
 
     except Exception as e:
         st.error(f"Error procesando el CSV: {e}")
