@@ -17,7 +17,6 @@ st.set_page_config(page_title="DQaaS - Bunge Global SA", page_icon="🌐", layou
 if "perfilado_iniciado" not in st.session_state:
     st.session_state.perfilado_iniciado = False
 
-
 # ==========================
 # Pantalla inicial
 # ==========================
@@ -55,10 +54,13 @@ if not st.session_state.perfilado_iniciado:
         </style>
     """, unsafe_allow_html=True)
 
-    # Centrado del botón usando columnas
-    col_left, col_center, col_right = st.columns([1, 2, 1])
+    # Espaciado
+    st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
+
+    # Botón centrado con columnas
+    col_left, col_center, col_right = st.columns([1, 1, 1])
     with col_center:
-        if st.button("🚀 Iniciar Perfilado de Datos", key="start_button", use_container_width=True):
+        if st.button("🚀 Iniciar Perfilado de Datos", key="start_button"):
             st.session_state.perfilado_iniciado = True
             st.rerun()
 
@@ -68,7 +70,8 @@ else:
     # ==========================
     st.markdown("""
         <div style="text-align: center; margin-bottom: 30px;">
-            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 10px;">
+            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28"
+                 width="180" style="margin-bottom: 10px;">
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold; margin-top: 10px;">
                 Bunge Global SA - Viterra Data Products Squad Extension
@@ -95,7 +98,9 @@ else:
         "Pedidos": "pedidos"
     }
 
-    # Selectbox con título estilizado
+    # ==========================
+    # Estilos
+    # ==========================
     st.markdown("""
         <style>
         .subtitle {
@@ -104,9 +109,17 @@ else:
             color: #004C97;
             margin-bottom: -10px;
         }
+        footer {
+            text-align: center;
+            color: #6b6b6b;
+            margin-top: 40px;
+        }
         </style>
     """, unsafe_allow_html=True)
 
+    # ==========================
+    # Select tabla
+    # ==========================
     st.markdown('<p class="subtitle">Selecciona una tabla:</p>', unsafe_allow_html=True)
     tabla_visible = st.selectbox("", list(tablas_map.keys()))
     tabla_seleccionada = tablas_map[tabla_visible]
@@ -208,8 +221,13 @@ else:
     # --- Gráficos ---
     with tab3:
         st.markdown('<p class="subtitle">Visualización de métricas:</p>', unsafe_allow_html=True)
-        fig_bar = px.bar(x=list(metricas.keys()), y=list(metricas.values()), color=list(metricas.keys()),
-                         title="Métricas de Calidad", labels={"x": "Dimensión", "y": "Porcentaje"})
+        fig_bar = px.bar(
+            x=list(metricas.keys()),
+            y=list(metricas.values()),
+            color=list(metricas.keys()),
+            title="Métricas de Calidad",
+            labels={"x": "Dimensión", "y": "Porcentaje"}
+        )
         st.plotly_chart(fig_bar, use_container_width=True)
 
         fig_radar = go.Figure()
@@ -231,7 +249,12 @@ else:
             "quality_metrics": metricas
         }
         yaml_str = yaml.dump(yaml_data, allow_unicode=True)
-        st.download_button(label="Descargar reglas y métricas en YAML", data=yaml_str, file_name=f"{tabla_seleccionada}_quality.yaml", mime="text/yaml")
+        st.download_button(
+            label="Descargar reglas y métricas en YAML",
+            data=yaml_str,
+            file_name=f"{tabla_seleccionada}_quality.yaml",
+            mime="text/yaml"
+        )
 
     # --- Datos de prueba ---
     with tab5:
