@@ -18,63 +18,13 @@ if "perfilado_iniciado" not in st.session_state:
     st.session_state.perfilado_iniciado = False
 
 # ==========================
-# Estilos globales
-# ==========================
-st.markdown("""
-    <style>
-    /* Centra TODOS los st.button de la página */
-    div.stButton {
-        display: flex;
-        justify-content: center;
-    }
-    /* Estilo del botón */
-    div.stButton > button {
-        width: 300px;
-        height: 60px;
-        font-size: 24px;
-        font-weight: bold;
-        background-color: #004C97;
-        color: white;
-        border-radius: 10px;
-        border: none;
-        transition: 0.3s;
-    }
-    div.stButton > button:hover {
-        background-color: #003366;
-        transform: scale(1.05);
-    }
-
-    /* Subtítulo reutilizable */
-    .subtitle {
-        font-size: 24px;
-        font-weight: bold;
-        color: #004C97;
-        margin-bottom: -10px;
-    }
-
-    /* Footer */
-    footer {
-        text-align: center;
-        color: #6b6b6b;
-        margin-top: 40px;
-    }
-
-    /* Opcional: reduce padding superior del contenedor principal para un look más centrado */
-    .block-container {
-        padding-top: 1rem;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# ==========================
 # Pantalla inicial
 # ==========================
 if not st.session_state.perfilado_iniciado:
-    # Portada con logo, título y subtítulo
+    # Portada con logo, título y subtítulo (HTML correcto)
     st.markdown("""
         <div style="text-align: center; margin-top: 80px;">
-            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28"
-                 width="180" style="margin-bottom: 20px;">
+            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 20px;">
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold;">
                 Bunge Global SA - Viterra Data Products Squad Extension
@@ -82,13 +32,37 @@ if not st.session_state.perfilado_iniciado:
         </div>
     """, unsafe_allow_html=True)
 
+    # Estilo SOLO del botón (sin cambiar el layout)
+    st.markdown("""
+        <style>
+        div.stButton > button {
+            width: 300px;
+            height: 60px;
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #004C97;
+            color: white;
+            border-radius: 10px;
+            border: none;
+            transition: 0.3s;
+        }
+        div.stButton > button:hover {
+            background-color: #003366;
+            transform: scale(1.05);
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
     # Espaciado bajo el título
     st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
 
-    # Botón (queda centrado por el CSS anterior)
-    if st.button("🚀 Iniciar Perfilado de Datos", key="start_button"):
-        st.session_state.perfilado_iniciado = True
-        st.rerun()
+    # Botón centrado de forma robusta con columnas (3-2-3 da un centrado visual muy preciso)
+    col_left, col_center, col_right = st.columns([3, 2, 3])
+    with col_center:
+        # usa use_container_width para que el botón ocupe la columna y no “parezca” desviado
+        if st.button("🚀 Iniciar Perfilado de Datos", key="start_button", use_container_width=True):
+            st.session_state.perfilado_iniciado = True
+            st.rerun()
 
 else:
     # ==========================
@@ -96,8 +70,7 @@ else:
     # ==========================
     st.markdown("""
         <div style="text-align: center; margin-bottom: 30px;">
-            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28"
-                 width="180" style="margin-bottom: 10px;">
+            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 10px;">
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold; margin-top: 10px;">
                 Bunge Global SA - Viterra Data Products Squad Extension
@@ -123,6 +96,25 @@ else:
         "Proveedores": "proveedores",
         "Pedidos": "pedidos"
     }
+
+    # ==========================
+    # Estilos (solo títulos y footer)
+    # ==========================
+    st.markdown("""
+        <style>
+        .subtitle {
+            font-size: 24px;
+            font-weight: bold;
+            color: #004C97;
+            margin-bottom: -10px;
+        }
+        footer {
+            text-align: center;
+            color: #6b6b6b;
+            margin-top: 40px;
+        }
+        </style>
+    """, unsafe_allow_html=True)
 
     # ==========================
     # Select tabla
