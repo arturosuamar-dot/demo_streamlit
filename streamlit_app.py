@@ -18,74 +18,6 @@ if "perfilado_iniciado" not in st.session_state:
     st.session_state.perfilado_iniciado = False
 
 # ==========================
-# CSS global para ancho, tabs y emojis
-# ==========================
-st.markdown("""
-    <style>
-    /* Ancho global del contenedor principal (siempre ancho) */
-    .main .block-container {
-        max-width: 1800px;         /* ancho amplio por defecto */
-        margin-left: auto;
-        margin-right: auto;
-    }
-    @media (min-width: 1800px) {
-        .main .block-container {
-            max-width: 96vw;       /* aprovechar casi todo el viewport en pantallas muy grandes */
-        }
-    }
-
-    /* Asegurar que los elementos dentro aprovechen el ancho */
-    .stApp, .main, .block-container {
-        width: 100%;
-    }
-
-    /* Estilos de Tabs: evitar recorte de emojis y mejorar legibilidad */
-    .stTabs [data-baseweb="tab-list"] {
-        flex-wrap: wrap;             /* permite bajar de línea si hay muchas pestañas */
-        gap: 4px;
-    }
-    .stTabs [data-baseweb="tab"] {
-        padding: 12px 18px;
-        font-size: 18px;
-        line-height: 1.3;
-        white-space: nowrap;         /* mantener el emoji pegado al texto */
-    }
-
-    /* Tipografía con soporte de emojis de color */
-    html, body, .stApp {
-        font-family: "Segoe UI", "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji",
-                      "Helvetica Neue", Arial, sans-serif !important;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* Botón principal más ancho (pantalla inicial) */
-    div.stButton > button {
-        width: 420px;
-        height: 64px;
-        font-size: 24px;
-        font-weight: bold;
-        background-color: #004C97;
-        color: white;
-        border-radius: 10px;
-        border: none;
-        transition: 0.3s;
-    }
-    div.stButton > button:hover {
-        background-color: #003366;
-        transform: scale(1.05);
-    }
-
-    /* Subtítulos y footer */
-    .subtitle { font-size: 24px; font-weight: bold; color: #004C97; margin-bottom: -10px; }
-    footer { text-align: center; color: #6b6b6b; margin-top: 40px; }
-
-    /* Evitar que tablas y charts se limiten por un ancho menor */
-    .element-container { width: 100%; max-width: 100%; }
-    </style>
-""", unsafe_allow_html=True)
-
-# ==========================
 # Pantalla inicial
 # ==========================
 if not st.session_state.perfilado_iniciado:
@@ -109,6 +41,74 @@ if not st.session_state.perfilado_iniciado:
             st.rerun()
 
 else:
+    # ==========================
+    # CSS global para ancho, tabs y emojis
+    # ==========================
+    st.markdown("""
+        <style>
+        /* Ancho global del contenedor principal (siempre ancho) */
+        .main .block-container {
+            max-width: 1800px;         /* ancho amplio por defecto */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (min-width: 1800px) {
+            .main .block-container {
+                max-width: 96vw;       /* aprovechar casi todo el viewport en pantallas muy grandes */
+            }
+        }
+    
+        /* Asegurar que los elementos dentro aprovechen el ancho */
+        .stApp, .main, .block-container {
+            width: 100%;
+        }
+    
+        /* Estilos de Tabs: evitar recorte de emojis y mejorar legibilidad */
+        .stTabs [data-baseweb="tab-list"] {
+            flex-wrap: wrap;             /* permite bajar de línea si hay muchas pestañas */
+            gap: 4px;
+        }
+        .stTabs [data-baseweb="tab"] {
+            padding: 12px 18px;
+            font-size: 18px;
+            line-height: 1.3;
+            white-space: nowrap;         /* mantener el emoji pegado al texto */
+        }
+    
+        /* Tipografía con soporte de emojis de color */
+        html, body, .stApp {
+            font-family: "Segoe UI", "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji",
+                          "Helvetica Neue", Arial, sans-serif !important;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    
+        /* Botón principal más ancho (pantalla inicial) */
+        div.stButton > button {
+            width: 420px;
+            height: 64px;
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #004C97;
+            color: white;
+            border-radius: 10px;
+            border: none;
+            transition: 0.3s;
+        }
+        div.stButton > button:hover {
+            background-color: #003366;
+            transform: scale(1.05);
+        }
+    
+        /* Subtítulos y footer */
+        .subtitle { font-size: 24px; font-weight: bold; color: #004C97; margin-bottom: -10px; }
+        footer { text-align: center; color: #6b6b6b; margin-top: 40px; }
+    
+        /* Evitar que tablas y charts se limiten por un ancho menor */
+        .element-container { width: 100%; max-width: 100%; }
+        </style>
+    """, unsafe_allow_html=True)
+
     # ==========================
     # Encabezado con logo y título
     # ==========================
