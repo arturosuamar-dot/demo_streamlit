@@ -11,6 +11,17 @@ import plotly.graph_objects as go
 # ==========================
 st.set_page_config(page_title="DQaaS - Bunge Global SA", page_icon="🌐", layout="wide")
 
+st.markdown("""
+    <style>
+    /* Centra el contenedor principal de Streamlit y limita su ancho para un centrado visual perfecto */
+    .block-container {
+        max-width: 900px;        /* ajusta este valor a tu gusto: 800, 900, 1000… */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # ==========================
 # Estado inicial
 # ==========================
