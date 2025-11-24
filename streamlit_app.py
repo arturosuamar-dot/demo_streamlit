@@ -1,3 +1,4 @@
+
 import streamlit as st
 import yaml
 import random
@@ -10,16 +11,11 @@ import plotly.graph_objects as go
 # ==========================
 st.set_page_config(page_title="DQaaS - Bunge Global SA", page_icon="🌐", layout="wide")
 
-
-
-
-
 # ==========================
 # Estado inicial
 # ==========================
 if "perfilado_iniciado" not in st.session_state:
     st.session_state.perfilado_iniciado = False
-
 
 # ==========================
 # Pantalla inicial
@@ -33,13 +29,11 @@ if not st.session_state.perfilado_iniciado:
         </div>
     """, unsafe_allow_html=True)
 
-    if st.button("🚀 Iniciar Perfilado de Datos"):
+    if st.button("🚀 Iniciar Perfilado de Datos", key="start_button"):
         st.session_state.perfilado_iniciado = True
-        st.rerun()  # Recarga la app para mostrar el contenido
+        st.rerun()
+
 else:
-    
-    
-    
     # ==========================
     # Encabezado con logo y título
     # ==========================
@@ -52,15 +46,15 @@ else:
             </p>
         </div>
     """, unsafe_allow_html=True)
-    
+
     # ==========================
     # Sidebar
     # ==========================
     st.sidebar.header("Opciones")
     st.sidebar.info("Selecciona la tabla y genera reglas de calidad en formato Bunge YAML.")
-    if st.sidebar.button("Conectar a GCP"):
+    if st.sidebar.button("Conectar a GCP", key="gcp_button"):
         st.sidebar.success("Conexión simulada con BigQuery ✅")
-    
+
     # ==========================
     # Mapeo de tablas
     # ==========================
@@ -71,24 +65,23 @@ else:
         "Proveedores": "proveedores",
         "Pedidos": "pedidos"
     }
-    
-    
-    # Selectbox
+
+    # Selectbox con título estilizado
     st.markdown("""
         <style>
         .subtitle {
             font-size: 24px;
             font-weight: bold;
             color: #004C97;
-            margin-bottom: -10px; /* Reduce espacio */
+            margin-bottom: -10px;
         }
         </style>
     """, unsafe_allow_html=True)
-    
+
     st.markdown('<p class="subtitle">Selecciona una tabla:</p>', unsafe_allow_html=True)
     tabla_visible = st.selectbox("", list(tablas_map.keys()))
     tabla_seleccionada = tablas_map[tabla_visible]
-    
+
     # ==========================
     # Reglas por tabla
     # ==========================
@@ -120,7 +113,7 @@ else:
             {"name": "quantity_min", "description": "Cantidad mínima 100 toneladas", "condition": "quantity >= 100", "dimension": "Validez"}
         ]
     }
-    
+
     # ==========================
     # Datos ficticios coherentes
     # ==========================
@@ -147,7 +140,7 @@ else:
         {"id": 401, "cliente_id": 101, "producto_code": "SOY2025", "status": "PENDIENTE", "order_date": "2025-11-10", "delivery_date": "2025-11-15", "quantity": 120},
         {"id": 402, "cliente_id": 102, "producto_code": "MAIZ2025", "status": "COMPLETADO", "order_date": "2025-11-05", "delivery_date": "2025-11-12", "quantity": 200}
     ]
-    
+
     # ==========================
     # Función para métricas
     # ==========================
@@ -160,54 +153,41 @@ else:
             "Integridad Referencial": random.randint(75, 95),
             "Exactitud": random.randint(78, 94)
         }
-    
+
     metricas = generar_metricas()
     umbral = 90
-    
+
     # ==========================
     # Pestañas
     # ==========================
     tab1, tab2, tab3, tab4, tab5 = st.tabs(["📋 Reglas", "📊 Métricas", "📈 Gráficos", "⬇️ Descargar YAML", "📂 Datos de prueba"])
-    
+
     # --- Reglas ---
     with tab1:
         st.markdown('<p class="subtitle">Reglas para la tabla seleccionada:</p>', unsafe_allow_html=True)
         st.table(reglas_por_tabla[tabla_seleccionada])
-    
+
     # --- Métricas ---
     with tab2:
         st.markdown('<p class="subtitle">Métricas de calidad:</p>', unsafe_allow_html=True)
         cols = st.columns(len(metricas))
         for i, (k, v) in enumerate(metricas.items()):
-            if v >= umbral:
-                delta = ""  # No texto, solo flecha automática
-                color = "normal"  # Flecha verde
-                estado = "✅"
-            else:
-                delta = ""  # No texto, solo flecha automática
-                color = "inverse"  # Flecha roja
-                estado = "⚠️"
-            
-            cols[i].metric(
-                label=k,
-                value=f"{v}% {estado}",  # Valor + emoji
-                delta=delta,             # Sin texto adicional
-                delta_color=color        # Controla color de flecha
-            )
-    
-    
+            color = "normal" if v >= umbral else "inverse"
+            estado = "✅" if v >= umbral else "⚠️"
+            cols[i].metric(label=k, value=f"{v}% {estado}", delta="", delta_color=color)
+
     # --- Gráficos ---
     with tab3:
         st.markdown('<p class="subtitle">Visualización de métricas:</p>', unsafe_allow_html=True)
         fig_bar = px.bar(x=list(metricas.keys()), y=list(metricas.values()), color=list(metricas.keys()),
                          title="Métricas de Calidad", labels={"x": "Dimensión", "y": "Porcentaje"})
         st.plotly_chart(fig_bar, use_container_width=True)
-    
+
         fig_radar = go.Figure()
         fig_radar.add_trace(go.Scatterpolar(r=list(metricas.values()), theta=list(metricas.keys()), fill='toself', name='Calidad'))
         fig_radar.update_layout(polar=dict(radialaxis=dict(visible=True, range=[70, 100])), showlegend=False, title="Radar de Calidad")
         st.plotly_chart(fig_radar, use_container_width=True)
-    
+
     # --- Descargar YAML ---
     with tab4:
         yaml_data = {
@@ -223,10 +203,10 @@ else:
         }
         yaml_str = yaml.dump(yaml_data, allow_unicode=True)
         st.download_button(label="Descargar reglas y métricas en YAML", data=yaml_str, file_name=f"{tabla_seleccionada}_quality.yaml", mime="text/yaml")
-    
+
     # --- Datos de prueba ---
     with tab5:
-        st.markdown(f"**Datos de la tabla {tabla_visible}:**", unsafe_allow_html=True)
+        st.markdown(f"**Datos de la tabla {tabla_visible}:**")
         if tabla_seleccionada == "clientes":
             st.table(clientes_data)
         elif tabla_seleccionada == "ventas":
@@ -237,40 +217,8 @@ else:
             st.table(proveedores_data)
         elif tabla_seleccionada == "pedidos":
             st.table(pedidos_data)
-    
+
     # ==========================
     # Footer
     # ==========================
     st.markdown('<footer>© 2025 Bunge Global SA - Todos los derechos reservados</footer>', unsafe_allow_html=True)
-    
-    # Sidebar
-    st.sidebar.header("Opciones")
-    st.sidebar.info("Selecciona la tabla y genera reglas de calidad en formato Bunge YAML.")
-    if st.sidebar.button("Conectar a GCP"):
-        st.sidebar.success("Conexión simulada con BigQuery ✅")
-
-    # Mapeo de tablas
-    tablas_map = {
-        "Clientes": "clientes",
-        "Ventas": "ventas",
-        "Productos": "productos",
-        "Proveedores": "proveedores",
-        "Pedidos": "pedidos"
-    }
-
-    # Selectbox con título estilizado
-    st.markdown("""
-        <style>
-        .subtitle {
-            font-size: 24px;
-            font-weight: bold;
-            color: #004C97;
-            margin-bottom: -10px;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
-    st.markdown('<p class="subtitle">Selecciona una tabla:</p>', unsafe_allow_html=True)
-    tabla_visible = st.selectbox("", list(tablas_map.keys()))
-    tabla_seleccionada = tablas_map[tabla_visible]
-
