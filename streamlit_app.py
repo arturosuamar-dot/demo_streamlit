@@ -47,8 +47,7 @@ else:
 if not st.session_state.perfilado_iniciado:
     st.markdown("""
         <div style="text-align: center; margin-top: 80px;">
-            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28"
-                 width="180" style="margin-bottom: 20px;">
+            https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold;">
                 Bunge Global SA - Viterra Data Products Squad Extension
@@ -90,8 +89,7 @@ else:
     # ==========================
     st.markdown("""
         <div style="text-align: center; margin-bottom: 30px;">
-            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28"
-                 width="180" style="margin-bottom: 10px;">
+            https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold; margin-top: 10px;">
                 Bunge Global SA - Viterra Data Products Squad Extension
@@ -142,7 +140,6 @@ else:
             return pd.read_csv(p, encoding="latin-1")
 
     def infer_types(df: pd.DataFrame):
-        """Detecta y convierte tipos sin cadenas problemáticas de dtype."""
         # Normaliza strings
         for col in df.columns:
             if is_object_dtype(df[col]):
@@ -175,6 +172,12 @@ else:
         else:
             return [df.columns[0]] if len(df.columns) > 0 else []
 
+    # ---- Parámetros por defecto fijos (ya no configurables en UI) ----
+    P_LOW_DEFAULT = 5.0       # Percentil inferior para rangos numéricos
+    P_HIGH_DEFAULT = 95.0     # Percentil superior para rangos numéricos
+    MAX_CAT_DEFAULT = 20      # Top-N categorías permitidas en categóricas
+    ALLOW_FUTURE_DEFAULT = False  # Fechas futuras no permitidas
+
     def make_rules_and_metrics(df: pd.DataFrame,
                                numeric_cols: list,
                                datetime_cols: list,
@@ -196,7 +199,7 @@ else:
                 "dimension": "Completitud"
             })
 
-        # Unicidad por columnas clave
+        # Unicidad por columnas clave (si existe alguna inferida)
         if key_cols:
             reglas.append({
                 "name": f"unique_key_{'_'.join(key_cols)}",
@@ -302,20 +305,37 @@ else:
     try:
         df = load_csv_local(path_csv)
         df, numeric_cols, datetime_cols, categorical_cols = infer_types(df)
-        default_keys = derive_default_keys(df, numeric_cols)
 
-        # Configuración global
+        # Configuración GLOBAL — solo campo de filtro
         with st.expander("⚙️ Configurar reglas (Global)"):
-            key_cols_global = st.multiselect("Columnas clave (unicidad)", options=df.columns.tolist(), default=default_keys)
-            c1, c2, c3 = st.columns(3)
-            p_low_global = c1.slider("Percentil inferior (rangos numéricos)", 0.0, 20.0, 5.0, 0.5)
-            p_high_global = c2.slider("Percentil superior (rangos numéricos)", 80.0, 100.0, 95.0, 0.5)
-            max_cat_global = c3.slider("Máx. categorías permitidas (top-N)", 5, 50, 20, 1)
-            allow_future_global = st.checkbox("Permitir fechas futuras", value=False, key="allow_future_global")
+            # Campo de filtro que se usará en la sección Segmento
+            # Proponemos por defecto 'Country' si existe; si no, el primer categórico o la primera columna
+            default_filter_col = "Country" if "Country" in df.columns else (categorical_cols[0] if categorical_cols else df.columns[0])
+            filter_col = st.selectbox(
+                "Campo de filtro (segmentación)",
+                options=df.columns.tolist(),
+                index=df.columns.tolist().index(default_filter_col) if default_filter_col in df.columns else 0,
+                key="filter_col_global"
+            )
 
+        # Deriva claves por defecto únicamente para métricas (no se exponen en UI)
+        def derive_default_keys(df_local: pd.DataFrame):
+            id_like = [c for c in df_local.columns if re.search(r"\bid\b", c, flags=re.IGNORECASE)]
+            if id_like:
+                return id_like
+            # si hay numéricas, usa la primera
+            num_local = [c for c in df_local.columns if is_numeric_dtype(df_local[c])]
+            if num_local:
+                return [num_local[0]]
+            # si no hay nada, usa la primera columna
+            return [df_local.columns[0]] if len(df_local.columns) > 0 else []
+
+        key_cols_default = derive_default_keys(df)
+
+        # Calcula reglas/métricas Global con parámetros por defecto
         reglas_global, metricas_global = make_rules_and_metrics(
             df, numeric_cols, datetime_cols, categorical_cols,
-            key_cols_global, p_low_global, p_high_global, max_cat_global, allow_future_global
+            key_cols_default, P_LOW_DEFAULT, P_HIGH_DEFAULT, MAX_CAT_DEFAULT, ALLOW_FUTURE_DEFAULT
         )
         umbral_csv = 90
 
@@ -376,16 +396,17 @@ else:
                     "numeric_columns": numeric_cols,
                     "datetime_columns": datetime_cols,
                     "categorical_columns": categorical_cols,
-                    "key_columns": key_cols_global
+                    "key_columns_inferred": key_cols_default
                 },
                 "rules": reglas_global,
                 "quality_metrics": metricas_global,
                 "parameters": {
-                    "percentile_low": p_low_global,
-                    "percentile_high": p_high_global,
-                    "max_allowed_categories": max_cat_global,
-                    "allow_future_dates": allow_future_global
-                }
+                    "percentile_low": P_LOW_DEFAULT,
+                    "percentile_high": P_HIGH_DEFAULT,
+                    "max_allowed_categories": MAX_CAT_DEFAULT,
+                    "allow_future_dates": ALLOW_FUTURE_DEFAULT
+                },
+                "filter_field": filter_col
             }
             yaml_str_global = yaml.dump(yaml_global, allow_unicode=True, sort_keys=False)
             st.download_button(
@@ -400,33 +421,25 @@ else:
             st.markdown('<p class="subtitle">📂 Vista CSV (Global)</p>', unsafe_allow_html=True)
             st.dataframe(df, use_container_width=True, height=520)
 
-            st.markdown('<p class="subtitle">🎯 Segmento (filtrar por columna/valor)</p>', unsafe_allow_html=True)
-            # Selección de segmento independiente del Global
-            default_segment_col = "Country" if "Country" in df.columns else (categorical_cols[0] if categorical_cols else df.columns[0])
-            seg_col = st.selectbox(
-                "Columna de segmento",
-                options=df.columns.tolist(),
-                index=df.columns.tolist().index(default_segment_col) if default_segment_col in df.columns else 0,
-                key="seg_col_main"
-            )
+            st.markdown('<p class="subtitle">🎯 Segmento (filtrar por valores del campo de filtro)</p>', unsafe_allow_html=True)
+            # Usa el campo seleccionado en Configurar reglas (Global)
+            seg_col = filter_col
             unique_vals = sorted(df[seg_col].dropna().unique().tolist())
+            # Si el campo es Country y tiene Spain, proponlo por defecto (sigue tu patrón)
             default_vals = ["Spain"] if seg_col == "Country" and "Spain" in unique_vals else []
             seg_vals = st.multiselect(f"Valores para {seg_col}", options=unique_vals, default=default_vals, key="seg_vals_main")
 
-            with st.expander("⚙️ Configurar reglas (Segmento)"):
-                key_cols_seg = st.multiselect("Columnas clave (unicidad, segmento)", options=df.columns.tolist(), default=default_keys, key="key_cols_seg_main")
-                c1, c2, c3 = st.columns(3)
-                p_low_seg = c1.slider("Percentil inferior (segmento)", 0.0, 20.0, 5.0, 0.5, key="p_low_seg_main")
-                p_high_seg = c2.slider("Percentil superior (segmento)", 80.0, 100.0, 95.0, 0.5, key="p_high_seg_main")
-                max_cat_seg = c3.slider("Máx. categorías permitidas (segmento)", 5, 50, 20, 1, key="max_cat_seg_main")
-                allow_future_seg = st.checkbox("Permitir fechas futuras (segmento)", value=False, key="allow_future_seg_main")
-
+            # Aplica el filtro de segmento
             df_segment = df[df[seg_col].isin(seg_vals)].copy() if seg_vals else df.copy()
+            # Re-inferir tipos tras el filtro
             df_segment, num_seg, dt_seg, cat_seg = infer_types(df_segment)
 
+            # Reglas/métricas del segmento con los mismos parámetros por defecto
+            # Claves inferidas sobre el segmento
+            key_cols_seg_inferred = derive_default_keys(df_segment)
             reglas_seg, metricas_seg = make_rules_and_metrics(
                 df_segment, num_seg, dt_seg, cat_seg,
-                key_cols_seg, p_low_seg, p_high_seg, max_cat_seg, allow_future_seg
+                key_cols_seg_inferred, P_LOW_DEFAULT, P_HIGH_DEFAULT, MAX_CAT_DEFAULT, ALLOW_FUTURE_DEFAULT
             )
 
             if seg_vals:
@@ -484,15 +497,15 @@ else:
                     "numeric": num_seg,
                     "datetime": dt_seg,
                     "categorical": cat_seg,
-                    "key_columns": key_cols_seg
+                    "key_columns_inferred": key_cols_seg_inferred
                 },
                 "rules": reglas_seg,
                 "quality_metrics": metricas_seg,
                 "parameters": {
-                    "percentile_low": p_low_seg,
-                    "percentile_high": p_high_seg,
-                    "max_allowed_categories": max_cat_seg,
-                    "allow_future_dates": allow_future_seg
+                    "percentile_low": P_LOW_DEFAULT,
+                    "percentile_high": P_HIGH_DEFAULT,
+                    "max_allowed_categories": MAX_CAT_DEFAULT,
+                    "allow_future_dates": ALLOW_FUTURE_DEFAULT
                 }
             }
             yaml_str_seg = yaml.dump(yaml_seg, allow_unicode=True, sort_keys=False)
