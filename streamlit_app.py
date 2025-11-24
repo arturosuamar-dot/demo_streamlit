@@ -35,7 +35,7 @@ if not st.session_state.perfilado_iniciado:
 
     if st.button("🚀 Iniciar Perfilado de Datos"):
         st.session_state.perfilado_iniciado = True
-        st.experimental_rerun()  # Recarga la app para mostrar el contenido
+        st.rerun()  # Recarga la app para mostrar el contenido
 else:
     
     
