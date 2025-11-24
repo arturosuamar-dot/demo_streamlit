@@ -50,10 +50,10 @@ if not st.session_state.perfilado_iniciado:
     # Portada con logo, título y subtítulo (HTML correcto)
     st.markdown("""
         <div style="text-align: center; margin-top: 80px;">
-            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 20px;">
-            <h1 style="color: #004C97; font-size: 48px; font-weight: bold;">Bunge Global SA — Data Quality Service</h1>
+            https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28
+            <h1 style="color: #004C97; font-size: 48px; font-weight: bold;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold;">
-                For Viterra • Delivered by the Data Products Squad
+                Bunge Global SA - Viterra Data Products Squad Extension
             </p>
         </div>
     """, unsafe_allow_html=True)
@@ -95,10 +95,10 @@ else:
     # ==========================
     st.markdown("""
         <div style="text-align: center; margin-bottom: 30px;">
-            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 10px;">
-            <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">Bunge Global SA — Data Quality Service</h1>
+            https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28
+            <h1 style="color: #004C97; font-size: 48px; font-weight: bold; margin: 0;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold; margin-top: 10px;">
-                For Viterra • Delivered by the Data Products Squad
+                Bunge Global SA - Viterra Data Products Squad Extension
             </p>
         </div>
     """, unsafe_allow_html=True)
@@ -142,14 +142,14 @@ else:
     """, unsafe_allow_html=True)
 
     # ==========================
-    # Select tabla
+    # Select tabla (demo fija)
     # ==========================
     st.markdown('<p class="subtitle">Selecciona una tabla:</p>', unsafe_allow_html=True)
     tabla_visible = st.selectbox("", list(tablas_map.keys()))
     tabla_seleccionada = tablas_map[tabla_visible]
 
     # ==========================
-    # Reglas por tabla
+    # Reglas por tabla (demo fija)
     # ==========================
     reglas_por_tabla = {
         "clientes": [
@@ -181,7 +181,7 @@ else:
     }
 
     # ==========================
-    # Datos ficticios coherentes
+    # Datos demo
     # ==========================
     clientes_data = [
         {"id": 101, "nombre": "Agroexport SA", "email": "contacto@agroexport.com", "pais": "AR", "tipo_cliente": "Mayorista"},
@@ -208,7 +208,7 @@ else:
     ]
 
     # ==========================
-    # Función para métricas (tablas demo)
+    # Métricas demo
     # ==========================
     def generar_metricas():
         return {
@@ -224,10 +224,10 @@ else:
     umbral = 90
 
     # ==========================
-    # Pestañas (añadimos CSV adjunto)
+    # Pestañas
     # ==========================
     tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(
-        ["📋 Reglas", "📊 Métricas", "📈 Gráficos", "⬇️ Descargar YAML", "📂 Datos de prueba", "📄 CSV adjunto"]
+        ["📋 Reglas", "📊 Métricas", "📈 Gráficos", "⬇️ Descargar YAML", "📂 Datos de prueba", "📄 CSV adjunto (auto)"]
     )
 
     # --- Reglas ---
@@ -261,7 +261,7 @@ else:
         fig_radar.update_layout(polar=dict(radialaxis=dict(visible=True, range=[70, 100])), showlegend=False, title="Radar de Calidad")
         st.plotly_chart(fig_radar, use_container_width=True)
 
-    # --- Descargar YAML ---
+    # --- Descargar YAML (demo tabla) ---
     with tab4:
         yaml_data = {
             "metadata": {
@@ -296,109 +296,195 @@ else:
         elif tabla_seleccionada == "pedidos":
             st.table(pedidos_data)
 
-    # ========= 📄 CSV adjunto: Reglas, Métricas, Gráficos, YAML, Datos =========
+    # ========= 📄 CSV adjunto (auto): reglas, métricas, gráficos, YAML, datos =========
     with tab6:
-        st.markdown('<p class="subtitle">CSV adjunto: reglas, métricas, gráficos y YAML</p>', unsafe_allow_html=True)
+        st.markdown('<p class="subtitle">CSV adjunto: perfilado automático (cualquier esquema)</p>', unsafe_allow_html=True)
 
         import pandas as pd
         import numpy as np
+        import re
 
         # ---- Carga del CSV ----
-        csv_file = st.file_uploader("Sube un CSV con el mismo esquema (opcional)", type=["csv"], key="csv_uploader")
+        csv_file = st.file_uploader("Sube un CSV (cualquier esquema)", type=["csv"], key="csv_uploader_auto")
+
         def load_csv_to_df(uploaded) -> pd.DataFrame:
             if uploaded is not None:
                 return pd.read_csv(uploaded)
             else:
+                # Por defecto intenta leer el CSV que compartiste previamente
                 return pd.read_csv("global_agribusiness_food_company_1000_2.csv")
 
         try:
             df = load_csv_to_df(csv_file)
+            n_rows, n_cols = df.shape
 
-            # Tipado y limpieza
-            expected_cols = ["ProductID","ProductName","Category","Region","Country","Supplier","UnitPrice","Currency","StockQuantity","LastUpdated"]
-            missing = [c for c in expected_cols if c not in df.columns]
-            if missing:
-                st.error(f"El CSV no contiene columnas esperadas: {missing}")
-                st.stop()
+            # ---- Inferencia de tipos ----
+            # Convertimos objetos a datetime si >60% de parseo posible
+            def try_parse_datetime(series: pd.Series) -> bool:
+                try:
+                    parsed = pd.to_datetime(series, errors="coerce", infer_datetime_format=True)
+                    return parsed.notna().mean() >= 0.6
+                except Exception:
+                    return False
 
-            df["LastUpdated"] = pd.to_datetime(df["LastUpdated"], errors="coerce")
-            for col in ["UnitPrice", "StockQuantity", "ProductID"]:
-                df[col] = pd.to_numeric(df[col], errors="coerce")
+            # Normaliza strings (espacios)
             for col in df.select_dtypes(include=["object"]).columns:
                 df[col] = df[col].astype(str).str.strip()
 
-            # ---- Definición/derivación de reglas desde el CSV ----
-            allowed_currency = {"USD","EUR","INR"}
-            allowed_regions  = {"North America","South America","Europe","Africa","Asia","Oceania"}
+            # Detecta posibles fechas en columnas object
+            datetime_candidates = []
+            for col in df.columns:
+                if df[col].dtype == "object" and try_parse_datetime(df[col]):
+                    datetime_candidates.append(col)
+            # Castea esas columnas a datetime
+            for col in datetime_candidates:
+                df[col] = pd.to_datetime(df[col], errors="coerce", infer_datetime_format=True)
 
-            # Rango sugerido de precio (puedes ajustar)
-            min_rule_price, max_rule_price = 100, 2000
+            numeric_cols = df.select_dtypes(include=["number"]).columns.tolist()
+            datetime_cols = df.select_dtypes(include=["datetime"]).columns.tolist()
+            categorical_cols = df.select_dtypes(include=["object", "category"]).columns.tolist()
 
-            reglas_csv = [
-                {"name": "product_id_not_null", "description": "ProductID no debe ser nulo", "condition": "ProductID IS NOT NULL", "dimension": "Completitud"},
-                {"name": "product_name_not_null", "description": "ProductName no debe ser nulo", "condition": "ProductName IS NOT NULL", "dimension": "Completitud"},
-                {"name": "category_not_null", "description": "Category no debe ser nulo", "condition": "Category IS NOT NULL", "dimension": "Completitud"},
-                {"name": "region_valid", "description": "Region válida", "condition": f"Region IN {sorted(list(allowed_regions))}", "dimension": "Consistencia"},
-                {"name": "country_not_null", "description": "Country no debe ser nulo", "condition": "Country IS NOT NULL", "dimension": "Completitud"},
-                {"name": "supplier_not_null", "description": "Supplier no debe ser nulo", "condition": "Supplier IS NOT NULL", "dimension": "Completitud"},
-                {"name": "currency_valid", "description": "Moneda válida (USD, EUR, INR)", "condition": f"Currency IN {sorted(list(allowed_currency))}", "dimension": "Consistencia"},
-                {"name": "unit_price_range", "description": f"UnitPrice entre {min_rule_price} y {max_rule_price}", "condition": f"UnitPrice BETWEEN {min_rule_price} AND {max_rule_price}", "dimension": "Validez"},
-                {"name": "unit_price_positive", "description": "UnitPrice > 0", "condition": "UnitPrice > 0", "dimension": "Validez"},
-                {"name": "stock_non_negative", "description": "StockQuantity ≥ 0", "condition": "StockQuantity >= 0", "dimension": "Validez"},
-                {"name": "last_updated_not_future", "description": "LastUpdated no puede ser futura", "condition": "LastUpdated <= CURRENT_DATE", "dimension": "Validez"},
-                {"name": "product_id_unique", "description": "ProductID único", "condition": "ProductID IS UNIQUE", "dimension": "Unicidad"},
-            ]
+            # Heurística para clave(s): columnas que contengan 'id' en el nombre
+            id_like = [c for c in df.columns if re.search(r"\bid\b", c, flags=re.IGNORECASE)]
+            default_keys = id_like if id_like else ([numeric_cols[0]] if numeric_cols else [df.columns[0]])
 
-            # ---- Cálculo de métricas de calidad sobre el CSV ----
-            total_rows = len(df)
+            # ---- Controles de configuración dinámica ----
+            with st.expander("⚙️ Configurar reglas (CSV)"):
+                key_cols = st.multiselect(
+                    "Columnas clave para Unicidad (puede ser compuesto)",
+                    options=df.columns.tolist(),
+                    default=default_keys
+                )
+                # Percentiles para rangos numéricos (aplican a todas las numéricas)
+                c1, c2, c3 = st.columns(3)
+                p_low = c1.slider("Percentil inferior (rango numérico)", 0.0, 20.0, 5.0, 0.5)
+                p_high = c2.slider("Percentil superior (rango numérico)", 80.0, 100.0, 95.0, 0.5)
+                max_cat = c3.slider("Máx. categorías 'permitidas' por columna", 5, 50, 20, 1)
+                # Fechas: no futuras
+                allow_future_dates = st.checkbox("Permitir fechas futuras", value=False)
 
-            # Completitud: % de valores no nulos sobre columnas críticas
-            critical_cols = ["ProductID","ProductName","Category","Region","Country","Supplier","UnitPrice","Currency","StockQuantity","LastUpdated"]
-            completeness = float(
-                df[critical_cols].notna().sum().sum()
-            ) / (len(df) * len(critical_cols)) * 100 if total_rows > 0 else 0.0
+            # ---- Reglas derivadas del CSV (genéricas) ----
+            reglas_csv = []
 
-            # Unicidad: % de ProductID únicos
-            uniqueness = df["ProductID"].nunique() / total_rows * 100 if total_rows > 0 else 0.0
+            # 1) No nulos por columna
+            for col in df.columns:
+                reglas_csv.append({
+                    "name": f"{col}_not_null",
+                    "description": f"{col} no debe ser nulo",
+                    "condition": f"{col} IS NOT NULL",
+                    "dimension": "Completitud"
+                })
 
-            # Consistencia: Currency y Region dentro de listados permitidos
-            consistency_mask = df["Currency"].isin(allowed_currency) & df["Region"].isin(allowed_regions)
-            consistency = consistency_mask.mean() * 100 if total_rows > 0 else 0.0
+            # 2) Unicidad por columnas clave (si se configuran)
+            if key_cols:
+                reglas_csv.append({
+                    "name": f"unique_key_{'_'.join(key_cols)}",
+                    "description": f"Clave única basada en columnas: {', '.join(key_cols)}",
+                    "condition": f"UNIQUE({', '.join(key_cols)})",
+                    "dimension": "Unicidad"
+                })
 
-            # Validez: reglas numéricas y de fecha
-            today = pd.Timestamp(date.today())
-            validity_mask = (
-                (df["UnitPrice"] > 0) &
-                (df["UnitPrice"].between(min_rule_price, max_rule_price, inclusive="both")) &
-                (df["StockQuantity"] >= 0) &
-                (df["LastUpdated"] <= today)
-            )
-            validity = validity_mask.mean() * 100 if total_rows > 0 else 0.0
+            # 3) Rangos por percentiles para cada columna numérica
+            for col in numeric_cols:
+                q_low = df[col].quantile(p_low / 100.0)
+                q_high = df[col].quantile(p_high / 100.0)
+                reglas_csv.append({
+                    "name": f"{col}_range",
+                    "description": f"{col} entre P{p_low:.1f}={q_low:.3f} y P{p_high:.1f}={q_high:.3f}",
+                    "condition": f"{col} BETWEEN {q_low:.3f} AND {q_high:.3f}",
+                    "dimension": "Validez"
+                })
+                reglas_csv.append({
+                    "name": f"{col}_non_negative",
+                    "description": f"{col} ≥ 0 (si aplica)",
+                    "condition": f"{col} >= 0",
+                    "dimension": "Validez"
+                })
 
-            # Integridad referencial (simplificada): Supplier y Category presentes + ProductID no duplicado
-            referential_mask = (
-                df["Supplier"].notna() &
-                df["Category"].notna()
-            )
-            referential = referential_mask.mean() * 100 if total_rows > 0 else 0.0
+            # 4) Fechas no futuras
+            for col in datetime_cols:
+                reglas_csv.append({
+                    "name": f"{col}_not_future",
+                    "description": f"{col} no puede ser futura",
+                    "condition": f"{col} <= CURRENT_DATE",
+                    "dimension": "Validez"
+                })
 
-            # Exactitud (proxy): valores de UnitPrice dentro del IQR ampliado (Q1-1.5*IQR, Q3+1.5*IQR)
-            if total_rows > 0 and df["UnitPrice"].notna().sum() > 0:
-                q1 = df["UnitPrice"].quantile(0.25)
-                q3 = df["UnitPrice"].quantile(0.75)
-                iqr = q3 - q1
-                low, high = q1 - 1.5*iqr, q3 + 1.5*iqr
-                accuracy_mask = df["UnitPrice"].between(low, high, inclusive="both")
-                accuracy = accuracy_mask.mean() * 100
+            # 5) Categóricas: lista de valores permitidos (top-N por frecuencia)
+            for col in categorical_cols:
+                # top-N categorías más frecuentes
+                top_vals = df[col].value_counts(dropna=True).head(max_cat).index.tolist()
+                reglas_csv.append({
+                    "name": f"{col}_allowed_values",
+                    "description": f"{col} dentro de las {len(top_vals)} categorías más frecuentes",
+                    "condition": f"{col} IN {top_vals}",
+                    "dimension": "Consistencia"
+                })
+
+            # ---- Métricas de calidad (genéricas) ----
+            total_cells = n_rows * n_cols if n_rows and n_cols else 0
+
+            # Completitud: % celdas no nulas
+            completeness = (df.notna().sum().sum() / total_cells * 100.0) if total_cells > 0 else 0.0
+
+            # Unicidad: si hay key_cols, % de filas con clave no nula y no duplicada
+            if key_cols:
+                keys_non_null = df[key_cols].notna().all(axis=1)
+                # clave compuesta como tupla
+                key_tuples = [tuple(x) for x in df[key_cols].values]
+                unique_count = len(set(key_tuples))
+                uniqueness = (unique_count / n_rows * 100.0) if n_rows > 0 else 0.0
+                # integridad clave: filas con clave presente (no nula)
+                integrity_key = keys_non_null.mean() * 100.0
             else:
-                accuracy = 0.0
+                # sin clave definida: unicidad sobre fila completa
+                uniqueness = (df.drop_duplicates().shape[0] / n_rows * 100.0) if n_rows > 0 else 0.0
+                integrity_key = 0.0
+
+            # Validez: promedio de cumplimiento de rangos numéricos + fechas no futuras
+            validity_scores = []
+            # numéricos
+            for col in numeric_cols:
+                q_low = df[col].quantile(p_low / 100.0)
+                q_high = df[col].quantile(p_high / 100.0)
+                mask_range = df[col].between(q_low, q_high, inclusive="both")
+                mask_nonneg = df[col] >= 0
+                # promedio de ambas
+                validity_scores.append(mask_range.mean() * 100.0 if n_rows > 0 else 0.0)
+                validity_scores.append(mask_nonneg.mean() * 100.0 if n_rows > 0 else 0.0)
+            # fechas
+            for col in datetime_cols:
+                if allow_future_dates:
+                    # todo válido
+                    validity_scores.append(100.0)
+                else:
+                    mask_date = df[col] <= pd.Timestamp(date.today())
+                    validity_scores.append(mask_date.mean() * 100.0 if n_rows > 0 else 0.0)
+            validity = round(np.mean(validity_scores), 2) if validity_scores else 0.0
+
+            # Consistencia: categóricas dentro del top-N
+            consistency_scores = []
+            for col in categorical_cols:
+                top_vals = df[col].value_counts(dropna=True).head(max_cat).index.tolist()
+                consistency_scores.append(df[col].isin(top_vals).mean() * 100.0 if n_rows > 0 else 0.0)
+            consistency = round(np.mean(consistency_scores), 2) if consistency_scores else 0.0
+
+            # Exactitud (proxy): valores numéricos dentro de IQR (por columna), promedio
+            accuracy_scores = []
+            for col in numeric_cols:
+                q1 = df[col].quantile(0.25)
+                q3 = df[col].quantile(0.75)
+                iqr = q3 - q1
+                low, high = q1 - 1.5 * iqr, q3 + 1.5 * iqr
+                accuracy_scores.append(df[col].between(low, high, inclusive="both").mean() * 100.0 if n_rows > 0 else 0.0)
+            accuracy = round(np.mean(accuracy_scores), 2) if accuracy_scores else 0.0
 
             metricas_csv = {
                 "Completitud": round(completeness, 2),
                 "Unicidad": round(uniqueness, 2),
                 "Consistencia": round(consistency, 2),
                 "Validez": round(validity, 2),
-                "Integridad Referencial": round(referential, 2),
+                "Integridad Clave": round(integrity_key, 2),
                 "Exactitud": round(accuracy, 2)
             }
             umbral_csv = 90
@@ -410,12 +496,12 @@ else:
 
             # --- Reglas CSV ---
             with ctab1:
-                st.markdown('<p class="subtitle">Reglas generadas para el CSV:</p>', unsafe_allow_html=True)
+                st.markdown('<p class="subtitle">Reglas generadas dinámicamente (CSV):</p>', unsafe_allow_html=True)
                 st.table(reglas_csv)
 
             # --- Métricas CSV ---
             with ctab2:
-                st.markdown('<p class="subtitle">Métricas de calidad calculadas sobre el CSV:</p>', unsafe_allow_html=True)
+                st.markdown('<p class="subtitle">Métricas de calidad calculadas (CSV):</p>', unsafe_allow_html=True)
                 cols = st.columns(len(metricas_csv))
                 for i, (k, v) in enumerate(metricas_csv.items()):
                     color = "normal" if v >= umbral_csv else "inverse"
@@ -441,9 +527,7 @@ else:
                     fill='toself',
                     name='Calidad CSV'
                 ))
-                # Ajusta el rango en función de las métricas observadas
                 min_axis = max(0, min(metricas_csv.values()) - 10)
-                max_axis = min(100, max(metricas_csv.values()) + 5)
                 fig_radar_csv.update_layout(
                     polar=dict(radialaxis=dict(visible=True, range=[min_axis, 100])),
                     showlegend=False,
@@ -458,66 +542,87 @@ else:
                         "company": "Bunge Global SA",
                         "generated_by": "DQaaS Streamlit App",
                         "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                        "source_system": "CSV Upload"
+                        "source_system": "CSV Upload (auto)"
                     },
-                    "table": "agribusiness_products_csv",
+                    "dataset": {
+                        "rows": int(n_rows),
+                        "columns": int(n_cols),
+                        "numeric_columns": numeric_cols,
+                        "datetime_columns": datetime_cols,
+                        "categorical_columns": categorical_cols,
+                        "key_columns": key_cols
+                    },
                     "rules": reglas_csv,
                     "quality_metrics": metricas_csv,
-                    "summary": {
-                        "rows": int(total_rows),
-                        "distinct_products": int(df["ProductID"].nunique())
+                    "parameters": {
+                        "percentile_low": p_low,
+                        "percentile_high": p_high,
+                        "max_allowed_categories": max_cat,
+                        "allow_future_dates": allow_future_dates
                     }
                 }
                 yaml_str_csv = yaml.dump(yaml_csv, allow_unicode=True, sort_keys=False)
                 st.download_button(
-                    label="Descargar reglas y métricas del CSV en YAML",
+                    label="Descargar reglas y métricas del CSV (YAML)",
                     data=yaml_str_csv,
-                    file_name="agribusiness_products_csv_quality.yaml",
+                    file_name="csv_quality_profile.yaml",
                     mime="text/yaml"
                 )
 
             # --- Vista CSV (con filtros opcionales) ---
             with ctab5:
-                st.markdown('<p class="subtitle">Vista de datos del CSV:</p>', unsafe_allow_html=True)
+                st.markdown('<p class="subtitle">Vista de datos del CSV (filtros dinámicos):</p>', unsafe_allow_html=True)
 
                 with st.expander("🔎 Filtros"):
-                    c1, c2, c3, c4, c5 = st.columns(5)
-                    category = c1.multiselect("Category", sorted(df["Category"].dropna().unique().tolist()))
-                    region = c2.multiselect("Region", sorted(df["Region"].dropna().unique().tolist()))
-                    country = c3.multiselect("Country", sorted(df["Country"].dropna().unique().tolist()))
-                    supplier = c4.multiselect("Supplier", sorted(df["Supplier"].dropna().unique().tolist()))
-                    currency = c5.multiselect("Currency", sorted(df["Currency"].dropna().unique().tolist()))
-                    search_text = st.text_input("Buscar (ProductName o Supplier)", "")
-                    # slider de precios
-                    min_price = float(df["UnitPrice"].min())
-                    max_price = float(df["UnitPrice"].max())
-                    price_range = st.slider("Rango UnitPrice", min_value=min_price, max_value=max_price,
-                                            value=(min_price, max_price))
+                    # Filtros por cada tipo detectado
+                    # Categóricos: multiselect por columna
+                    filter_vals = {}
+                    if categorical_cols:
+                        st.markdown("**Categóricas**")
+                        for col in categorical_cols:
+                            options = sorted(df[col].dropna().unique().tolist())
+                            filter_vals[col] = st.multiselect(f"{col}", options)
+
+                    # Numéricas: rango por columna (hasta 5 primeras para no saturar UI)
+                    if numeric_cols:
+                        st.markdown("**Numéricas**")
+                        for col in numeric_cols[:5]:
+                            mn = float(df[col].min())
+                            mx = float(df[col].max())
+                            filter_vals[col] = st.slider(f"{col} (rango)", mn, mx, (mn, mx))
+
+                    # Texto libre
+                    search_text = st.text_input("Buscar texto en todas las columnas (contiene)", "")
 
                 dff = df.copy()
-                if category: dff = dff[dff["Category"].isin(category)]
-                if region: dff = dff[dff["Region"].isin(region)]
-                if country: dff = dff[dff["Country"].isin(country)]
-                if supplier: dff = dff[dff["Supplier"].isin(supplier)]
-                if currency: dff = dff[dff["Currency"].isin(currency)]
+                # Aplica filtros categóricos
+                for col in categorical_cols:
+                    vals = filter_vals.get(col)
+                    if vals:
+                        dff = dff[dff[col].isin(vals)]
+                # Aplica filtros numéricos (solo si slider presente)
+                for col in numeric_cols[:5]:
+                    rng = filter_vals.get(col)
+                    if isinstance(rng, tuple):
+                        dff = dff[(dff[col] >= rng[0]) & (dff[col] <= rng[1])]
+                # Búsqueda libre (en columnas de texto)
                 if search_text:
-                    mask = (
-                        dff["ProductName"].astype(str).str.contains(search_text, case=False, na=False) |
-                        dff["Supplier"].astype(str).str.contains(search_text, case=False, na=False)
-                    )
-                    dff = dff[mask]
-                dff = dff[(dff["UnitPrice"] >= price_range[0]) & (dff["UnitPrice"] <= price_range[1])]
+                    mask_any = pd.Series(False, index=dff.index)
+                    text_cols = dff.select_dtypes(include=["object", "category"]).columns
+                    for col in text_cols:
+                        mask_any = mask_any | dff[col].astype(str).str.contains(search_text, case=False, na=False)
+                    dff = dff[mask_any]
 
                 st.caption(f"Filas mostradas: {len(dff):,} de {len(df):,}")
-                st.dataframe(
-                    dff.sort_values(by="LastUpdated", ascending=False),
-                    use_container_width=True,
-                    height=520
-                )
+                # Ordena por la primera datetime si existe
+                sort_col = datetime_cols[0] if datetime_cols else None
+                if sort_col:
+                    dff = dff.sort_values(by=sort_col, ascending=False)
+                st.dataframe(dff, use_container_width=True, height=520)
 
         except Exception as e:
             st.error(f"Error procesando el CSV: {e}")
-            st.info("Verifica el esquema esperado: ProductID, ProductName, Category, Region, Country, Supplier, UnitPrice, Currency, StockQuantity, LastUpdated.")
+            st.info("Prueba con un CSV válido. La app soporta esquemas arbitrarios y perfila columnas numéricas, de fecha y categóricas automáticamente.")
 
     # ==========================
     # Footer
