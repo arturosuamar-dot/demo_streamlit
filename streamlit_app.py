@@ -12,23 +12,36 @@ import plotly.graph_objects as go
 st.set_page_config(page_title="DQaaS - Bunge Global SA", page_icon="🌐", layout="wide")
 
 # ==========================
-# Centrar el contenedor principal
-# ==========================
-st.markdown("""
-    <style>
-    .block-container {
-        max-width: 900px;  /* prueba 900; ajusta si lo quieres más ancho/estrecho */
-        margin-left: auto;
-        margin-right: auto;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# ==========================
 # Estado inicial
 # ==========================
 if "perfilado_iniciado" not in st.session_state:
     st.session_state.perfilado_iniciado = False
+
+# ==========================
+# CSS condicional para el ancho del contenedor
+# ==========================
+if not st.session_state.perfilado_iniciado:
+    # Portada: contenedor más estrecho y centrado
+    st.markdown("""
+        <style>
+        .block-container {
+            max-width: 900px;  /* landing centrada y cómoda */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+else:
+    # App iniciada: contenedor más ancho para desktop
+    st.markdown("""
+        <style>
+        .block-container {
+            max-width: 1200px;  /* ajusta 1100-1400 según tu preferencia */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        </style>
+    """, unsafe_allow_html=True)
 
 # ==========================
 # Pantalla inicial
@@ -69,10 +82,9 @@ if not st.session_state.perfilado_iniciado:
     # Espaciado bajo el título
     st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
 
-    # Botón centrado de forma robusta con columnas (3-2-3 da un centrado visual muy preciso)
+    # Botón ligeramente desplazado a la izquierda (asimetría en columnas)
     col_left, col_center, col_right = st.columns([3, 2, 5.3])
     with col_center:
-        # usa use_container_width para que el botón ocupe la columna y no “parezca” desviado
         if st.button("🚀 Iniciar Perfilado de Datos", key="start_button", use_container_width=True):
             st.session_state.perfilado_iniciado = True
             st.rerun()
