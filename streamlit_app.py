@@ -100,17 +100,9 @@ else:
     """, unsafe_allow_html=True)
 
     # ==========================
-    # Sidebar
+    # Mapeo de dataproducts (demo)
     # ==========================
-    st.sidebar.header("Opciones")
-    st.sidebar.info("Selecciona la tabla y genera reglas de calidad en formato Bunge YAML.")
-    if st.sidebar.button("Conectar a GCP", key="gcp_button"):
-        st.sidebar.success("Conexión simulada con BigQuery ✅")
-
-    # ==========================
-    # Mapeo de tablas (demo)
-    # ==========================
-    tablas_map = {"Clientes": "clientes", "Ventas": "ventas", "Productos": "productos", "Proveedores": "proveedores", "Pedidos": "pedidos"}
+    dataproducts_map = {"Clientes": "clientes", "Ventas": "ventas", "Productos": "productos", "Proveedores": "proveedores", "Pedidos": "pedidos"}
 
     # ==========================
     # Estilos (solo títulos y footer)
@@ -123,16 +115,16 @@ else:
     """, unsafe_allow_html=True)
 
     # ==========================
-    # Select tabla (demo)
+    # Select dataproduct (demo)
     # ==========================
-    st.markdown('<p class="subtitle">Selecciona una tabla:</p>', unsafe_allow_html=True)
-    tabla_visible = st.selectbox("", list(tablas_map.keys()))
-    tabla_seleccionada = tablas_map[tabla_visible]
+    st.markdown('<p class="subtitle">Seleccione el dataproduct:</p>', unsafe_allow_html=True)
+    dataproduct_visible = st.selectbox("", list(dataproducts_map.keys()))
+    dataproduct_seleccionada = dataproducts_map[dataproduct_visible]
 
     # ==========================
-    # Reglas por tabla (demo)
+    # Reglas por dataproduct (demo)
     # ==========================
-    reglas_por_tabla = {
+    reglas_por_dataproduct = {
         "clientes": [
             {"name": "no_null_id", "description": "ID no debe ser nulo", "condition": "id IS NOT NULL", "dimension": "Completitud"},
             {"name": "email_format", "description": "Formato de email válido", "condition": "email LIKE '%@%'", "dimension": "Consistencia"},
@@ -213,8 +205,8 @@ else:
 
     # --- Reglas (demo) ---
     with tab1:
-        st.markdown('<p class="subtitle">Reglas para la tabla seleccionada:</p>', unsafe_allow_html=True)
-        st.table(reglas_por_tabla[tabla_seleccionada])
+        st.markdown('<p class="subtitle">Reglas para la dataproduct seleccionada:</p>', unsafe_allow_html=True)
+        st.table(reglas_por_dataproduct[dataproduct_seleccionada])
 
     # --- Métricas (demo) ---
     with tab2:
@@ -246,26 +238,26 @@ else:
                 "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 "source_system": "GCP BigQuery"
             },
-            "table": tabla_seleccionada,
-            "rules": reglas_por_tabla[tabla_seleccionada],
+            "table": dataproduct_seleccionada,
+            "rules": reglas_por_dataproduct[dataproduct_seleccionada],
             "quality_metrics": metricas
         }
         yaml_str = yaml.dump(yaml_data, allow_unicode=True)
         st.download_button(label="Descargar reglas y métricas en YAML", data=yaml_str,
-                           file_name=f"{tabla_seleccionada}_quality.yaml", mime="text/yaml")
+                           file_name=f"{dataproduct_seleccionada}_quality.yaml", mime="text/yaml")
 
     # --- Datos de prueba (demo) ---
     with tab5:
-        st.markdown(f"**Datos de la tabla {tabla_visible}:**")
-        if tabla_seleccionada == "clientes":
+        st.markdown(f"**Datos de la dataproduct {dataproduct_visible}:**")
+        if dataproduct_seleccionada == "clientes":
             st.table(clientes_data)
-        elif tabla_seleccionada == "ventas":
+        elif dataproduct_seleccionada == "ventas":
             st.table(ventas_data)
-        elif tabla_seleccionada == "productos":
+        elif dataproduct_seleccionada == "productos":
             st.table(productos_data)
-        elif tabla_seleccionada == "proveedores":
+        elif dataproduct_seleccionada == "proveedores":
             st.table(proveedores_data)
-        elif tabla_seleccionada == "pedidos":
+        elif dataproduct_seleccionada == "pedidos":
             st.table(pedidos_data)
 
     # ========= 📄 CSV adjunto (auto): Global y Segmento =========
