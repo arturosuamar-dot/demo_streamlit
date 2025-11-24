@@ -114,7 +114,7 @@ else:
         "Dataproduct_Prueba": "./datos_prueba.csv",
     }
 
-    st.markdown('<p class="subtitle">Seleccione el dataproduct:</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle">📂 Seleccione el dataproduct:</p>', unsafe_allow_html=True)
     dataproduct_visible = st.selectbox("", list(DATASETS.keys()))
     path_csv = DATASETS[dataproduct_visible]
 
@@ -469,7 +469,7 @@ else:
 
         # --- Vista de datos (Ámbito actual) ---
         with tab5:
-            st.markdown(f'<p class="subtitle">📂 Vista CSV ({scope_label})</p>', unsafe_allow_html=True)
+            st.markdown(f'<p class="subtitle">📂 Vista de datos ({scope_label})</p>', unsafe_allow_html=True)
             if seg_vals:
                 st.caption(f"Filas segmento: {len(df_current):,} / {len(df):,} [{seg_col} ∈ {seg_vals}]")
             else:
