@@ -14,7 +14,7 @@ st.set_page_config(page_title="DQaaS - Bunge Global SA", page_icon="🌐", layou
 # ==========================
 # Centro estable del contenedor
 # ==========================
-MAX_WIDTH = 900  # ajusta 880, 900, 920 según tu monitor
+MAX_WIDTH = 880  # ajusta 880, 900, 920 según tu monitor
 st.markdown(f"""
     <style>
     .block-container {{
