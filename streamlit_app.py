@@ -110,15 +110,10 @@ else:
     """, unsafe_allow_html=True)
 
     # ==========================
-    # Catálogo de Dataproducts -> mapeo a CSV
-    # (por ahora todos apuntan a ./datos_prueba.csv; podrás cambiarlos por CSV específicos)
+    # Único Dataproduct -> CSV local
     # ==========================
     DATASETS = {
-        "Clientes": "./datos_prueba.csv",
-        "Ventas": "./datos_prueba.csv",
-        "Productos": "./datos_prueba.csv",
-        "Proveedores": "./datos_prueba.csv",
-        "Pedidos": "./datos_prueba.csv",
+        "Dataproduct_Prueba": "./datos_prueba.csv",
     }
 
     st.markdown('<p class="subtitle">Seleccione el dataproduct:</p>', unsafe_allow_html=True)
@@ -141,11 +136,9 @@ else:
         p = Path(path_str)
         if not p.exists():
             raise FileNotFoundError(f"No se encuentra el archivo: {p.resolve()}")
-        # Si conoces el separador, usa sep="," explícito; aquí dejamos autodetección simple
         try:
             return pd.read_csv(p)
         except UnicodeDecodeError:
-            # Intento alternativo con latin-1
             return pd.read_csv(p, encoding="latin-1")
 
     def infer_types(df: pd.DataFrame):
@@ -304,14 +297,14 @@ else:
         return reglas, metrics
 
     # ==========================
-    # Carga + perfilado GLOBAL (para el dataproduct seleccionado)
+    # Carga + perfilado GLOBAL (Dataproduct_Prueba)
     # ==========================
     try:
         df = load_csv_local(path_csv)
         df, numeric_cols, datetime_cols, categorical_cols = infer_types(df)
         default_keys = derive_default_keys(df, numeric_cols)
 
-        # Configuración global (afecta a Reglas/Métricas/Gráficos/YAML)
+        # Configuración global
         with st.expander("⚙️ Configurar reglas (Global)"):
             key_cols_global = st.multiselect("Columnas clave (unicidad)", options=df.columns.tolist(), default=default_keys)
             c1, c2, c3 = st.columns(3)
@@ -327,7 +320,7 @@ else:
         umbral_csv = 90
 
         # ==========================
-        # Pestañas principales (CSV integrado en Dataproducts)
+        # Pestañas principales
         # ==========================
         tab1, tab2, tab3, tab4, tab5 = st.tabs(
             ["📋 Reglas", "📊 Métricas", "📈 Gráficos", "⬇️ Descargar YAML", "📂 Vista de datos"]
