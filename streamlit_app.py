@@ -12,6 +12,19 @@ import plotly.graph_objects as go
 st.set_page_config(page_title="DQaaS - Bunge Global SA", page_icon="🌐", layout="wide")
 
 # ==========================
+# Centrar el contenedor principal
+# ==========================
+st.markdown("""
+    <style>
+    .block-container {
+        max-width: 900px;  /* prueba 900; ajusta si lo quieres más ancho/estrecho */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# ==========================
 # Estado inicial
 # ==========================
 if "perfilado_iniciado" not in st.session_state:
