@@ -17,16 +17,20 @@ st.set_page_config(page_title="DQaaS - Bunge Global SA", page_icon="🌐", layou
 if "perfilado_iniciado" not in st.session_state:
     st.session_state.perfilado_iniciado = False
 
+
 # ==========================
 # Pantalla inicial
 # ==========================
 if not st.session_state.perfilado_iniciado:
-    # Portada con logo, título y subtítulo
+    # Portada con logo, título y subtítulo (HTML sin entidades escapadas)
     st.markdown("""
         <div style="text-align: center; margin-top: 80px;">
-            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 20px;">
+            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28"
+                 width="180" style="margin-bottom: 20px;">
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold;">DQaaS - Data Quality as a Service</h1>
-            <p style="color: #003366; font-size: 22px; font-weight: bold;">Bunge Global SA - Viterra Data Products Squad Extension</p>
+            <p style="color: #003366; font-size: 22px; font-weight: bold;">
+                Bunge Global SA - Viterra Data Products Squad Extension
+            </p>
         </div>
     """, unsafe_allow_html=True)
 
@@ -51,12 +55,12 @@ if not st.session_state.perfilado_iniciado:
         </style>
     """, unsafe_allow_html=True)
 
-    # Botón centrado debajo del título
-    st.markdown("<div style='text-align: center; margin-top: 30px;'>", unsafe_allow_html=True)
-    if st.button("🚀 Iniciar Perfilado de Datos", key="start_button"):
-        st.session_state.perfilado_iniciado = True
-        st.rerun()
-    st.markdown("</div>", unsafe_allow_html=True)
+    # Centrado del botón usando columnas
+    col_left, col_center, col_right = st.columns([1, 2, 1])
+    with col_center:
+        if st.button("🚀 Iniciar Perfilado de Datos", key="start_button", use_container_width=True):
+            st.session_state.perfilado_iniciado = True
+            st.rerun()
 
 else:
     # ==========================
