@@ -268,12 +268,12 @@ else:
         import numpy as np
         import re
         from pathlib import Path
+        from pandas.api.types import is_datetime64_any_dtype, is_object_dtype, is_numeric_dtype
 
         # ---- Catálogo local ----
         DATASETS = {
-            # Usa el nombre legible como clave y la ruta relativa como valor
             "datos_prueba.csv": "./datos_prueba.csv",
-            # Puedes añadir más si quieres:
+            # Añade aquí otros CSV locales si lo deseas:
             # "otro_dataset.csv": "./otro_dataset.csv",
         }
 
@@ -286,32 +286,36 @@ else:
             p = Path(path_str)
             if not p.exists():
                 raise FileNotFoundError(f"No se encuentra el archivo: {p.resolve()}")
-            # Si conoces el separador explícitamente, usa sep="," para mayor rendimiento
+            # Si conoces el separador, usa sep="," explícito para mayor rendimiento
             return pd.read_csv(p)
 
         def infer_types(df: pd.DataFrame):
+            """Detecta y convierte tipos: numéricos, fechas y categóricos sin usar cadenas inválidas en select_dtypes."""
             # Normaliza strings
-            for col in df.select_dtypes(include=["object"]).columns:
-                df[col] = df[col].astype(str).str.strip()
+            for col in df.columns:
+                if is_object_dtype(df[col]):
+                    df[col] = df[col].astype(str).str.strip()
 
-            # Detecta columnas datetime en objetos (>=60% parseables)
-            def try_parse_datetime(series: pd.Series) -> bool:
+            # Detecta y convierte columnas datetime:
+            #  - Si ya son datetime64, las dejamos
+            #  - Si son object y >=60% parseables, convertimos
+            def maybe_to_datetime(series: pd.Series) -> bool:
                 try:
-                    parsed = pd.to_datetime(series, errors="coerce")
+                    parsed = pd.to_datetime(series, errors="coerce", infer_datetime_format=True)
                     return parsed.notna().mean() >= 0.6
                 except Exception:
                     return False
 
-            datetime_candidates = []
             for col in df.columns:
-                if df[col].dtype == "object" and try_parse_datetime(df[col]):
-                    datetime_candidates.append(col)
-            for col in datetime_candidates:
-                df[col] = pd.to_datetime(df[col], errors="coerce")
+                if is_object_dtype(df[col]) and maybe_to_datetime(df[col]):
+                    df[col] = pd.to_datetime(df[col], errors="coerce", infer_datetime_format=True)
 
-            numeric_cols = df.select_dtypes(include=["number"]).columns.tolist()
-            datetime_cols = df.select_dtypes(include=["datetime64[ns]", "datetime64[ns, tz]"]).columns.tolist()
-            categorical_cols = df.select_dtypes(include=["object", "category"]).columns.tolist()
+            # Listas de columnas por tipo
+            numeric_cols = [c for c in df.columns if is_numeric_dtype(df[c])]
+            datetime_cols = [c for c in df.columns if is_datetime64_any_dtype(df[c])]
+            categorical_cols = [c for c in df.columns
+                                if (df[c].dtype.name in ("object", "category")) and c not in datetime_cols]
+
             return df, numeric_cols, datetime_cols, categorical_cols
 
         def derive_default_keys(df: pd.DataFrame, numeric_cols: list):
@@ -544,9 +548,11 @@ else:
             with gtab2:
                 st.markdown('<p class="subtitle">🎯 Configurar segmento</p>', unsafe_allow_html=True)
                 default_segment_col = "Country" if "Country" in df.columns else (categorical_cols[0] if categorical_cols else df.columns[0])
-                seg_col = st.selectbox("Columna de segmento", options=df.columns.tolist(),
-                                       index=df.columns.tolist().index(default_segment_col) if default_segment_col in df.columns else 0)
-
+                seg_col = st.selectbox(
+                    "Columna de segmento",
+                    options=df.columns.tolist(),
+                    index=df.columns.tolist().index(default_segment_col) if default_segment_col in df.columns else 0
+                )
                 unique_vals = sorted(df[seg_col].dropna().unique().tolist())
                 default_vals = ["Spain"] if seg_col == "Country" and "Spain" in unique_vals else []
                 seg_vals = st.multiselect(f"Valores para {seg_col}", options=unique_vals, default=default_vals)
