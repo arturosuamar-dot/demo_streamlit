@@ -15,65 +15,78 @@ st.set_page_config(page_title="DQaaS - Bunge Global SA", page_icon="🌐", layou
 # Estado inicial
 # ==========================
 if "perfilado_iniciado" not in st.session_state:
-    st.session_state.perfilado_iniciado = False
+    st.session_state.perfilado_iniciado = False;
+
 
 # ==========================
-# CSS inicial (contenedor más estrecho)
+# CSS inicial (contenedor más estrecho, portada centrada)
 # Solo se aplica antes de iniciar el perfilado
 # ==========================
 if not st.session_state.perfilado_iniciado:
     st.markdown("""
         <style>
+        /* Contenedor moderado y centrado */
         .main .block-container {
-            max-width: 900px;
+            max-width: 980px;
             margin-left: auto;
             margin-right: auto;
+            padding-top: 6vh;  /* separa desde arriba */
         }
-        /* Botón inicial estilizado */
+        /* Tipografía base */
+        html, body, .stApp {
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        }
+        /* Botón inicial */
         div.stButton > button {
-            width: 320px;
-            height: 60px;
-            font-size: 24px;
-            font-weight: bold;
+            width: 340px;
+            height: 56px;
+            font-size: 20px;
+            font-weight: 600;
             background-color: #004C97;
             color: white;
             border-radius: 10px;
             border: none;
-            transition: 0.3s;
+            transition: 0.25s;
         }
         div.stButton > button:hover {
             background-color: #003366;
-            transform: scale(1.05);
+            transform: translateY(-1px);
         }
-        /* Subtítulo y footer básicos para la portada */
-        .subtitle { font-size: 24px; font-weight: bold; color: #004C97; margin-bottom: -10px; }
-        footer { text-align: center; color: #6b6b6b; margin-top: 40px; }
+        /* Footer portada */
+        footer { text-align: center; color: #6b6b6b; margin-top: 48px; }
         </style>
     """, unsafe_allow_html=True)
 
 # ==========================
-# Pantalla inicial
+# Pantalla inicial (PORTADA)
 # ==========================
 if not st.session_state.perfilado_iniciado:
-    st.markdown("""
-        <div style="text-align: center; margin-top: 80px;">
-            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28"
-                 style="width:180px; margin-bottom:20px;" />
-            <h1 style="color: #004C97; font-size: 48px; font-weight: bold;">DQaaS - Data Quality as a Service</h1>
-            <p style="color: #003366; font-size: 22px; font-weight: bold;">
-                Bunge Global SA - Viterra Data Products Squad Extension
-            </p>
-        </div>
-    """, unsafe_allow_html=True)
+    # Contenedor centrado sin columnas desbalanceadas
+    with st.container():
+        st.markdown("""
+            <div style="text-align: center;">
+                <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28"
+                     alt="Bunge" style="width:180px; height:auto; margin-bottom:18px;" />
+                <h1 style="color:#004C97; font-size:42px; font-weight:800; margin:0 0 8px 0;">
+                    DQaaS - Data Quality as a Service
+                </h1>
+                <p style="color:#003366; font-size:20px; font-weight:600; margin:0 0 24px 0;">
+                    Bunge Global SA - Viterra Data Products Squad Extension
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
 
-    st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+        # Botón centrado (sin usar columnas asimétricas)
+        # Para mantenerlo en el centro, usamos un pequeño contenedor con margen auto
+        btn_col = st.columns([1, 1, 1])  # 3 columnas iguales
+        with btn_col[1]:
+            if st.button("🚀 Iniciar Perfilado de Datos", key="start_button", use_container_width=True):
+                st.session_state.perfilado_iniciado = True
+                st.rerun()
 
-    # Botón centrado
-    col_left, col_center, col_right = st.columns([3, 2, 3])
-    with col_center:
-        if st.button("🚀 Iniciar Perfilado de Datos", key="start_button", use_container_width=True):
-            st.session_state.perfilado_iniciado = True
-            st.rerun()
+    # Footer portada
+    st.markdown('<footer>© 2025 Bunge Global SA - Todos los derechos reservados</footer>', unsafe_allow_html=True)
+
 
 else:
     # ==========================
