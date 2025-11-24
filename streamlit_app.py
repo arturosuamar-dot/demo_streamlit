@@ -21,16 +21,15 @@ if "perfilado_iniciado" not in st.session_state:
 # Pantalla inicial
 # ==========================
 if not st.session_state.perfilado_iniciado:
-
-    # Portada
+    # Portada con logo, título y subtítulo
     st.markdown("""
-        <div style="text-align: center; margin-top: 100px;">
+        <div style="text-align: center; margin-top: 80px;">
+            <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 20px;">
             <h1 style="color: #004C97; font-size: 48px; font-weight: bold;">DQaaS - Data Quality as a Service</h1>
             <p style="color: #003366; font-size: 22px; font-weight: bold;">Bunge Global SA - Viterra Data Products Squad Extension</p>
-            <br>
         </div>
     """, unsafe_allow_html=True)
-    
+
     # CSS para estilizar el botón
     st.markdown("""
         <style>
@@ -51,9 +50,9 @@ if not st.session_state.perfilado_iniciado:
         }
         </style>
     """, unsafe_allow_html=True)
-    
-    # Contenedor centrado para el botón
-    st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
+
+    # Botón centrado debajo del título
+    st.markdown("<div style='text-align: center; margin-top: 30px;'>", unsafe_allow_html=True)
     if st.button("🚀 Iniciar Perfilado de Datos", key="start_button"):
         st.session_state.perfilado_iniciado = True
         st.rerun()
