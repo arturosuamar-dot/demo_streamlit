@@ -47,7 +47,7 @@ else:
 # Pantalla inicial
 # ==========================
 if not st.session_state.perfilado_iniciado:
-    # Portada con logo, título y subtítulo (HTML correcto)
+    # Portada con logo, título y subtítulo
     st.markdown("""
         <div style="text-align: center; margin-top: 80px;">
             <img src="https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28" width="180" style="margin-bottom: 20px;">
@@ -296,15 +296,13 @@ else:
         elif tabla_seleccionada == "pedidos":
             st.table(pedidos_data)
 
-    # --- 📄 CSV adjunto ---
+    # --- 📄 CSV adjunto (tabla con selección) ---
     with tab6:
-        st.markdown('<p class="subtitle">Vista del CSV adjunto:</p>', unsafe_allow_html=True)
+        st.markdown('<p class="subtitle">CSV adjunto: seleccione filas</p>', unsafe_allow_html=True)
 
         # Uploader opcional para reemplazar el CSV (por defecto usa el incluido)
         csv_file = st.file_uploader("Sube un CSV con el mismo esquema (opcional)", type=["csv"], key="csv_uploader")
 
-        # Si no se sube nada, usamos el CSV por defecto (ruta/stream que tengas disponible)
-        # En tu entorno real, reemplaza la lectura de archivo local por tu origen preferido (GCS/BigQuery/SharePoint, etc.).
         import pandas as pd
 
         def load_csv_to_df(uploaded) -> pd.DataFrame:
@@ -316,19 +314,17 @@ else:
         try:
             df = load_csv_to_df(csv_file)
 
-            # Tipado y limpieza ligera:
-            # - LastUpdated a datetime
-            # - UnitPrice y StockQuantity a numéricos
-            # - Normalización de espacios en strings
+            # Tipado y limpieza ligera
             if "LastUpdated" in df.columns:
                 df["LastUpdated"] = pd.to_datetime(df["LastUpdated"], errors="coerce")
             for col in ["UnitPrice", "StockQuantity", "ProductID"]:
                 if col in df.columns:
                     df[col] = pd.to_numeric(df[col], errors="coerce")
+            # Normaliza strings
             for col in df.select_dtypes(include=["object"]).columns:
                 df[col] = df[col].astype(str).str.strip()
 
-            # Panel de filtros
+            # Filtros
             with st.expander("🔎 Filtros"):
                 c1, c2, c3, c4, c5 = st.columns(5)
                 category = c1.multiselect("Category", sorted(df["Category"].dropna().unique().tolist())) if "Category" in df.columns else []
@@ -349,7 +345,7 @@ else:
                 price_range = st.slider("Rango de UnitPrice", min_value=min_price, max_value=max_price,
                                         value=(min_price, max_price))
 
-            # Aplicar filtros
+            # Aplica filtros
             dff = df.copy()
             if category:
                 dff = dff[dff["Category"].isin(category)]
@@ -362,8 +358,6 @@ else:
             if currency:
                 dff = dff[dff["Currency"].isin(currency)]
             if search_text:
-                st.write(f"Filtrando por texto: **{search_text}**")
-                # Evita errores si faltan columnas
                 pcol = "ProductName" if "ProductName" in dff.columns else None
                 scol = "Supplier" if "Supplier" in dff.columns else None
                 if pcol or scol:
@@ -376,38 +370,63 @@ else:
             if "UnitPrice" in dff.columns:
                 dff = dff[(dff["UnitPrice"] >= price_range[0]) & (dff["UnitPrice"] <= price_range[1])]
 
-            # Contador y tabla
-            st.caption(f"Filas mostradas: {len(dff):,} de {len(df):,}")
+            # Añade columna de selección si no existe
+            if "selected" not in dff.columns:
+                dff.insert(0, "selected", False)
+
+            # Ordena por fecha (si existe)
             sort_col = "LastUpdated" if "LastUpdated" in dff.columns else None
             if sort_col:
                 dff = dff.sort_values(by=sort_col, ascending=False)
-            st.dataframe(dff, use_container_width=True, height=500)
 
-            # Descarga del subconjunto filtrado
-            csv_bytes = dff.to_csv(index=False).encode("utf-8")
-            st.download_button(
-                label="⬇️ Descargar CSV filtrado",
-                data=csv_bytes,
-                file_name="agribusiness_filtered.csv",
-                mime="text/csv"
+            st.caption(f"Filas mostradas: {len(dff):,} de {len(df):,}")
+
+            # Editor con selección (checkbox por fila)
+            edited = st.data_editor(
+                dff,
+                use_container_width=True,
+                height=520,
+                # Solo permitir editar la columna de selección
+                disabled=[c for c in dff.columns if c != "selected"],
+                column_config={
+                    "selected": st.column_config.CheckboxColumn(
+                        "Seleccionar", help="Marca para seleccionar esta fila", default=False
+                    ),
+                    "UnitPrice": st.column_config.NumberColumn(format="%.2f"),
+                    "StockQuantity": st.column_config.NumberColumn(format="%d"),
+                    "LastUpdated": st.column_config.DatetimeColumn()
+                }
             )
 
-            # Métricas rápidas (ejemplo: precio medio y stock total)
-            st.markdown("### 📌 Resumen rápido")
-            cA, cB, cC = st.columns(3)
-            if "UnitPrice" in dff.columns and not dff["UnitPrice"].isna().all():
-                cA.metric("Precio medio (UnitPrice)", f"{dff['UnitPrice'].mean():,.2f}")
-            if "StockQuantity" in dff.columns and not dff["StockQuantity"].isna().all():
-                cB.metric("Stock total", f"{int(dff['StockQuantity'].sum()):,}")
-            if "ProductID" in dff.columns:
-                cC.metric("Productos únicos", f"{dff['ProductID'].nunique():,}")
+            # Filas seleccionadas
+            selected_rows = edited[edited["selected"] == True] if "selected" in edited.columns else edited.iloc[0:0]
+
+            st.markdown("### ✅ Selección")
+            cA, cB = st.columns(2)
+            cA.metric("Filas seleccionadas", f"{len(selected_rows):,}")
+            if "UnitPrice" in selected_rows.columns and not selected_rows.empty:
+                cB.metric("Precio medio selección", f"{selected_rows['UnitPrice'].mean():,.2f}")
+
+            if not selected_rows.empty:
+                st.markdown("#### Vista de selección")
+                st.table(selected_rows.drop(columns=["selected"]))
+
+                # Descarga solo selección
+                sel_bytes = selected_rows.drop(columns=["selected"]).to_csv(index=False).encode("utf-8")
+                st.download_button(
+                    label="⬇️ Descargar selección (CSV)",
+                    data=sel_bytes,
+                    file_name="agribusiness_selection.csv",
+                    mime="text/csv"
+                )
+            else:
+                st.info("Marca filas en la columna **Seleccionar** para ver/descargar la selección.")
 
         except Exception as e:
             st.error(f"Error leyendo el CSV: {e}")
-            st.info("Verifica que el archivo tenga el esquema esperado: ProductID, ProductName, Category, Region, Country, Supplier, UnitPrice, Currency, StockQuantity, LastUpdated.")
+            st.info("Verifica el esquema: ProductID, ProductName, Category, Region, Country, Supplier, UnitPrice, Currency, StockQuantity, LastUpdated.")
 
     # ==========================
     # Footer
     # ==========================
-
     st.markdown('<footer>© 2025 Bunge Global SA - Todos los derechos reservados</footer>', unsafe_allow_html=True)
