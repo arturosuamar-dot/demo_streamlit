@@ -12,28 +12,45 @@ import plotly.graph_objects as go
 st.set_page_config(page_title="DQaaS - Bunge Global SA", page_icon="🌐", layout="wide")
 
 # ==========================
-# Centrar el contenedor principal
+# Centro estable del contenedor
 # ==========================
-st.markdown("""
+MAX_WIDTH = 900  # ajusta 880, 900, 920 según tu monitor
+st.markdown(f"""
     <style>
-    /* Centra el contenido en pantallas anchas y da un ancho máximo estable */
-    .block-container {
-        max-width: 900px;   /* ajusta: 840, 900, 960 según prefieras */
+    .block-container {{
+        max-width: {MAX_WIDTH}px;
         margin-left: auto;
         margin-right: auto;
-    }
-    /* Subtítulo reutilizable y footer */
-    .subtitle {
+    }}
+    /* Estética del botón y centrado de respaldo */
+    div.stButton > button {{
+        width: 300px;
+        height: 52px;
+        font-size: 18px;
+        font-weight: 700;
+        background-color: #004C97;
+        color: #ffffff;
+        border-radius: 10px;
+        border: none;
+        transition: 0.2s ease;
+        margin: 0 auto;              /* respaldo: centra el botón dentro del contenedor */
+        display: block;              /* asegura que margin auto funcione */
+    }}
+    div.stButton > button:hover {{
+        background-color: #003366;
+        transform: translateY(-1px);
+    }}
+    .subtitle {{
         font-size: 24px;
         font-weight: bold;
         color: #004C97;
         margin-bottom: -10px;
-    }
-    footer {
+    }}
+    footer {{
         text-align: center;
         color: #6b6b6b;
         margin-top: 40px;
-    }
+    }}
     </style>
 """, unsafe_allow_html=True)
 
@@ -43,14 +60,13 @@ st.markdown("""
 if "perfilado_iniciado" not in st.session_state:
     st.session_state.perfilado_iniciado = False
 
-# URL del logo
 LOGO_URL = "https://delivery.bunge.com/-/jssmedia/Feature/Components/Basic/Icons/NewLogo.ashx?iar=0&hash=F544E33B7C336344D37599CBB3053C28"
 
 # ==========================
 # Pantalla inicial
 # ==========================
 if not st.session_state.perfilado_iniciado:
-    # Encabezado (logo + títulos)
+    # Encabezado
     st.markdown('<div style="text-align: center; margin-top: 60px;"></div>', unsafe_allow_html=True)
     st.image(LOGO_URL, width=140)
     st.markdown("""
@@ -64,31 +80,11 @@ if not st.session_state.perfilado_iniciado:
         </div>
     """, unsafe_allow_html=True)
 
-    # Estilo del botón (solo aspecto, no layout)
-    st.markdown("""
-        <style>
-        div.stButton > button {
-            width: 300px;
-            height: 52px;
-            font-size: 18px;
-            font-weight: 700;
-            background-color: #004C97;
-            color: #ffffff;
-            border-radius: 10px;
-            border: none;
-            transition: 0.2s ease;
-        }
-        div.stButton > button:hover {
-            background-color: #003366;
-            transform: translateY(-1px);
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
-    # Botón centrado con columnas simétricas
     st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
-    col_l, col_c, col_r = st.columns([1, 1, 1])  # columnas simétricas
-    with col_c:
+
+    # Botón perfectamente centrado con columnas simétricas
+    col_left, col_center, col_right = st.columns([4, 2, 4])
+    with col_center:
         if st.button("🚀 Iniciar Perfilado de Datos", key="start_button", use_container_width=True):
             st.session_state.perfilado_iniciado = True
             st.rerun()
