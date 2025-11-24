@@ -21,28 +21,42 @@ if "perfilado_iniciado" not in st.session_state:
 # Pantalla inicial
 # ==========================
 if not st.session_state.perfilado_iniciado:
-    # CSS para centrar y agrandar el botón
+    # Portada
+    st.markdown("""
+        <div style="text-align: center; margin-top: 100px;">
+            <h1 style="color: #004C97; font-size: 48px; font-weight: bold;">DQaaS - Data Quality as a Service</h1>
+            <p style="color: #003366; font-size: 22px; font-weight: bold;">Bunge Global SA - Viterra Data Products Squad Extension</p>
+            <br>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # CSS para botón centrado y grande
     st.markdown("""
         <style>
         div.stButton > button {
             display: block;
-            margin: 0 auto; /* Centra el botón */
-            width: 300px; /* Ajusta el ancho */
-            height: 60px; /* Ajusta la altura */
-            font-size: 24px; /* Tamaño del texto */
+            margin: 30px auto;
+            width: 300px;
+            height: 60px;
+            font-size: 24px;
             font-weight: bold;
-            background-color: #004C97; /* Color corporativo Bunge */
-            color: white; /* Texto en blanco */
-            border-radius: 10px; /* Bordes redondeados */
+            background-color: #004C97;
+            color: white;
+            border-radius: 10px;
+            border: none;
+            transition: 0.3s;
+        }
+        div.stButton > button:hover {
+            background-color: #003366;
+            transform: scale(1.05);
         }
         </style>
     """, unsafe_allow_html=True)
-    
-    # Botón centrado y grande
+
+    # Botón
     if st.button("🚀 Iniciar Perfilado de Datos", key="start_button"):
         st.session_state.perfilado_iniciado = True
         st.rerun()
-
 
 else:
     # ==========================
