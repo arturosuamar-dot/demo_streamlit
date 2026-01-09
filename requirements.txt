@@ -1,5 +1,9 @@
 # requirements.txt
-pandas
-streamlit>=1.38
-pyyaml>=6.0
-plotly
+
+streamlit==1.32.0
+pandas==2.2.0
+numpy==1.26.3
+plotly==5.18.0
+openpyxl==3.1.2
+pyyaml==6.0.1
+pathlib==1.0.1
